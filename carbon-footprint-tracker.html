@@ -1,263 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>EcoSaver – Carbon Footprint Tracker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-:root {
-  --primary: #17984a;
-  --primary-gradient: linear-gradient(120deg, #159943 0%, #4be687 100%);
-  --card: #fff;
-  --border: #e4eaea;
-  --accent: #48d99d;
-  --shadow: 0 8px 60px #23be6b22, 0 2px 22px #2fe4920e;
-  --radius: 1.35em;
-  --font-main: 'Open Sans', Arial,sans-serif;
-  --font-display: 'Poppins', Arial,sans-serif;
-}
-/* Eco BG -- floating leaves */
-.eco-bgsvg{
-  position:fixed;z-index:0;pointer-events:none;top:0;left:0;width:100vw;height:100vh;min-height:100vh;animation:bgfloat 130s cubic-bezier(.75,.12,.29,1) infinite alternate;
-}
-@keyframes bgfloat { 0%{filter:hue-rotate(0);} 100%{filter:hue-rotate(10deg);} }
-body, html { margin:0; padding:0; min-height:100vh; width:100vw; box-sizing:border-box; background: #f4fdf8; font-family: var(--font-main);}
-body { min-height:100vh; width:100vw; display:flex; flex-direction:column;}
-a { text-decoration:none; color: var(--accent);}
-.eco-header {
-  width:100vw;box-sizing:border-box;
-  background:var(--primary-gradient);
-  color:#fff;font-family:var(--font-display); font-weight:700;font-size:1.18em;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.12em 3vw 1.08em 3vw;
-  box-shadow:var(--shadow);position:relative;z-index:4;
-}
-.eco-header .logo-group {display:flex;align-items:center;gap:12px;}
-.eco-header .logo-group svg {height:2.25em;width:2.25em;}
-.eco-header .brand {font-size:2.18em;letter-spacing:-.5px;}
-.eco-header .nav-menu {display:flex;gap:2.1em;font-weight:600;}
-.eco-header .nav-menu a {color:#fff; opacity:.86; padding:.45em 1.15em; border-radius:.9em;transition:.17s;}
-.eco-header .nav-menu a.active, .eco-header .nav-menu a:hover {background:#fff5;opacity:1;}
-/* CARD */
-.eco-hero-card {
-  margin:3vw auto 2vw auto; 
-  background: linear-gradient(115deg,#fff 82%,#dcffe6 100%);
-  border-radius: var(--radius); max-width:680px;width:97vw;box-shadow:var(--shadow);
-  border:1.6px solid var(--border);display:flex;flex-direction:column;align-items:center;position:relative;
-  padding:2.4em 2.8em 2.2em 2.8em;animation:bounceIn .65s cubic-bezier(.4,1.44,.33,1.09);
-}
-@keyframes bounceIn {from{opacity:.1;transform:translateY(72px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
-@media(max-width:750px){.eco-hero-card{padding:1.2em .7em 1.1em .7em;}}
-
-.eco-hero-card img{width:8em;height:8em;object-fit:cover;border-radius:99em;border:4.5px solid #b4fadb;box-shadow:0 2px 19px #4eda8b1d;margin:-2.2em 0 1.28em 0;}
-.eco-section-title {font-family:var(--font-display); font-size:2.22em; color: var(--primary); font-weight:900; text-align: center; margin:0 auto .5em auto;letter-spacing:-1.1px;}
-.eco-desc {color:#198b52;font-size:1.07em;margin:1em 0 1.32em 0;text-align:center;max-width:94vw;}
-label {display:block;line-height:1.3;}
-.eco-form {width:100%;max-width:420px;margin:0 auto;}
-.eco-row{display:flex;align-items:baseline;gap:.7em;margin-bottom:1.1em;}
-.eco-row svg{margin-top:.12em;flex-shrink:0;width:1.05em;height:1.05em;opacity:.8;}
-.eco-form-group{flex:1;}
-.eco-form-group input{width:100%;font-size:1.11em;border:2.2px solid var(--border);border-radius:99em;padding:.85em 1.05em;background:#eefbf2;transition:.16s;outline:none;box-shadow:0 2.5px 10px #4be5c013;margin-top:.11em;font-family:var(--font-main);}
-.eco-form-group input:focus{border-color:var(--accent);box-shadow:0 0 10px #82ffbb77;}
-.eco-btn{width:100%;margin:2.1em 0 1em 0;background:linear-gradient(99deg,#35deae 20%,#0fa865 90%);color:#fff;font-weight:800;font-size:1.19em;font-family:var(--font-display);padding:.93em 0;border-radius:99em;border:none;box-shadow:0 9px 28px #53ebc117;cursor:pointer;transition:.19s;outline:none;letter-spacing:.01em;}
-.eco-btn:disabled {filter:grayscale(.28);}
-.eco-btn:hover{background:linear-gradient(99deg,#2be878 20%,#116921 97%);color:#f6ffef;}
-.eco-progress-area{width:100%;max-width:430px;margin:1.1em auto;}
-.eco-progress-bg{width:100%; background:#eaffef; border-radius:99em; height:1.18em;margin:2.2em 0 1.7em 0;overflow:hidden;position:relative;box-shadow:0 2px 15px #b1f2c51a;}
-.eco-progress-bar{background:linear-gradient(120deg,#2fe326 6%,#21f7dc 94%);height:1.18em;border-radius:99em;transition:width 1.1s cubic-bezier(.41,.95,.22,1.12);width:0;position:absolute;left:0;top:0;box-shadow:0 4px 12px #76faea33;}
-.eco-progress-leaf{position:absolute;top:-22px;width:37px;left:0;pointer-events:none;transform:translateX(0);opacity:0;transition:opacity .6s,cubic-bezier(.4,.88,.65,1.13);z-index:5;}
-.eco-progress-label {position:absolute;right:18px;top:-1.8em;color:#189f3e;font-weight:900;font-size:1.07em;text-shadow:0 1px 0 #fffa;padding-left:.55em;}
-.eco-feedback-area{margin:0;text-align:center;width:100%;}
-.ecoFeedback-card{margin:0 auto 0 auto;font-size:1.25em;font-weight:900;border-radius:1.15em;padding:1.15em 2.1em;box-shadow:0 12px 37px #6efdce1a;background:#e9ffe0;display:inline-block;letter-spacing:.01em;position:relative;animation: ecofeed-in .8s cubic-bezier(.33,1.07,.51,1.10);}
-@keyframes ecofeed-in {from{opacity:.1;transform:translateY(78px) scale(.89);}to{opacity:1;transform:translateY(0) scale(1);}}
-.ecoFeedback-card.excellent{ color:#159943;border:2.5px solid #6dea96;background:linear-gradient(120deg,#e7ffea 0%,#eaffeb 100%);}
-.ecoFeedback-card.average{ color:#986c0f;border:2.5px solid #ffe18c;background:linear-gradient(120deg,#fcffe3 15%,#fafae5 100%);}
-.ecoFeedback-card.high{ color:#e85a45;border:2.5px solid #ffb9b3;background:linear-gradient(120deg,#fff3e1 0%,#fff2e6 90%);}
-.ecoFeedback-stamp{display:inline-block; font-size:1.18em;font-weight:800; border-radius:.99em; padding:.24em 1.22em;margin-top:1.05em;background: #fff; box-shadow:0 1.5px 16px #1ffb77; border:2.2px solid #23ba6b;animation: ecoBadgePop .68s cubic-bezier(.18,.91,.37,1.31);}
-@keyframes ecoBadgePop {0%{transform:scale(.63) rotate(-4deg);opacity:0;}90%{opacity:.95;}100%{transform:scale(1) rotate(0);opacity:1;}}
-.eco-suggestions{margin-top:1.8em;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-@media(max-width:600px){.eco-suggestions{grid-template-columns:1fr;}}
-.eco-tip-card{
-  background:linear-gradient(95deg, #eafff4 60%, #f9fffb 100%);
-  border-radius:.95em;box-shadow:0 3px 13px #18e69516;padding:1.15em 1.25em 1.15em 1.1em;display:flex;align-items:center;gap:1em;animation:tipPop .68s cubic-bezier(.23,1.03,.52,1.11);
-  border-left:6.8px solid #25bb71; position:relative;
-}
-@keyframes tipPop{from{opacity:0;transform:translateY(55px) scale(.93);}to{opacity:1;transform:translateY(0) scale(1);}}
-.eco-tip-card svg{width:2.1em;height:2.1em;flex-shrink:0;opacity:.74;}
-.eco-tip-text{font-size:1.06em;color:#137e3d;font-weight:600;}
-.eco-confetti{pointer-events:none;position:absolute;left:0;top:0;width:100%;height:100%;z-index:39;display:block;}
-/* FOOTER */
-.eco-footer {background:var(--primary-gradient);color:#fff; width:100vw;padding:2.1em 0 1.1em 0;font-family:var(--font-display); font-size:1.12em;letter-spacing:0.01em;text-align:center;box-shadow:0 -2px 30px #23ba6b18;}
-.eco-footer .eco-footer-brand {color:#fff; font-weight:700;font-size:1.1em;}
-.eco-footer small {color:#caffd9; opacity:.79;font-size:.99em;}
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carbon Footprint Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<svg class="eco-bgsvg" viewBox="0 0 1920 1080" width="100%" height="100%">
-<defs>
-  <radialGradient id="g" cx="50%" cy="43%" r="90%" fx="60%" fy="65%">
-    <stop stop-color="#dcfee5" offset="0"/>
-    <stop stop-color="#a4fbca" offset="1"/>
-  </radialGradient>
-</defs>
-<ellipse fill="url(#g)" cx="960" cy="540" rx="1200" ry="800"/>
-<ellipse fill="#c8ecdf" rx="550" ry="240" cx="1620" cy="370" opacity=".16"/>
-<ellipse fill="#79e2dd" rx="400" ry="180" cx="210" cy="790" opacity=".10"/>
-</svg>
-<!-- HEADER -->
-<header class="eco-header">
-  <div class="logo-group">
-    <svg viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="20" rx="18" ry="16" fill="#23ba6b" opacity="0.18"/><path d="M34 10C34 10 30 32 14 27C7 25 6 15 13 13C17 12 23 10 34 10Z" stroke="#1b7f36" stroke-width="2.5" fill="#23ba6b"/><path d="M20 30L20 17" stroke="#176d28" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="12.5" r="2.3" fill="#fff" opacity="0.53"/></svg>
-    <span class="brand">EcoSaver</span>
-  </div>
-  <nav class="nav-menu">
-    <a href="carbon-footprint-tracker.html" class="active">Carbon Tracker</a>
-    <a href="about.html">About</a>
-     <a href="dashboard.html">dashboard</a>
-  </nav>
-</header>
-<main style="flex-grow:1; width:100vw; display:flex; align-items:center; justify-content:center;">
-  <div class="eco-hero-card">
-    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Carbon Footprint">
-    <h1 class="eco-section-title">Eco Carbon Calculator</h1>
-    <div class="eco-desc">Estimate your daily carbon emissions—calculation and progress, with animated feedback and EcoSaver polish!</div>
-    <form id="carbonForm" class="eco-form" autocomplete="off">
-      <div class="eco-row"><svg viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="12" ry="9" fill="#8de983"/><rect x="12" y="1" width="4" height="18" rx="2" fill="#23ba6b"/></svg><div class="eco-form-group"><label for="electricity">Electricity (kWh/day):</label><input type="number" id="electricity" min="0" step="0.1" required></div></div>
-      <div class="eco-row"><svg viewBox="0 0 28 28"><circle cx="14" cy="17" r="8" fill="#53db7f"/><ellipse cx="14" cy="10" rx="7" ry="3" fill="#17984a" fill-opacity="0.3"/></svg><div class="eco-form-group"><label for="car">Car (km/day):</label><input type="number" id="car" min="0" step="0.1" required></div></div>
-      <div class="eco-row"><svg viewBox="0 0 28 28"><ellipse cx="14" cy="14" rx="11" ry="4" fill="#53db7f" fill-opacity=".7"/></svg><div class="eco-form-group"><label for="publicTransport">Public Transport (km/day):</label><input type="number" id="publicTransport" min="0" step="0.1"></div></div>
-      <div class="eco-row"><svg viewBox="0 0 28 28"><ellipse cx="14" cy="14" rx="9" ry="8" fill="#8de983" fill-opacity=".7"/><ellipse cx="14" cy="9" rx="4.4" ry="2.6" fill="#23ba6b" fill-opacity=".23"/></svg><div class="eco-form-group"><label for="flight">Flight (hrs/year):</label><input type="number" id="flight" min="0" step="0.1"></div></div>
-      <div class="eco-row"><svg viewBox="0 0 28 28"><ellipse cx="14" cy="17" rx="10" ry="7" fill="#9fd38b"/><rect x="8" y="9" width="12" height="10" rx="4" fill="#aad234" fill-opacity="0.17"/></svg><div class="eco-form-group"><label for="heating">Heating (units/day):</label><input type="number" id="heating" min="0" step="0.1"></div></div>
-      <div class="eco-row"><svg viewBox="0 0 28 28"><ellipse cx="14" cy="14" rx="10" ry="8" fill="#ffe7c3"/><ellipse cx="14" cy="14" rx="7" ry="5" fill="#e68d25" fill-opacity="0.22"/></svg><div class="eco-form-group"><label for="meat">Meat (servings/day):</label><input type="number" id="meat" min="0" step="1" required></div></div>
-      <div class="eco-row"><svg viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="9" ry="7" fill="#b2ecde"/><ellipse cx="14" cy="16" rx="6" ry="2.5" fill="#23ba6b" fill-opacity=".14"/></svg><div class="eco-form-group"><label for="waste">Waste (kg/day):</label><input type="number" id="waste" min="0" step="0.1"></div></div>
-      <div class="eco-row"><svg viewBox="0 0 28 28"><ellipse cx="14" cy="14" rx="10" ry="8" fill="#aae8cf"/><ellipse cx="14" cy="22" rx="4.5" ry="2" fill="#23ba6b" fill-opacity="0.18"/></svg><div class="eco-form-group"><label for="water">Water (liters/day):</label><input type="number" id="water" min="0" step="1"></div></div>
-      <button id="btn-calc" type="submit" class="eco-btn">Calculate</button>
-    </form>
-    <div class="eco-progress-area" style="margin-top:-1.2em">
-      <div class="eco-progress-bg" style="margin-bottom:.7em;">
-        <div id="eco-progress-bar" class="eco-progress-bar"></div>
-        <svg class="eco-progress-leaf" id="eco-progress-leaf" viewBox="0 0 34 28"><ellipse cx="16" cy="12" rx="14" ry="12" fill="#5de17d"/><ellipse cx="22" cy="18" rx="7" ry="7" fill="#d6f8d3" fill-opacity=".65"/><path d="M16 12v13" stroke="#15893e" stroke-width="2.2" stroke-linecap="round"/></svg>
-        <span class="eco-progress-label" id="eco-progress-label"></span>
+<body class="min-h-screen w-full bg-gradient-to-br from-green-200 via-green-100 to-green-400 flex flex-col">
+  <header class="bg-green-800 text-white py-4 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center px-4">
+      <h1 class="text-3xl font-extrabold tracking-tight">Carbon Footprint Tracker</h1>
+      <a href="login.html" class="bg-white text-green-800 px-4 py-2 rounded-lg shadow hover:bg-green-100 font-semibold transition">Back to Dashboard</a>
+    </div>
+    <!-- Navigation Menu -->
+    <nav class="flex flex-wrap gap-2 md:gap-4 container mx-auto px-4 mt-2">
+      <a href="login.html#challenges" class="text-white hover:text-green-200 font-semibold">Challenges</a>
+      <a href="login.html#learn" class="text-white hover:text-green-200 font-semibold">Learn</a>
+      <a href="login.html#community" class="text-white hover:text-green-200 font-semibold">Community</a>
+      <a href="login.html#impact" class="text-white hover:text-green-200 font-semibold">Impact</a>
+      <a href="login.html#habits" class="text-white hover:text-green-200 font-semibold">Habits</a>
+      <a href="login.html#eco-tips" class="text-white hover:text-green-200 font-semibold">Eco Tips</a>
+      <a href="login.html#leaderboard" class="text-white hover:text-green-200 font-semibold">Leaderboard</a>
+    </nav>
+  </header>
+  <main class="flex-grow flex items-center justify-center">
+    <section class="w-full max-w-3xl bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center mt-8 mb-8">
+      <div class="flex flex-col md:flex-row items-center mb-10 w-full">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Carbon Footprint" class="w-40 h-40 object-cover rounded-full shadow-xl mb-6 md:mb-0 md:mr-10 border-4 border-green-300">
+        <div class="flex-1">
+          <h2 class="text-2xl font-bold mb-3 text-green-800">Track Your Carbon Footprint</h2>
+          <p class="text-gray-700 text-lg">Use this modern calculator to estimate your daily carbon emissions. Discover how your choices impact the planet and get instant feedback to help you live more sustainably.</p>
+        </div>
       </div>
-    </div>
-    <div id="eco-feedback-area" class="eco-feedback-area"></div>
-    <div id="eco-suggestions-root"></div>
-  </div>
-</main>
-<footer class="eco-footer">
-  <div class="eco-footer-brand">EcoSaver – Environmental Education Platform</div>
-  <small>© 2025 Government of Punjab. Powered by the Punjab Government Digital Initiative.</small>
-  <div style="margin-top:.7em;color:#d7ffe7;font-size:1.11em;font-weight:600;">"Together for a Greener Tomorrow"</div>
-</footer>
-<script>
-function ecoConfetti(where){
-  let cav = document.createElement('canvas'), ctx;
-  cav.width = (where.offsetWidth || 370); cav.height = 80; cav.className='eco-confetti';
-  where.appendChild(cav); ctx = cav.getContext('2d');
-  let pieces = Array.from({length: 22}, ()=>({
-    x:Math.random()*cav.width,
-    y:Math.random()*61+8,
-    w:4+Math.random()*3,
-    h:12+Math.random()*9,
-    vx:Math.random()-.5,vy:Math.random()*2.9+2,ay:Math.random()*.11+.095,
-    color: ["#23ba6b","#bbecb9","#f4c844","#35deae","#17984a","#ec88b2"][Math.floor(Math.random()*6)],
-    rot:Math.random()*360
-  })), t=0, mxT=44;
-  function draw(){
-    ctx.clearRect(0,0,cav.width,cav.height);
-    for (let p of pieces) {
-      ctx.save(); ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot*Math.PI/180);
-      ctx.fillStyle=p.color;
-      ctx.fillRect(-p.w/2, -p.h/2, p.w,p.h);
-      ctx.restore();
-      p.x += p.vx; p.y += p.vy+=p.ay; p.rot += (Math.random()-.5)*7.8;
+      <form id="carbonForm" class="space-y-7 w-full">
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2" for="electricity">Electricity Usage <span class="text-gray-500 text-sm">(kWh/day)</span>:</label>
+          <input type="number" id="electricity" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2" for="car">Car Travel <span class="text-gray-500 text-sm">(km/day)</span>:</label>
+          <input type="number" id="car" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2" for="publicTransport">Public Transport <span class="text-gray-500 text-sm">(km/day)</span>:</label>
+          <input type="number" id="publicTransport" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1">
+        </div>
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2" for="flight">Flight Travel <span class="text-gray-500 text-sm">(hours/year)</span>:</label>
+          <input type="number" id="flight" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1">
+        </div>
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2" for="heating">Home Heating (Natural Gas) <span class="text-gray-500 text-sm">(units/day)</span>:</label>
+          <input type="number" id="heating" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1">
+        </div>
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2" for="meat">Meat Consumption <span class="text-gray-500 text-sm">(servings/day)</span>:</label>
+          <input type="number" id="meat" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="1" required>
+        </div>
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2" for="waste">Waste Generation <span class="text-gray-500 text-sm">(kg/day)</span>:</label>
+          <input type="number" id="waste" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1">
+        </div>
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2" for="water">Water Usage <span class="text-gray-500 text-sm">(liters/day)</span>:</label>
+          <input type="number" id="water" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="1">
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-700 text-white font-bold py-3 rounded-xl shadow-lg hover:from-green-600 hover:to-green-800 transition text-lg">Calculate</button>
+      </form>
+      <div id="result" class="mt-10 text-center text-xl font-semibold"></div>
+    </section>
+  </main>
+  <footer class="bg-green-800 text-white text-center py-4 mt-auto shadow-inner">
+    &copy; 2025 EcoAwarenessHub. All rights reserved.
+  </footer>
+  <script>
+    document.getElementById('carbonForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const electricity = parseFloat(document.getElementById('electricity').value) || 0;
+      const car = parseFloat(document.getElementById('car').value) || 0;
+      const publicTransport = parseFloat(document.getElementById('publicTransport').value) || 0;
+      const flight = parseFloat(document.getElementById('flight').value) || 0;
+      const heating = parseFloat(document.getElementById('heating').value) || 0;
+      const meat = parseFloat(document.getElementById('meat').value) || 0;
+      const waste = parseFloat(document.getElementById('waste').value) || 0;
+      const water = parseFloat(document.getElementById('water').value) || 0;
+      // Emission factors (kg CO2e per unit)
+      const electricityFactor = 0.92; // per kWh
+      const carFactor = 0.21; // per km
+      const publicTransportFactor = 0.08; // per km (bus/train average)
+      const flightFactor = 90 / 365; // per hour (short/long haul avg, annualized)
+      const heatingFactor = 2.2; // per unit natural gas
+      const meatFactor = 2.5; // per serving
+      const wasteFactor = 1.8; // per kg
+      const waterFactor = 0.0003; // per liter
+      const total = (electricity * electricityFactor)
+        + (car * carFactor)
+        + (publicTransport * publicTransportFactor)
+        + (flight * flightFactor)
+        + (heating * heatingFactor)
+        + (meat * meatFactor)
+        + (waste * wasteFactor)
+        + (water * waterFactor);
+      let feedback = '';
+      if (total < 5) {
+        feedback = '<span class="text-green-700">Excellent!</span> Your carbon footprint is low. Keep it up! 🌱';
+      } else if (total < 15) {
+        feedback = '<span class="text-yellow-600">Average.</span> There is room for improvement. Consider greener choices! 🌍';
+      } else {
+        feedback = '<span class="text-red-700">High.</span> Try to reduce your emissions for a healthier planet. 🌎';
+      }
+      document.getElementById('result').innerHTML = `Your estimated daily carbon footprint is <span class="text-green-800 font-bold">${total.toFixed(2)} kg CO₂e</span>.<br>${feedback}`;
+    });
+  </script>
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const iconSun = document.getElementById('iconSun');
+  const iconMoon = document.getElementById('iconMoon');
+  // On page load, check localStorage
+  if (localStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark');
+    if (iconSun && iconMoon) {
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
     }
-    t++; if(t<mxT) requestAnimationFrame(draw); else ctx.clearRect(0,0,cav.width,cav.height);
   }
-  draw();
-  setTimeout(()=>cav.remove(),1400);
-}
-function animateEcoProgress(val){
-  let bar=document.getElementById('eco-progress-bar'),lbl=document.getElementById('eco-progress-label');
-  let leaf=document.getElementById('eco-progress-leaf');
-  let percent = Math.min(100,(val/25)*100);
-  if(bar){
-    bar.style.width = "0%";
-    setTimeout(()=>{bar.style.width=percent+"%";},55);
+  if (darkModeToggle && iconSun && iconMoon) {
+    darkModeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      if (isDark) {
+        localStorage.setItem('darkMode', 'enabled');
+        iconSun.classList.add('hidden');
+        iconMoon.classList.remove('hidden');
+      } else {
+        localStorage.setItem('darkMode', 'disabled');
+        iconSun.classList.remove('hidden');
+        iconMoon.classList.add('hidden');
+      }
+    });
   }
-  if(leaf){
-    if(percent>3){
-      leaf.style.opacity=1;
-      leaf.style.left = `calc(${percent}% - 28px)`;
-    } else {
-      leaf.style.opacity=0;
-      leaf.style.left = `0%`;
-    }
-  }
-  if(lbl){ lbl.textContent = val ? val.toFixed(2) + " kg CO₂e" : ""; }
-}
-function showSuggestions(){
-  document.getElementById('eco-suggestions-root').innerHTML = `
-    <div class="eco-suggestions">
-      <div class="eco-tip-card"><svg viewBox="0 0 32 32"><ellipse cx="16" cy="16" rx="13" ry="10" fill="#eafca7"/><path d="M16 19v8" stroke="#27cd72" stroke-width="2"/></svg><div class="eco-tip-text"><b>Plant a sapling</b> or nurture greenery around you.</div></div>
-      <div class="eco-tip-card"><svg viewBox="0 0 32 32"><ellipse cx="21" cy="18" rx="9" ry="7" fill="#bae6e4"/><rect x="5" y="10" width="12" height="5" rx="2.5" fill="#1acd9b" opacity=".3"/><rect x="7" y="21" width="18" height="7" rx="3" fill="#1acd9b" opacity=".14"/></svg><div class="eco-tip-text"><b>Use public transport</b> or carpool whenever possible.</div></div>
-      <div class="eco-tip-card"><svg viewBox="0 0 32 32"><ellipse cx="18" cy="14" rx="10" ry="7" fill="#ffe7c3"/><rect x="7" y="15" width="12" height="5" rx="2.5" fill="#ffb700" opacity=".4"/></svg><div class="eco-tip-text"><b>Eat less red meat</b>—try more veggies for the planet and your health!</div></div>
-      <div class="eco-tip-card"><svg viewBox="0 0 32 32"><ellipse cx="18" cy="16" rx="10" ry="7" fill="#d3ecf9"/><rect x="5" y="12" width="13" height="4" rx="2" fill="#18ba99" opacity=".32"/></svg><div class="eco-tip-text"><b>Switch off wasteful lights</b> and unplug idle devices at home.</div></div>
-    </div>
-    <div style="margin-top:.8em;color:#188946;font-size:1.08em;font-weight:700;animation:bounceIn .8s;">Every small action counts for a greener Punjab!</div>
-  `;
-}
-document.getElementById("carbonForm").addEventListener("submit", function(e){
-  e.preventDefault();
-  document.getElementById('eco-suggestions-root').innerHTML = "";
-  const btn = document.getElementById('btn-calc');
-  btn.disabled = true; setTimeout(()=>{btn.disabled=false;},1500);
-  const electricity = parseFloat(document.getElementById('electricity').value) || 0,
-        car = parseFloat(document.getElementById('car').value) || 0,
-        publicTransport = parseFloat(document.getElementById('publicTransport').value) || 0,
-        flight = parseFloat(document.getElementById('flight').value) || 0,
-        heating = parseFloat(document.getElementById('heating').value) || 0,
-        meat = parseFloat(document.getElementById('meat').value) || 0,
-        waste = parseFloat(document.getElementById('waste').value) || 0,
-        water = parseFloat(document.getElementById('water').value) || 0;
-  const electricityFactor = 0.92, carFactor = 0.21, publicTransportFactor = 0.08,
-        flightFactor = 90/365, heatingFactor=2.2,
-        meatFactor=2.5, wasteFactor=1.8, waterFactor=0.0003;
-  const total = (electricity*electricityFactor)
-    +(car*carFactor)
-    +(publicTransport*publicTransportFactor)
-    +(flight*flightFactor)
-    +(heating*heatingFactor)
-    +(meat*meatFactor)
-    +(waste* wasteFactor)
-    +(water* waterFactor);
-
-  animateEcoProgress(total);
-
-  let cardClass = '',feedback='',stamp='', ecoarea=document.getElementById("eco-feedback-area");
-  ecoarea.innerHTML = ""; 
-  if (total < 5) {
-    cardClass = "excellent";
-    stamp = '<div class="ecoFeedback-stamp" style="border-color:#23ba6b;">🌱 Excellent!</div>';
-    feedback = "Your carbon footprint is <b>very eco-friendly</b>. Keep shining green for Punjab!<br>"+stamp;
-    setTimeout(()=>ecoConfetti(ecoarea),410);
-  } else if (total < 15) {
-    cardClass = "average";
-    stamp = '<div class="ecoFeedback-stamp" style="border-color:#b4cd23;">🌍 Average</div>';
-    feedback = "Your footprint is <b>moderate</b>. More eco acts = more points!<br>"+stamp;
-  } else {
-    cardClass = "high";
-    stamp = '<div class="ecoFeedback-stamp" style="border-color:#e85a45;">🔥 High</div>';
-    feedback = "Footprint is <b>high</b>. Try public transport, less meat, and energy saving!<br>"+stamp;
-    setTimeout(showSuggestions,700); // Show suggestions anim after result
-  }
-  ecoarea.innerHTML =
-  `<div class="ecoFeedback-card ${cardClass}">
-      Your estimated carbon footprint is <span style="color:#17a963;font-weight:900;">${total.toFixed(2)} kg CO₂e</span>.<br>
-      ${feedback}
-    </div>`;
-  if(document.getElementById('electricity')) setTimeout(()=>document.getElementById('electricity').focus(),1700);
 });
 </script>
 </body>
