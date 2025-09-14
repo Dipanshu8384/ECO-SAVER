@@ -4,408 +4,26 @@
   <meta charset="UTF-8">
   <title>EcoLearner Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="login.css">
+
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* --- DARK MODE OVERRIDES --- */
-body.dark {
-  background: #111827 !important;
-  color: #e1f7ef !important;
-}
-body.dark .gradient-bg {
-  background: linear-gradient(135deg, #183e3a 0%, #1e293b 60%, #111827 100%) !important;
-}
-body.dark .glass-card {
-  background: rgba(17,24,39,0.7) !important;
-  border-color: #222 !important;
-  color: #e1f7ef !important;
-}
-body.dark nav, body.dark .nav-shadow {
-  background: #1e293b !important;
-  color: #e1f7ef !important;
-  box-shadow: 0 1px 8px 0 rgba(32,196,182,0.09);
-}
-body.dark .btn {
-  background: #222 !important;
-  color: #20c4b6 !important;
-  border-color: #20c4b6 !important;
-}
-body.dark .btn:hover {
-  background: #183e3a !important;
-  color: #fd7e25 !important;
-}
-body.dark .article-card, body.dark .quiz-card, body.dark .quiz-container {
-  background: #1e293b !important;
-  color: #e1f7ef !important;
-  border-color: #20c4b6 !important;
-}
-body.dark .notification-ticker {
-  background: #222 !important;
-  color: #20c4b6 !important;
-}
-body.dark .footer-container, body.dark footer {
-  background: #111827 !important;
-  color: #e1f7ef !important;
-}
-body.dark .quiz-answers button {
-  background: #222 !important;
-  color: #20c4b6 !important;
-  border-color: #20c4b6 !important;
-}
-body.dark .quiz-answers button.selected {
-  background: #20c4b6 !important;
-  color: #fff !important;
-}
-body.dark .quiz-answers button.incorrect {
-  background: #fd7e25 !important;
-  color: #fff !important;
-}
-body.dark .quiz-next-btn {
-  background: #20c4b6 !important;
-  color: #fff !important;
-}
-body.dark .quiz-result {
-  color: #fd7e25 !important;
-}
-    body {
-      background: #f4fff8;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #183e3a;
-  transition: background 0.3s, color 0.3s;
-    }
-    .gradient-bg {
-      background: linear-gradient(135deg, #20c4b6 0%, #3ec3da 60%, #19b6ab 100%);
-    }
-    /* .glass-card {
-      backdrop-filter: blur(12px);
-      background: rgba(250,255,255,0.10);
-      border-radius: 2rem;
-      border: 4px solid #fff;
-      box-shadow: 0 12px 32px 0 rgba(0,0,0,0.04);
-    } */
-
-     .glass-card {
-  backdrop-filter: blur(16px);
-  background: rgba(250,255,255,0.24);
-  border-radius: 2rem;
-  border: 2px solid rgba(255,255,255,0.23);
-  box-shadow: 0 18px 40px 0 rgba(32,196,182,0.08);
-  transition: box-shadow 0.3s;
-}
-.glass-card:hover {
-  box-shadow: 0 24px 60px 0 rgba(32,196,182,0.19);
-  transform: scale(1.025);
-}
-  .nav-shadow { box-shadow: 0 1px 8px 0 rgba(32,196,182,0.09);}
-    .accent {
-      color: #fd7e25;
-    }
-    /* .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 0.7em;
-    } */
-  .feature-icon { font-size: 2.5rem; margin-bottom: 0.6em;}
-     @keyframes ring-progress { from {stroke-dashoffset: 232;} to {stroke-dashoffset: 58;} }
-
-    /* Toast notification */
-.toast {
-  position: fixed; top: 14px; right: 20px; z-index: 1000;
-  background: #20c4b6; color: #fff; padding: 1rem 2rem;
-  border-radius: 1rem; font-size: 1rem; box-shadow: 0 4px 30px rgba(32,196,182,0.15);
-  opacity: 0; pointer-events: none; transition: opacity 0.4s;
-}
-.toast.show { opacity: 1; pointer-events: auto; }
-/* Activate dark mode body */
-body.dark {background: #111827; color: #e1f7ef;}
-
-.notification-ticker {
-  position: relative;
-  height: 2.5rem;
-  font-weight: 600;
-  font-size: 1rem;
-  user-select: none;
-}
-
-.ticker-content {
-  white-space: nowrap;
-  position: absolute;
-  will-change: transform;
-  animation: ticker-scroll 20s linear infinite;
-}
-
-@keyframes ticker-scroll {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-#eco-tips h2, #ai-suggestions h2 {
-  text-align: center;
-}
-
-#ecoTipDisplay, #aiSuggestionDisplay {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1.1rem;
-  line-height: 1.5;
-  text-align: center;
-  user-select: none;
-  transition: all 0.3s ease-in-out;
-}
-
-#ecoTipDisplay {
-  border: 2px solid #20c4b6;
-}
-
-#aiSuggestionDisplay {
-  border: 2px solid #fd7e25;
-}
-
-@media (max-width: 640px) {
-  #ecoTipDisplay, #aiSuggestionDisplay {
-    font-size: 1rem;
-    padding: 1rem 2rem;
-  }
-}
-
-
-    #quiz-section {
-  max-width: 600px;
-  margin: 3rem auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 1rem;
-}
-
-.quiz-title {
-  font-size: 2rem;
-  color: #20c4b6;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.quiz-card {
-  background: #f4fff8;
-  border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  padding: 2rem 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.quiz-question {
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: #158a8e;
-  margin-bottom: 1rem;
-  min-height: 60px;
-}
-
-.quiz-answers {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.quiz-answers button {
-  background: #e0f7f5;
-  color: #076f74;
-  border: 2px solid #20c4b6;
-  border-radius: 0.7rem;
-  padding: 1rem 1.25rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.3s, color 0.3s, transform 0.15s;
-  box-shadow: inset 0 0 10px rgba(32,196,182,0.25);
-}
-
-.quiz-answers button:hover:not(:disabled) {
-  background: #20c4b6;
-  color: #fff;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 15px rgba(32,196,182,0.5);
-}
-
-.quiz-answers button.selected {
-  background: #20c4b6;
-  color: #fff;
-  pointer-events: none;
-}
-
-.quiz-answers button.incorrect {
-  background: #fd7e25;
-  color: #fff;
-  pointer-events: none;
-}
-
-.quiz-next-btn {
-  margin-top: 1.5rem;
-  background: #20c4b6;
-  color: white;
-  border: none;
-  border-radius: 0.9rem;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 1rem;
-  padding: 0.9rem 2rem;
-  box-shadow: 0 8px 25px rgba(32,196,182,0.5);
-  align-self: center;
-  display: none;
-  transition: background 0.3s;
-}
-
-.quiz-next-btn:hover {
-  background: #188f84;
-}
-
-.quiz-result {
-  text-align: center;
-  font-size: 1.4rem;
-  font-weight: 700;
-  padding: 1rem 0;
-  color: #fd7e25;
-  display: none;
-}
-
-@media (max-width: 640px) {
-  #quiz-section, .quiz-card {
-    padding: 1rem 1.5rem;
-  }
-  .quiz-answers button {
-    font-size: 0.9rem;
-  }
-  .quiz-title {
-    font-size: 1.8rem;
-  }
-}
-
-
-    @media (max-width: 600px) {
-      .quiz-card { padding: 18px; }
-    }
-
-    footer {
-      width: 100%;
-      background: #111827;
-      color: #d1d5db;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      padding: 64px 0 0 0; /* Top gap for natural separation */
-    }
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-      gap: 40px;
-      padding: 0 24px;
-    }
-    .footer-container h3,
-    .footer-container h4 {
-      margin-bottom: 15px;
-      font-weight: bold;
-      color: #10b981;
-    }
-    .footer-container h4 { color: #d1d5db; }
-    .footer-container ul {
-      list-style: none;
-      padding: 0;
-    }
-    .footer-container a {
-      color: #d1d5db;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .footer-container a:hover {
-      color: #10b981;
-    }
-    .footer-note {
-      text-align: center;
-      margin-top: 48px;
-      font-size: 14px;
-      color: #6b7280;
-    }
-    .newsletter-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .newsletter-form input[type="email"] {
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      color: #111827;
-    }
-    .newsletter-form button {
-      background: #10b981;
-      border: none;
-      color: #111827;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .newsletter-message {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #6ee7b7;
-    }
-
-
-    .leaderboard-card {
-  border: 3px solid #e1f7ef;
-}
-
-.leaderboard-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: #f9fffa;
-  border-radius: 18px;
-  box-shadow: 0 1px 6px 0 rgba(40,184,163,0.07);
-  padding: 1rem;
-  transition: transform 0.13s;
-}
-.leaderboard-row:hover {
-  transform: scale(1.02);
-  box-shadow: 0 2px 12px rgba(40,184,163,0.13);
-}
-.leaderboard-row.gold { background: linear-gradient(90deg,#fff7e0 0%,#fffbe8 100%);}
-.leaderboard-row.silver { background: linear-gradient(90deg,#e6f8ff 0%,#f0faff 100%);}
-.leaderboard-row.bronze { background: linear-gradient(90deg,#f7ead9 0%,#ffefde 100%);}
-.leaderboard-row .rank {font-size:1.6rem; font-weight:bold;}
-.leaderboard-row .avatar {
-    width: 48px; height: 48px; object-fit:cover;
-    border-radius:50%; border:2.5px solid #20c4b6; background:#e1f7ef;
-}
-.leaderboard-row .name { font-weight:bold; color:#076f74;}
-.leaderboard-row .eco-points { font-weight:bold; color:#fd7e25; font-size:1.1rem;}
-.leaderboard-row .badge {
-    display:inline-block;
-    padding:2px 8px;
-    background: #e1f7ef;
-    color: #20c4b6;
-    border-radius:8px;
-    font-size:0.92em;
-    margin-left:8px;
-}
-
-
-  </style>
 </head>
 <body class="font-inter">
 
 <!-- Navigation Bar (New Header) -->
-  <nav class="w-full bg-[#f6fcf4] nav-shadow sticky top-0 z-40">
+<nav class="w-full bg-[#f6fcf4] nav-shadow sticky top-0 z-40">
   <div class="container mx-auto flex items-center justify-between px-8 py-3">
     <div class="flex items-center gap-3">
       <img src="LOGO.jpg" alt="EcoSaver Logo" class="w-12 h-12 rounded-lg object-contain bg-[#20c4b6] p-1" />
       <span class="font-bold text-lg text-gray-900">EcoSaver</span>
     </div>
-    <!-- Remove the middle menu button block here -->
+    <div class="hidden md:flex gap-10 text-base font-medium text-gray-600">
+      <a href="#challenges" class="hover:text-[#20c4b6]">Challenges</a>
+      <a href="#learn" class="hover:text-[#20c4b6]">Learn</a>
+      <a href="#community" class="hover:text-[#20c4b6]">Community</a>
+      <a href="#impact" class="hover:text-[#20c4b6]">Impact</a>
+      <a href="#habits" class="hover:text-[#20c4b6]">Habits</a>
+    </div>
     <div class="flex items-center gap-3">
       <!-- Eco Points System -->
       <div class="flex items-center gap-2 px-2 py-1 rounded-xl bg-[#e1f7ef] border border-[#20c4b6] font-semibold text-[#20c4b6]" id="ecoPointsDisplay">
@@ -414,7 +32,7 @@ body.dark {background: #111827; color: #e1f7ef;}
       </div>
       <button onclick="logEcoAction()" class="bg-[#20c4b6] text-white px-3 py-1 rounded-lg font-bold shadow hover:bg-teal-500 transition">Log Eco-Action</button>
       <!-- User Avatar & Profile Dropdown -->
-      <div class="relative flex items-center gap-3" id="profileDropdownArea">
+      <div class="relative" id="profileDropdownArea">
         <img src="avtar1.png" alt="Profile" id="profileAvatar" class="w-10 h-10 rounded-full border-2 border-[#20c4b6] cursor-pointer" />
         <div id="profileDropdown" class="absolute right-0 top-12 bg-white rounded-xl shadow-xl w-64 py-4 px-5 z-50 hidden" style="min-width:210px">
           <div class="flex items-center gap-3 mb-3">
@@ -430,74 +48,23 @@ body.dark {background: #111827; color: #e1f7ef;}
             <div class="flex gap-2 flex-wrap text-sm">
               <span class="bg-[#e1f7ef] text-[#20c4b6] rounded-lg px-2 py-1">Green Beginner</span>
               <span class="bg-[#fff2e5] text-[#fd7e25] rounded-lg px-2 py-1">Eco-Warrior</span>
+              <!-- More badges can be added -->
             </div>
           </div>
           <hr class="my-3"/>
           <div><span class="font-bold">Eco-Points:</span> <span id="profilePoints">120</span></div>
         </div>
       </div>
+      <!-- <a href="fun.html" class="text-[#20c4b6] font-semibold px-4 py-2 rounded hover:bg-[#e1f7ef] transition">Login</a>
+      <a href="signup.html" class="bg-[#41d9af] text-white font-semibold px-4 py-2 rounded-lg hover:bg-[#20c4b6] transition">Sign Up</a> -->
 
-      <!-- <button id="darkModeToggle" class="ml-3 px-3 py-2 bg-[#e1f7ef] text-[#20c4b6] rounded-xl font-bold focus:outline-none">🌗 Dark Mode</button> -->
-
-      <!-- Modern Dark Mode Toggle with Animated Icon -->
-<button id="darkModeToggle"
-  class="ml-3 flex items-center justify-center w-12 h-12 rounded-full bg-[#e1f7ef] shadow-lg transition duration-300 hover:bg-[#41d9af] group focus:outline-none"
-  aria-label="Toggle dark mode">
-  <!-- SVG animated sun/moon icon -->
-  <span id="darkModeIcon">
-    <!-- Sun (light mode) -->
-    <svg class="block group-hover:scale-110 transition-transform duration-200" id="iconSun" width="28" height="28" viewBox="0 0 24 24" fill="none"
-      stroke="#fd7e25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="5" />
-      <line x1="12" y1="1" x2="12" y2="3" />
-      <line x1="12" y1="21" x2="12" y2="23" />
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-      <line x1="1" y1="12" x2="3" y2="12" />
-      <line x1="21" y1="12" x2="23" y2="12" />
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-    </svg>
-    <!-- Moon (dark mode, hidden initially) -->
-    <svg class="hidden group-hover:scale-110 transition-transform duration-200" id="iconMoon" width="28" height="28" viewBox="0 0 24 24" fill="none"
-      stroke="#41d9af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
-    </svg>
-  </span>
-</button>
-
-    <div id="toast" class="toast"></div>
-      <!-- Single Right-Aligned Menu Button -->
-      <div class="relative inline-block text-left ml-3">
-        <!-- <button id="menuButton" class="bg-[#41d9af] text-white font-semibold px-4 py-2 rounded-lg hover:bg-[#20c4b6] transition">Menu ▼</button> -->
-         <!-- Stylish Menu Button with Icon & Animation -->
-<button id="menuButton" class="relative flex items-center justify-center w-12 h-12 rounded-full bg-[#41d9af] shadow-lg hover:bg-[#fd7e25] transition duration-200 group focus:outline-none">
-  <span class="sr-only">Open main menu</span>
-  <svg class="w-7 h-7 text-white group-hover:text-[#fffbe8] transition duration-200"
-       fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"
-       xmlns="http://www.w3.org/2000/svg">
-    <line x1="5" y1="7" x2="19" y2="7" stroke-linecap="round"/>
-    <line x1="5" y1="12" x2="19" y2="12" stroke-linecap="round"/>
-    <line x1="5" y1="17" x2="19" y2="17" stroke-linecap="round"/>
-  </svg>
-  <span class="absolute top-0 right-0 bg-[#fd7e25] text-white text-xs font-bold rounded-full px-2 py-0.5 shadow -translate-y-2/3 translate-x-1/2 group-hover:scale-110 transition-transform">
-    NEW
-  </span>
-</button>
-
-        <div id="menuDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
-          <div class="py-1">
-            <a href="fun.html" class="block px-4 py-2 text-gray-700 hover:bg-[#20c4b6] hover:text-white">Login</a>
-            <a href="fun.html" class="block px-4 py-2 text-gray-700 hover:bg-[#20c4b6] hover:text-white">Sign Up</a>
-            <a href="#contact" class="block px-4 py-2 text-gray-700 hover:bg-[#20c4b6] hover:text-white">Contact Support</a>
-          </div>
-        </div>
-      </div>
+      <a href="fun.html" class="block px-4 py-2 text-gray-700 hover:bg-[#20c4b6] hover:text-white" role="menuitem" onclick="openLoginChoiceModal(event)">Login</a>
+      <a href="signup.html" class="block px-4 py-2 text-gray-700 hover:bg-[#20c4b6] hover:text-white" role="menuitem" onclick="openSignupChoiceModal(event)">Sign Up</a>
     </div>
-    <!-- <button id="darkModeToggle" class="ml-3 px-3 py-2 bg-[#e1f7ef] text-[#20c4b6] rounded-xl font-bold focus:outline-none">🌗 Dark Mode</button>
-    <div id="toast" class="toast"></div> -->
   </div>
 </nav>
+
+
 
 
 <!-- Notification Ticker -->
@@ -506,6 +73,45 @@ body.dark {background: #111827; color: #e1f7ef;}
     🔔 New challenges added weekly! &nbsp;&nbsp;&nbsp; 🌿 Join community cleanups this weekend! &nbsp;&nbsp;&nbsp; 📢 Check out our latest eco tips!
   </div>
 </div>
+<!-- 🌍 Environment Image Slider -->
+<section class="w-full bg-[#f6fcf4] py-12" id="env-slider">
+  <div class="container mx-auto px-8 max-w-5xl text-center">
+    <h2 class="text-3xl font-bold text-[#20c4b6] mb-6">Explore Nature</h2>
+
+    <div class="slider relative overflow-hidden rounded-2xl shadow-lg">
+      <!-- Slides Wrapper -->
+      <div class="slides flex transition-transform duration-700 ease-in-out w-full">
+        <div class="slide min-w-full">
+          <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470" class="w-full h-[400px] object-cover" alt="Forest">
+        </div>
+        <div class="slide min-w-full">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" class="w-full h-[400px] object-cover" alt="Ocean">
+        </div>
+        <div class="slide min-w-full">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" class="w-full h-[400px] object-cover" alt="Mountains">
+        </div>
+        <div class="slide min-w-full">
+          <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9" class="w-full h-[400px] object-cover" alt="River">
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <button class="prev absolute left-4 top-1/2 -translate-y-1/2 bg-[#20c4b6] text-white text-2xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-[#17a799] transition">❮</button>
+      <button class="next absolute right-4 top-1/2 -translate-y-1/2 bg-[#20c4b6] text-white text-2xl w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-[#17a799] transition">❯</button>
+
+      <!-- Dots -->
+      <div class="dots flex justify-center gap-2 mt-4"></div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
 
 <!-- About/Solution Summary -->
 <section class="w-full bg-white py-12" id="about">
@@ -782,189 +388,32 @@ body.dark {background: #111827; color: #e1f7ef;}
     <div class="footer-note">
       &copy; 2025 EcoSaver. All rights reserved.
     </div>
-
-  <script>
-
-
-  document.addEventListener('DOMContentLoaded', function() {
-    // Dropdown menu logic
-    const menuButton = document.getElementById('menuButton');
-    const menuDropdown = document.getElementById('menuDropdown');
-    if (menuButton && menuDropdown) {
-      menuButton.addEventListener('click', function(e) {
-        e.stopPropagation();
-        menuDropdown.classList.toggle('hidden');
-      });
-      document.addEventListener('click', function(e) {
-        if (!menuButton.contains(e.target) && !menuDropdown.contains(e.target)) {
-          menuDropdown.classList.add('hidden');
-        }
-      });
-    }
-
-    // Profile Dropdown Toggle
-    const profileAvatar = document.getElementById('profileAvatar');
-    const profileDropdown = document.getElementById('profileDropdown');
-    const profileDropdownArea = document.getElementById('profileDropdownArea');
-    if (profileAvatar && profileDropdown && profileDropdownArea) {
-      profileAvatar.onclick = function(e) {
-        e.stopPropagation();
-        profileDropdown.classList.toggle('hidden');
-      };
-      document.body.addEventListener('click', function(e) {
-        if (!profileDropdownArea.contains(e.target)) {
-          profileDropdown.classList.add('hidden');
-        }
-      });
-    }
-
-    // User Profile Data & Update Function
-    let userProfile = {
-      name: "Aman Sharma",
-      email: "aman@email.com",
-      ecoPoints: 120,
-      badges: ["Green Beginner", "Eco-Warrior"],
-      level: "Eco-Warrior"
-    };
-    // If user info exists in localStorage, use it
-    const storedUser = localStorage.getItem('ecoUser');
-    if (storedUser) {
-      try {
-        const parsed = JSON.parse(storedUser);
-        userProfile = Object.assign(userProfile, parsed);
-      } catch (e) {}
-    }
-    // Find the user's leaderboard entry
-    function updateLeaderboardPoints() {
-      if (typeof leaderboardData !== 'undefined') {
-        let userIdx = leaderboardData.findIndex(u => u.name === userProfile.name);
-        if (userIdx === -1) {
-          // Add user to leaderboard if not present
-          leaderboardData.push({
-            name: userProfile.name,
-            avatar: "avtar1.png",
-            ecoPoints: userProfile.ecoPoints,
-            badges: userProfile.badges.slice(),
-          });
-          userIdx = leaderboardData.length - 1;
-        } else {
-          leaderboardData[userIdx].ecoPoints = userProfile.ecoPoints;
-          leaderboardData[userIdx].badges = userProfile.badges.slice();
-        }
-        renderLeaderboard();
-      }
-    }
-    function updateProfileInfo() {
-      document.getElementById('profileName').textContent = userProfile.name;
-      document.getElementById('profileEmail').textContent = userProfile.email;
-      document.getElementById('profileLevel').textContent = userProfile.level;
-      document.getElementById('profilePoints').textContent = userProfile.ecoPoints;
-      document.getElementById('ecoPointsNum').textContent = userProfile.ecoPoints;
-    }
-    updateProfileInfo();
-
-    // Eco-Points System: Earn points on log action
-    window.logEcoAction = function() {
-      userProfile.ecoPoints += 10;
-      updateProfileInfo();
-      updateLeaderboardPoints();
-      document.getElementById('ecoPointsDisplay').classList.add('bg-[#aeffd9]');
-      setTimeout(() => document.getElementById('ecoPointsDisplay').classList.remove('bg-[#aeffd9]'), 500);
-      if (userProfile.ecoPoints >= 200 && !userProfile.badges.includes("Eco Hero")) {
-        userProfile.badges.push("Eco Hero");
-        alert("Congrats! Unlocked badge: Eco Hero");
-        updateLeaderboardPoints();
-      }
-    };
-
-    // Dark Mode Toggle with localStorage persistence
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const iconSun = document.getElementById('iconSun');
-    const iconMoon = document.getElementById('iconMoon');
-    // On page load, check localStorage
-    if (localStorage.getItem('darkMode') === 'enabled') {
-      document.body.classList.add('dark');
-      if (iconSun && iconMoon) {
-        iconSun.classList.add('hidden');
-        iconMoon.classList.remove('hidden');
-      }
-    }
-    if (darkModeToggle && iconSun && iconMoon) {
-      darkModeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('dark');
-        const isDark = document.body.classList.contains('dark');
-        if (isDark) {
-          localStorage.setItem('darkMode', 'enabled');
-          iconSun.classList.add('hidden');
-          iconMoon.classList.remove('hidden');
-        } else {
-          localStorage.setItem('darkMode', 'disabled');
-          iconSun.classList.remove('hidden');
-          iconMoon.classList.add('hidden');
-        }
-      });
-    }
-    // Leaderboard Demo Data & Rendering
-    const leaderboardData = [
-      {
-        name: "Aman Sharma",
-        avatar: "avtar1.png",
-        ecoPoints: 120,
-        badges: ["Green Beginner", "Eco-Warrior"],
-      },
-      {
-        name: "Priya Singh",
-        avatar: "avtar2.png",
-        ecoPoints: 210,
-        badges: ["Eco Hero", "Green Beginner"],
-      },
-      {
-        name: "Rohan Patel",
-        avatar: "avtar3.png",
-        ecoPoints: 180,
-        badges: ["Eco-Warrior"],
-      },
-      {
-        name: "Sneha Verma",
-        avatar: "avtar4.png",
-        ecoPoints: 95,
-        badges: ["Green Beginner"],
-      },
-      {
-        name: "Vikas Kumar",
-        avatar: "avtar5.png",
-        ecoPoints: 60,
-        badges: [],
-      },
-    ];
-
-    function renderLeaderboard() {
-      const list = document.getElementById('leaderboardList');
-      if (!list) return;
-      // Sort by ecoPoints descending
-      const sorted = leaderboardData.slice().sort((a, b) => b.ecoPoints - a.ecoPoints);
-      list.innerHTML = '';
-      sorted.forEach((user, idx) => {
-        let rankClass = '';
-        if (idx === 0) rankClass = 'gold';
-        else if (idx === 1) rankClass = 'silver';
-        else if (idx === 2) rankClass = 'bronze';
-        list.innerHTML += `
-          <li class="leaderboard-row ${rankClass}">
-            <span class="rank">${idx + 1}</span>
-            <img src="${user.avatar}" alt="${user.name}" class="avatar" onerror="this.src='avtar1.png'"/>
-            <span class="name">${user.name}</span>
-            <span class="eco-points">${user.ecoPoints} pts</span>
-            ${user.badges.map(badge => `<span class="badge">${badge}</span>`).join('')}
-          </li>
-        `;
-      });
-    }
-    renderLeaderboard();
-    // ...existing code...
-  });
-  </script>
-  
 </footer>
+
+<!-- Login Choice Modal -->
+<div id="loginChoiceModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+  <div class="bg-white rounded-xl shadow-xl p-8 w-full max-w-xs relative">
+    <button class="absolute top-2 right-3 text-gray-400 text-2xl font-bold" onclick="closeLoginChoiceModal()">&times;</button>
+    <h2 class="text-xl font-bold mb-6 text-center">Login As</h2>
+    <div class="flex flex-col gap-4">
+      <a href="userlogin.html" class="bg-[#20c4b6] text-white font-bold py-3 rounded-lg text-center hover:bg-[#158a8e] transition">User</a>
+      <a href="teacherdashboard.html" class="bg-[#fd7e25] text-white font-bold py-3 rounded-lg text-center hover:bg-orange-600 transition">Teacher</a>
+    </div>
+  </div>
+</div>
+
+<!-- Signup Choice Modal -->
+<div id="signupChoiceModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+  <div class="bg-white rounded-xl shadow-xl p-8 w-full max-w-xs relative">
+    <button class="absolute top-2 right-3 text-gray-400 text-2xl font-bold" onclick="closeSignupChoiceModal()">&times;</button>
+    <h2 class="text-xl font-bold mb-6 text-center">Sign Up As</h2>
+    <div class="flex flex-col gap-4">
+      <a href="usersignup.html" class="bg-[#20c4b6] text-white font-bold py-3 rounded-lg text-center hover:bg-[#158a8e] transition">User</a>
+      <a href="teachersignup.html" class="bg-[#fd7e25] text-white font-bold py-3 rounded-lg text-center hover:bg-orange-600 transition">Teacher</a>
+    </div>
+  </div>
+</div>
+
+ <script src="login.js"></script>
 </body>
 </html>

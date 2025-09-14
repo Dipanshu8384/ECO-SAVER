@@ -1,54 +1,1026 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Community Action</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="min-h-screen bg-[#f6fcf4] flex flex-col items-center justify-center p-8">
-  <div class="max-w-2xl w-full bg-white rounded-2xl shadow p-8">
-    <h1 class="text-3xl font-bold text-[#20c4b6] mb-4">Community Action</h1>
-    <p class="mb-6 text-gray-700">Join local environmental initiatives and connect with like-minded students. Organize cleanup drives, awareness campaigns, and make a real impact in your community.</p>
-    <a href="login.html" class="inline-block px-4 py-2 bg-gray-200 text-[#20c4b6] rounded hover:bg-[#e1f7ef] font-semibold">&larr; Back to Dashboard</a>
-  </div>
-  <nav class="flex flex-wrap gap-2 md:gap-4 container mx-auto px-4 mt-2">
-        <a href="login.html#challenges" class="text-white hover:text-green-200 font-semibold">Challenges</a>
-        <a href="login.html#learn" class="text-white hover:text-green-200 font-semibold">Learn</a>
-        <a href="login.html#community" class="text-white hover:text-green-200 font-semibold">Community</a>
-        <a href="login.html#impact" class="text-white hover:text-green-200 font-semibold">Impact</a>
-        <a href="login.html#habits" class="text-white hover:text-green-200 font-semibold">Habits</a>
-        <a href="login.html#eco-tips" class="text-white hover:text-green-200 font-semibold">Eco Tips</a>
-        <a href="login.html#leaderboard" class="text-white hover:text-green-200 font-semibold">Leaderboard</a>
-      </nav>
-</body>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const darkModeToggle = document.getElementById('darkModeToggle');
-  const iconSun = document.getElementById('iconSun');
-  const iconMoon = document.getElementById('iconMoon');
-  // On page load, check localStorage
-  if (localStorage.getItem('darkMode') === 'enabled') {
-    document.body.classList.add('dark');
-    if (iconSun && iconMoon) {
-      iconSun.classList.add('hidden');
-      iconMoon.classList.remove('hidden');
+  <title>EcoLearn Punjab | Community Critical Action</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #17984a;
+      --accent: #23ba6b;
+      --primary-gradient: linear-gradient(120deg, #159943 0%, #52df9a 100%);
+      --brand-bg: linear-gradient(120deg, #e3fae6 0%, #e4fcf7 100%);
+      --card: #fff;
+      --radius: 1.3em;
+      --shadow: 0 7px 28px #14d38b17;
+      --font-main: 'Open Sans', Arial, sans-serif;
+      --font-display: 'Poppins', Arial, sans-serif;
     }
-  }
-  if (darkModeToggle && iconSun && iconMoon) {
-    darkModeToggle.addEventListener('click', function() {
-      document.body.classList.toggle('dark');
-      const isDark = document.body.classList.contains('dark');
-      if (isDark) {
-        localStorage.setItem('darkMode', 'enabled');
-        iconSun.classList.add('hidden');
-        iconMoon.classList.remove('hidden');
-      } else {
-        localStorage.setItem('darkMode', 'disabled');
-        iconSun.classList.remove('hidden');
-        iconMoon.classList.add('hidden');
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+      font-family: var(--font-main);
+      background: var(--brand-bg);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      width: 100vw;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .eco-header {
+      background: var(--primary-gradient);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 1.14em;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.13em 3vw 1.07em 3vw;
+      box-shadow: 0 6px 24px #23ba6b15;
+      z-index: 8;
+      position: relative;
+    }
+
+    .eco-header .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .eco-header .logo-group svg {
+      width: 2.1em;
+      height: 2.1em;
+    }
+
+    .eco-header .brand {
+      font-size: 2.1em;
+      font-weight: 900;
+    }
+
+    .eco-header .nav-menu {
+      display: flex;
+      gap: 2em;
+      font-weight: 600;
+    }
+
+    .eco-header .nav-menu a {
+      color: #fff;
+      opacity: .9;
+      padding: .43em 1.1em;
+      border-radius: .9em;
+      transition: .17s;
+      font-weight: 700;
+    }
+
+    .eco-header .nav-menu a.active,
+    .eco-header .nav-menu a:hover {
+      background: #fff3;
+      opacity: 1;
+    }
+
+    /* .eco-points-badge {
+      position: fixed;
+      right: 2vw;
+      top: 72px;
+      background: #fff;
+      color: #159943;
+      font-size: 1.16em;
+      font-family: var(--font-display);
+      font-weight: 900;
+      box-shadow: 0 6px 22px #1ee88b22;
+      border-radius: 1.1em;
+      padding: .51em 1.7em .49em 1.45em;
+      display: flex;
+      align-items: center;
+      gap: .7em;
+      z-index: 98;
+      transition: top .2s, right .2s;
+      animation: floatIn .6s;
+    }
+    @media (max-width: 700px) {
+      .eco-points-badge {
+        right: 1vw;
+        top: 62px;
+        font-size: 1em;
+        padding: .39em 1.1em .32em 1em;
       }
+    }
+    .eco-points-badge .star {
+      font-size: 1.32em;
+      margin-right: .22em;
+    }
+    .eco-points-floatup{
+      position:fixed;top:1.8em;right:3.4em;background:linear-gradient(93deg,#eaffdb,#cbffe3 90%);
+      color:#2ad97d;font-family:var(--font-display);font-weight:900;font-size:1.43em;padding:.28em 1em;border-radius:1.2em;z-index:222;
+      animation:floatup .95s cubic-bezier(.29,1.6,.81,1.01) both;box-shadow:0 2px 16px #a7efbe10;
+      pointer-events:none;
+    }
+    @keyframes floatup{from{opacity:0;transform:translateY(25px) scale(.75);}90%{opacity:.99;transform:scale(1.13);}to{opacity:0;transform:translateY(-31px) scale(.98);}}
+    .eco-badge-anim{position:fixed;top:7.1em;right:3.6em;background:#fff;font-family:var(--font-display);color:#198e51;font-size:1.25em;font-weight:800;box-shadow:0 5px 38px #2ac98632;border-radius:1.1em;padding:.5em 2em;z-index:2210;animation:badgepop 1.1s cubic-bezier(.49,1.46,.54,1.01);}
+    @keyframes badgepop{from{opacity:0;transform:scale(.6);}85%{opacity:.96;transform:scale(1.14);}to{opacity:0;transform:scale(.91);}} */
+    /* STATS */
+
+    .sticky-points-card {
+      position: fixed;
+      top: 24px;
+      right: 38px;
+      z-index: 100;
+      background: #fff;
+      border-radius: 1.28em;
+      box-shadow: 0 8px 36px #2ed38b1e, 0 1.3px 5px #138b9915;
+      padding: 1.31em 1.89em 1.18em 1.61em;
+      color: #153f2b;
+      font-family: var(--font-main);
+      width: 270px;
+      min-width: 235px;
+      max-width: 91vw;
+      transition: .2s top;
+      display: flex;
+      flex-direction: column;
+      gap: .55em;
+      align-items: flex-start;
+      animation: floatIn .6s;
+    }
+
+    @media (max-width:800px) {
+      .sticky-points-card {
+        top: 8px;
+        right: 4vw;
+        width: 95vw;
+        min-width: 0;
+        max-width: 99vw;
+        padding: .89em 1.3em;
+      }
+    }
+
+    @media (max-width:600px) {
+      .sticky-points-card {
+        top: 4.1em;
+        right: 1vw;
+        padding: .8em .75em;
+      }
+    }
+
+    @keyframes floatIn {
+      from {
+        opacity: 0;
+        transform: translateY(-22px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .sticky-points-card .upper-row {
+      display: flex;
+      align-items: center;
+      gap: .7em;
+      font-size: 1.11em;
+    }
+
+    .sticky-points-card .points-star {
+      color: #189149;
+      font-size: 1.33em;
+      vertical-align: -2px;
+    }
+
+    .sticky-points-card .points-big {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.38em;
+      margin-left: .15em;
+    }
+
+    .sticky-points-card .level-row {
+      display: flex;
+      align-items: center;
+      gap: .55em;
+      font-size: 1.05em;
+    }
+
+    .sticky-points-card .points-leaf {
+      width: 1.38em;
+      height: 1.38em;
+    }
+
+    .sticky-points-card .level-name {
+      font-weight: 700;
+      color: #17984a;
+    }
+
+    .sticky-points-card .progress-wrap {
+      margin: .3em 0 0 0;
+      width: 100%;
+      font-size: .92em;
+      color: #14472a;
+    }
+
+    .sticky-points-card .progress-bar-bg {
+      width: 100%;
+      background: #e5f7ef;
+      border-radius: .8em;
+      height: .68em;
+      margin: .11em 0 .3em 0;
+      position: relative;
+    }
+
+    .sticky-points-card .progress-bar-inner {
+      background: linear-gradient(90deg, #28e185, #dafda9 93%);
+      border-radius: .8em;
+      height: .68em;
+      transition: width 1.3s cubic-bezier(.5, 1.5, .6, 1.08);
+      width: 0;
+      min-width: 0;
+    }
+
+    .sticky-points-card .progress-label {
+      position: absolute;
+      right: 8px;
+      top: .25em;
+      font-weight: 700;
+      font-size: .95em;
+      color: #1977c7;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 0 .7em;
+      border-radius: .88em;
+    }
+
+    .sticky-points-card .pbreaks {
+      display: flex;
+      gap: 1.12em;
+      font-size: .94em;
+    }
+
+    .sticky-points-card .pbreaks span {
+      color: #6b9075;
+      border-bottom: 1.4px dotted #a1e6c6;
+      margin-right: .42em;
+    }
+
+    .eco-stat-hero {
+      max-width: 915px;
+      width: 96vw;
+      margin: 2.7em auto 1.3em auto;
+      background: linear-gradient(111deg, #fff 80%, #dbfff1 100%);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      border: 1.6px solid #e4eaea;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.2em 2.5em 1.2em 2.3em;
+      position: relative;
+      animation: fadeup .8s both;
+    }
+
+    @keyframes fadeup {
+      from {
+        opacity: 0;
+        transform: translateY(45px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-numbers {
+      display: flex;
+      gap: 1.3em;
+    }
+
+    .hero-number-block {
+      background: #ecfef3;
+      box-shadow: 0 1.3px 14px #25edd53e;
+      border-radius: 1.07em;
+      padding: 1.16em 2.1em;
+      min-width: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      animation: fadeup .8s;
+    }
+
+    .hero-number-count {
+      font-size: 2.13em;
+      color: #17984a;
+      font-family: var(--font-display);
+      font-weight: 900;
+    }
+
+    .hero-number-label {
+      font-size: 1em;
+      color: #156941;
+      font-weight: 800;
+      margin-top: .19em;
+    }
+
+    .hero-number-sparkle {
+      position: absolute;
+      right: 16px;
+      top: 11px;
+      font-size: 1.5em;
+      opacity: 0;
+      animation: sparkle .9s .9s both;
+    }
+
+    @keyframes sparkle {
+      to {
+        opacity: .98;
+        transform: scale(1.32);
+      }
+    }
+
+    /* LIVEFEED */
+    .livefeed {
+      width: 99vw;
+      max-width: 840px;
+      margin: 1.1em auto 1.2em auto;
+      background: linear-gradient(112deg, #f6fff6 70%, #e6fff6 100%);
+      border-radius: 1.1em;
+      box-shadow: 0 5px 19px #13b97f0d;
+      border: 1.1px solid #b8f8ea;
+      padding: 1.2em 1.3em .95em 1.3em;
+      display: flex;
+      overflow-x: auto;
+      gap: .95em;
+      scroll-behavior: smooth;
+      animation: fadeup .5s;
+    }
+
+    .liveitem {
+      flex: 0 0 260px;
+      display: flex;
+      align-items: center;
+      gap: .93em;
+      background: #fff;
+      box-shadow: 0 1.5px 9px #1eea8729;
+      margin-right: .05em;
+      padding: .95em .87em;
+      border-radius: 1.03em;
+      animation: itemin .55s both;
+    }
+
+    @keyframes itemin {
+      from {
+        opacity: 0;
+        transform: translateY(29px) scale(.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .liveavatar {
+      width: 2em;
+      height: 2em;
+      border-radius: 99em;
+      object-fit: cover;
+      background: #cdf5db;
+      margin-right: .5em;
+    }
+
+    .livelabel {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1em;
+      color: #169962;
+    }
+
+    .livetimestamp {
+      font-size: .84em;
+      color: #21ab77;
+      margin-left: .65em;
+    }
+
+    /* MISSION BLOCK */
+    .eco-missionboard {
+      max-width: 870px;
+      width: 97vw;
+      margin: 1.5em auto 2.3em auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2.1em;
+      z-index: 3;
+      position: relative;
+    }
+
+    .eco-mission-block {
+      background: linear-gradient(111deg, #fff 82%, #eafdde 100%);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border-left: 8px solid #28e185aa;
+      padding: 2.1em 2em 1.7em 2.2em;
+      margin: 0 auto;
+      max-width: 870px;
+      width: 97vw;
+      position: relative;
+      opacity: 0;
+      transform: translateY(70px) scale(.97);
+      transition: .57s cubic-bezier(.4, .99, .47, 1.09);
+    }
+
+    .eco-mission-block.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .eco-mission-icon {
+      float: left;
+      display: inline-block;
+      margin-right: 1.29em;
+      margin-top: .08em;
+      animation: iconSlideIn .81s both, swayicon 4.2s 1.3s infinite alternate;
+    }
+
+    @keyframes iconSlideIn {
+      0% {
+        transform: scale(.22) rotate(-50deg);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes swayicon {
+      0% {
+        transform: rotate(-2.1deg);
+      }
+
+      100% {
+        transform: rotate(1.8deg) scale(1.04);
+      }
+    }
+
+    .eco-mission-block .title {
+      font-family: var(--font-display);
+      font-size: 1.19em;
+      font-weight: 800;
+      color: #179856;
+      letter-spacing: -.3px;
+    }
+
+    .eco-mission-block .desc {
+      font-size: 1em;
+      color: #167a50;
+      margin-bottom: .7em;
+    }
+
+    .eco-actionmeter-wrap {
+      margin: 1.05em 0 .5em 0;
+    }
+
+    .eco-actionmeter-bg {
+      width: 210px;
+      height: .93em;
+      max-width: 75vw;
+      background: #dffae9;
+      border-radius: 99px;
+      overflow: hidden;
+      display: inline-block;
+      position: relative;
+      box-shadow: 0 1.5px 11px #48deae1c;
+      margin-right: .55em;
+    }
+
+    .eco-actionmeter-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #23ba6b 20%, #53df83 100%);
+      width: 0;
+      transition: width 1.1s cubic-bezier(.54, 1.16, .12, 1.14);
+      box-shadow: 0 0 18px #b7fadc3a;
+    }
+
+    .eco-actionmeter-leaf {
+      position: absolute;
+      top: -26px;
+      width: 23px;
+      left: 0;
+      opacity: 0;
+      transition: .4s;
+      z-index: 7;
+      animation: leafmeter 1s cubic-bezier(.29, .87, .52, 1.24) both;
+    }
+
+    @keyframes leafmeter {
+      from {
+        opacity: 0;
+        transform: translateX(0) scale(.62);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(7px) scale(1.1) rotate(-10deg);
+      }
+    }
+
+    .eco-actionmeter-label {
+      font-family: var(--font-display);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.03em;
+    }
+
+    .eco-upload-bar {
+      display: flex;
+      align-items: center;
+      gap: .9em;
+      margin: 1.3em 0 .8em 0;
+    }
+
+    .eco-upload-label {
+      font-weight: 700;
+      color: #128844;
+    }
+
+    .eco-upload-inp {
+      display: none;
+    }
+
+    .eco-upload-preview {
+      width: 42px;
+      height: 42px;
+      border-radius: 9px;
+      object-fit: cover;
+      background: #e8fbeb;
+      border: 2.5px solid #23ba6b30;
+      box-shadow: 0 2px 11px #b6fbdc17;
+      display: none;
+      transition: .19s;
+      margin-right: .7em;
+    }
+
+    .eco-upload-bar input[type="file"]+label {
+      display: inline-block;
+      font-family: var(--font-main);
+      background: #e9ffea;
+      padding: .62em 1.03em .5em 1.03em;
+      border-radius: 1em;
+      font-weight: 800;
+      color: #23ba6b;
+      font-size: 1.01em;
+      cursor: pointer;
+      transition: .12s;
+      border: 2px dashed #23ba6b59;
+    }
+
+    .eco-upload-bar input[type="file"]:focus+label,
+    .eco-upload-bar input[type="file"]:hover+label {
+      background: #dfedfe;
+      border-color: #38d39f;
+      color: #17984a;
+    }
+
+    .eco-upload-delete {
+      background: #fff4f7;
+      color: #e05d65;
+      border: none;
+      border-radius: 1em;
+      padding: .39em .79em;
+      cursor: pointer;
+      box-shadow: 0 1.5px 5px #edabb22d;
+      font-weight: 800;
+      transition: .13s;
+    }
+
+    .eco-upload-delete:hover {
+      background: #ffe1ec;
+      color: #bf223a;
+    }
+
+    .eco-upload-note {
+      min-width: 80px;
+      flex: 1;
+      font-size: 1em;
+      border-radius: 1.1em;
+      padding: .8em 1.15em;
+      border: 1.7px solid #c4f7e0;
+      background: #fcfff7;
+      font-family: var(--font-main);
+      margin-right: .7em;
+      width: 33vw;
+      max-width: 340px;
+      height: 2.2em;
+    }
+
+    .eco-contact-bar {
+      margin-bottom: .5em;
+    }
+
+    .eco-contact-label {
+      color: #198e51;
+      font-weight: 700;
+      font-size: .98em;
+    }
+
+    .eco-contact-email {
+      color: #118a99;
+      font-weight: 900;
+    }
+
+    .eco-mission-submit {
+      background: linear-gradient(90deg, #23ba6b 70%, #57ed8a 100%);
+      color: #fff;
+      font-weight: 800;
+      font-family: var(--font-display);
+      font-size: 1.05em;
+      margin-top: .46em;
+      padding: .7em 1.7em;
+      border: none;
+      border-radius: 1.1em;
+      box-shadow: 0 2px 16px #73ffdb22;
+      cursor: pointer;
+      outline: none;
+      transition: .14s;
+    }
+
+    .eco-mission-result {
+      background: linear-gradient(93deg, #e3ffea 70%, #fedffa 100%);
+      color: #159942;
+      border-radius: 1.1em;
+      padding: .61em 1em;
+      margin-top: 1.09em;
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 1em;
+      font-weight: 900;
+      box-shadow: 0 6px 22px #b8fdfd11;
+      animation: bounceUp .75s cubic-bezier(.24, 1.38, .29, 1.14);
+      opacity: 0;
+      transform: scale(.7);
+      transition: .20s;
+    }
+
+    .eco-mission-result.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    @keyframes bounceUp {
+      from {
+        opacity: 0;
+        transform: scale(.7);
+      }
+
+      90% {
+        transform: scale(1.12);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .eco-cta {
+      text-align: center;
+      margin: 2.3em auto 1.5em auto;
+      padding: 1.17em 2.3em 1.13em 2.3em;
+      border-radius: 2.16em;
+      font-family: var(--font-display);
+      font-size: 1.18em;
+      font-weight: 900;
+      background: linear-gradient(89deg, #43e97b, #17984a 99%);
+      color: #fff;
+      box-shadow: 0 8px 39px #45fad916;
+      transition: .18s;
+      animation: bounce .85s;
+    }
+
+    .eco-cta:hover {
+      background: linear-gradient(90deg, #159943 10%, #16b569 100%);
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: scale(.76);
+      }
+
+      87% {
+        transform: scale(1.11);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .eco-footer {
+      background: var(--primary-gradient);
+      color: #fff;
+      width: 100vw;
+      padding: 2em 0 1.14em 0;
+      font-family: var(--font-display);
+      font-size: 1.12em;
+      text-align: center;
+      margin-top: auto;
+      box-shadow: 0 -2px 27px #17a96319;
+    }
+
+    
+  </style>
+</head>
+
+<body>
+  <header class="eco-header">
+    <div class="logo-group">
+      <svg viewBox="0 0 40 40" fill="none">
+        <ellipse cx="20" cy="20" rx="18" ry="16" fill="#23ba6b" opacity="0.18" />
+        <path d="M34 10C34 10 30 32 14 27C7 25 6 15 13 13C17 12 23 10 34 10Z" stroke="#1b7f36" stroke-width="2.5"
+          fill="#23ba6b" />
+        <path d="M20 30L20 17" stroke="#176d28" stroke-width="2" stroke-linecap="round" />
+        <circle cx="20" cy="12.5" r="2.3" fill="#fff" opacity="0.53" />
+      </svg>
+      <span class="brand">EcoLearn Punjab</span>
+    </div>
+    <nav class="nav-menu">
+      <a href="dashboard.html">Home</a>
+      <a href="community-action.html" class="active">Community</a>
+      <a href="#">Eco Habits</a>
+      <a href="#">Leaderboard</a>
+      <a href="#">Impact</a>
+    </nav>
+  </header>
+
+  <div class="sticky-points-card" id="ecoPointsSticky">
+    <div class="upper-row">
+      <span class="points-star">★</span>
+      <span>Points</span>
+      <span class="points-big" id="pointsVal">150</span>
+    </div>
+    <div class="level-row">
+      <span>
+        <svg class="points-leaf" viewBox="0 0 28 28">
+          <ellipse cx="14" cy="16" rx="12" ry="9" fill="#a4fcc9" />
+          <rect x="12" y="1" width="4" height="12" rx="2" fill="#23ba6b" />
+        </svg>
+      </span>
+      <span class="level-name" id="levelName">Nature Friend</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-inner" id="pointsBar" style="width:30%"></div>
+        <span class="progress-label" id="progressLabel">150/500</span>
+      </div>
+      <div class="pbreaks">
+        <span>Games</span><span id="pf-g">5 played</span>
+        <span>Uploads</span><span id="pf-u">3 shared</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="eco-stat-hero">
+    <div
+      style="font-family:var(--font-display);font-size:2.03em;font-weight:900;color:var(--primary);padding-right:1em;">
+      Together: <span
+        style="background:linear-gradient(90deg,#43e97b 90%,#159943 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Punjab
+        Acts Green</span>
+    </div>
+    <div class="hero-numbers">
+      <div class="hero-number-block"><span class="hero-number-sparkle">✨</span>
+        <span class="hero-number-count" id="streakNum">0</span>
+        <div class="hero-number-label">Days of Streak</div>
+      </div>
+      <div class="hero-number-block"><span class="hero-number-sparkle">🌳</span>
+        <span class="hero-number-count" id="groupsNum">0</span>
+        <div class="hero-number-label">Active Groups</div>
+      </div>
+      <div class="hero-number-block"><span class="hero-number-sparkle">🤝</span>
+        <span class="hero-number-count" id="impactNum">0</span>
+        <div class="hero-number-label">Lives Impacted</div>
+      </div>
+    </div>
+  </div>
+  <div class="livefeed" id="livefeed"></div>
+
+  <div class="eco-missionboard" id="missionboard"></div>
+  <button class="eco-cta" style="margin-bottom:3em;">Submit Your Own Community Mission 🚩</button>
+  <footer class="eco-footer">
+    <div class="eco-footer-brand">EcoLearn Punjab – Environmental Education Platform</div>
+    <small>© 2025 Government of Punjab. Powered by the Punjab Government Digital Initiative.</small>
+    <div style="margin-top:.68em;color:#d7ffe7;font-size:1.12em;font-weight:600;">"Together for a Greener Tomorrow"
+    </div>
+  </footer>
+  <script>
+    const actions = [
+      {
+        title: "You witness waste burning in your street.",
+        desc: "Take a photo and send a report to help eco teams intervene.",
+        bar: 'linear-gradient(90deg,#fa6b4e 40%,#23ba6b 100%)', max: 90, label: "Awareness Reported", email: 'ecoteam@punjab.gov.in',
+        icon: `<svg viewBox="0 0 40 28"><ellipse cx="20" cy="14" rx="13" ry="10" fill="#dcffd9"/><path d="M20 24v-14" stroke="#23ba6b" stroke-width="2.5"/></svg>`
+      }, {
+        title: "Tree felling reported in your park.",
+        desc: "Document by photo, and notify the eco-officer now.",
+        bar: 'linear-gradient(90deg,#2abdca 35%,#23ba6b 100%)', max: 76, label: "Reported to Forest Dept", email: 'ecoteam@punjab.gov.in',
+        icon: `<svg viewBox="0 0 40 26"><ellipse cx="23" cy="15" rx="13" ry="10" fill="#cff7ef"/><ellipse cx="14" cy="7.5" rx="7" ry="4" fill="#56bae4" opacity="0.23"/><path d="M19 20l14-7" stroke="#1e8baf" stroke-width="2"/></svg>`
+      }, {
+        title: "Open waste dumping near your school.",
+        desc: "Show evidence—upload a snap and push for action!",
+        bar: 'linear-gradient(90deg,#ffbc05 15%,#16ba65 100%)', max: 65, label: "Alerted Civic Team", email: 'ecoteam@punjab.gov.in',
+        icon: `<svg viewBox="0 0 40 24"><ellipse cx="20" cy="12" rx="11" ry="7.5" fill="#faf6cd"/><ellipse cx="18" cy="16" rx="6" ry="2" fill="#d8fcdb" opacity="0.53"/><path d="M16 14l14-7" stroke="#17984a" stroke-width="2.2"/></svg>`
+      }, {
+        title: "Plastic bags everywhere at the bazaar.",
+        desc: "Take a photo of best/worst use (and send your suggestion).",
+        bar: 'linear-gradient(90deg,#fbcf17 15%,#71dc3c 98%)', max: 89, label: "Ban Bags & Promote Cloth", email: 'ecoteam@punjab.gov.in',
+        icon: `<svg viewBox="0 0 40 24"><ellipse cx="23" cy="15" rx="13" ry="7.5" fill="#e9f3ff"/><ellipse cx="15" cy="19" rx="7" ry="2.5" fill="#b4eceb" opacity=".5"/><path d="M13 15h16" stroke="#159893" stroke-width="2.4"/></svg>`
+      }, {
+        title: "Heavy water leak in your neighborhood.",
+        desc: "Help protect every drop: report and document the problem.",
+        bar: 'linear-gradient(90deg,#16dba3 15%,#159943 96%)', max: 79, label: "Civic Water Action", email: 'ecoteam@punjab.gov.in',
+        icon: `<svg viewBox="0 0 40 28"><ellipse cx="18" cy="14" rx="10" ry="8" fill="#d8eaff"/><ellipse cx="26" cy="7" rx="6" ry="3" fill="#51d8ff" opacity=".34"/><path d="M13 23h14" stroke="#11998e" stroke-width="2.1"/></svg>`
+      }, {
+        title: "Smoke detected from nearby field/industry.",
+        desc: "Document and alert! Protect clean air for all.",
+        bar: 'linear-gradient(90deg,#fd65af 50%,#a3e6fd 100%)', max: 82, label: "Air Quality Care", email: 'ecoteam@punjab.gov.in',
+        icon: `<svg viewBox="0 0 40 28"><ellipse cx="23" cy="15" rx="9" ry="8" fill="#dbd5fd"/><ellipse cx="11" cy="20" rx="6" ry="2.3" fill="#e6caff" opacity="0.6"/><path d="M11 10h17" stroke="#6f4ea6" stroke-width="2.3"/></svg>`
+      }, {
+        title: "Lights and fans left on all night at school.",
+        desc: "Photo proof motivates real change: report and get eco points.",
+        bar: 'linear-gradient(90deg,#23e6b3 17%,#cdfc37 95%)', max: 64, label: "Eco School Monitored", email: 'ecoteam@punjab.gov.in',
+        icon: `<svg viewBox="0 0 40 28"><ellipse cx="21" cy="17" rx="13" ry="8" fill="#ffecf7"/><ellipse cx="15" cy="8" rx="6" ry="2.5" fill="#ffa1c2" opacity="0.6"/><path d="M19 8 v17" stroke="#ec407a" stroke-width="2.1"/></svg>`
+      }
+    ];
+    // Render mission board
+    let mb = document.getElementById('missionboard');
+    mb.innerHTML = actions.map(function (a, i) {
+      return `<section class="eco-mission-block">
+      <span class="eco-mission-icon">${a.icon}</span>
+      <div class="title">${a.title}</div>
+      <div class="desc">${a.desc}</div>
+      <div class="eco-actionmeter-wrap">
+        <span class="eco-actionmeter-bg">
+          <span class="eco-actionmeter-bar" style="background:${a.bar};" data-max="${a.max}"></span>
+          <svg class="eco-actionmeter-leaf" viewBox="0 0 32 24"><ellipse cx="14" cy="12" rx="11" ry="8" fill="#23ba6b"/><ellipse cx="21" cy="17" rx="6" ry="5" fill="#d3fecf" opacity="0.8"/><path d="M14 12v10" stroke="#1a853c" stroke-width="2.1"/></svg>
+        </span>
+        <span class="eco-actionmeter-label">${a.label}</span>
+      </div>
+      <div class="eco-upload-bar">
+        <img class="eco-upload-preview" id="pic${i}"/>
+        <input type="file" id="file${i}" class="eco-upload-inp" accept="image/*"><label for="file${i}">Upload Picture</label>
+        <button class="eco-upload-delete" style="display:none" id="file${i}del">×</button>
+      </div>
+      <div class="eco-contact-bar">
+        <span class="eco-contact-label">Report to: </span>
+        <span class="eco-contact-email">${a.email}</span>
+      </div>
+      <textarea class="eco-upload-note" rows="2" placeholder="Add a note (optional)"></textarea>
+      <button class="eco-mission-submit">Submit Action</button>
+      <div class="eco-mission-result"></div>
+    </section>`;
+    }).join("");
+
+    // Animate count-ups
+    function animateCount(id, target, delay) {
+      let n = 0, el = document.getElementById(id), step = Math.max(1, Math.ceil(target / 54)), frames = 0;
+      el.textContent = "0";
+      setTimeout(() => { let i = setInterval(() => { n += step; frames++; if (n > target) n = target; el.textContent = n; if (n >= target || frames > 100) clearInterval(i); }, 20); }, delay);
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+      animateCount("streakNum", 36, 180);
+      animateCount("groupsNum", 17, 500);
+      animateCount("impactNum", 231, 900);
+    })
+
+    // Livefeed mock logic
+    const fakeUsers = [["A Singh"], ["Parmeet K."], ["Jaspreet"], ["Navdeep"], ["Simranjeet"], ["Arjun"], ["Harpreet S."]], acts = [
+      "reported waste burning 🔥", "planted trees 🌳", "ran e-waste drive ♻️", "flagged water leak 🚰", "launched Switch-Off campaign 💡", "coordinated clean-up 🧹", "spread eco-ed info 📣"
+    ];
+    function pushLive() {
+      let lf = document.getElementById("livefeed");
+      if (!lf) return;
+      let u = fakeUsers[Math.floor(Math.random() * fakeUsers.length)], act = acts[Math.floor(Math.random() * acts.length)];
+      let item = document.createElement('div'); item.className = "liveitem";
+      let now = new Date;
+      item.innerHTML = `<img class="liveavatar" src="https://randomuser.me/api/portraits/lego/${Math.floor(Math.random() * 9) + 1}.jpg"/><span><span class="livelabel">${u[0]}</span><span class="livetimestamp">${Math.floor(Math.random() * 10) + 1} min ago</span><br/><span>${act}</span></span>`;
+      lf.insertBefore(item, lf.firstChild);
+      if (lf.children.length > 6) lf.removeChild(lf.lastChild);
+    }
+    setInterval(pushLive, 2650); window.addEventListener("DOMContentLoaded", () => { for (let i = 0; i < 5; i++)pushLive(); });
+
+    // Animate block reveal
+    function revealBlocks() {
+      document.querySelectorAll('.eco-mission-block').forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 64) { section.classList.add('visible'); }
+      });
+    }
+    window.addEventListener('scroll', revealBlocks); window.addEventListener('load', revealBlocks);
+
+    // Points system
+    let ecoPoints = 0;
+    function rewardPoints(pts) {
+      ecoPoints += pts;
+      document.getElementById('pointsVal').textContent = ecoPoints;
+      let pop = document.createElement("div");
+      pop.className = "eco-points-floatup";
+      pop.textContent = `+${pts} Eco Points!`;
+      document.body.appendChild(pop);
+      setTimeout(() => pop.remove(), 950);
+      let badge = document.createElement("div");
+      badge.className = "eco-badge-anim";
+      badge.innerHTML = `🏅 Action Badge Earned!`;
+      document.body.appendChild(badge);
+      setTimeout(() => badge.remove(), 1450);
+    }
+
+    // Attach upload preview events for all
+    actions.forEach(function (a, i) {
+      let pic = document.getElementById('pic' + i);
+      let fileInput = document.getElementById('file' + i);
+      let delBtn = document.getElementById('file' + i + 'del');
+      fileInput.addEventListener('change', function (ev) {
+        if (fileInput.files && fileInput.files[0]) {
+          let reader = new FileReader();
+          reader.onload = function (e) {
+            pic.src = e.target.result; pic.style.display = 'inline-block'; delBtn.style.display = 'inline-block';
+          }
+          reader.readAsDataURL(fileInput.files[0]);
+        } else {
+          pic.src = ""; pic.style.display = 'none'; delBtn.style.display = 'none';
+        }
+      });
+      delBtn.addEventListener('click', function () {
+        fileInput.value = ""; pic.src = ""; pic.style.display = 'none'; delBtn.style.display = 'none';
+      });
     });
-  }
-});
-</script>
+
+    // Submission with points, badge, progress guess
+    document.querySelectorAll('.eco-mission-submit').forEach((btn, idx) => {
+      btn.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        const block = btn.closest('.eco-mission-block');
+        const bar = block.querySelector('.eco-actionmeter-bar');
+        const leaf = block.querySelector('.eco-actionmeter-leaf');
+        const max = parseInt(bar.getAttribute("data-max")) || 80;
+        bar.style.width = "0%";
+        setTimeout(() => { bar.style.width = max + "%"; leaf.style.opacity = 1; leaf.style.left = `calc(${max}% - 12px)`; }, 70);
+        setTimeout(() => {
+          const result = block.querySelector(".eco-mission-result");
+          result.textContent = "✔️ Submitted! Our eco-team will act and you'll be notified!";
+          result.classList.add('show');
+          rewardPoints(5);
+        }, 820);
+        // Connect to real backend/email as needed here
+      });
+    });
+
+    // Animated bar (on load, demo only!)
+    function setPointsBar(points, nextLevel) {
+      let percent = Math.min(points / nextLevel * 100, 100);
+      document.getElementById('pointsVal').textContent = points;
+      document.getElementById('pointsBar').style.width = percent + "%";
+      document.getElementById('progressLabel').textContent = points + "/" + nextLevel;
+      // Optional: animate width on change with a reset
+    }
+    function setLevel(points) {
+      // Demo example: simple levels
+      let name = "Nature Friend", lvl = 500;
+      if (points >= 1000) { name = "Eco Hero"; lvl = 2000; }
+      else if (points >= 500) { name = "Eco Enthusiast"; lvl = 1000; }
+      document.getElementById('levelName').textContent = name;
+      setPointsBar(points, lvl);
+    }
+
+    let userPoints = 150, playedGames = 5, uploaded = 3;
+    setLevel(userPoints);
+    document.getElementById('pf-g').textContent = playedGames + " played";
+    document.getElementById('pf-u').textContent = uploaded + " shared";
+
+    // Use this wherever you reward points
+    function rewardPoints(pts) {
+      userPoints += pts;
+      setLevel(userPoints);
+    }
+  </script>
+</body>
+
 </html>

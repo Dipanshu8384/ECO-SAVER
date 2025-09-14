@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EcoLearner Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #f4fff8;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #20c4b6 0%, #3ec3da 60%, #19b6ab 100%);
+    }
+    .glass-card {
+      backdrop-filter: blur(12px);
+      background: rgba(250,255,255,0.10);
+      border-radius: 2rem;
+      border: 4px solid #fff;
+      box-shadow: 0 12px 32px 0 rgba(0,0,0,0.04);
+    }
+    .nav-shadow {
+      box-shadow: 0 1px 6px 0 rgba(40,184,163,0.05);
+    }
+    .accent {
+      color: #fd7e25;
+    }
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 0.7em;
+    }
+
+.notification-ticker {
+  position: relative;
+  height: 2.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  user-select: none;
+}
+
+.ticker-content {
+  white-space: nowrap;
+  position: absolute;
+  will-change: transform;
+  animation: ticker-scroll 20s linear infinite;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+#eco-tips h2, #ai-suggestions h2 {
+  text-align: center;
+}
+
+#ecoTipDisplay, #aiSuggestionDisplay {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  text-align: center;
+  user-select: none;
+  transition: all 0.3s ease-in-out;
+}
+
+#ecoTipDisplay {
+  border: 2px solid #20c4b6;
+}
+
+#aiSuggestionDisplay {
+  border: 2px solid #fd7e25;
+}
+
+@media (max-width: 640px) {
+  #ecoTipDisplay, #aiSuggestionDisplay {
+    font-size: 1rem;
+    padding: 1rem 2rem;
+  }
+}
+
+
+    #quiz-section {
+  max-width: 600px;
+  margin: 3rem auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 1rem;
+}
+
+.quiz-title {
+  font-size: 2rem;
+  color: #20c4b6;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.quiz-card {
+  background: #f4fff8;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.quiz-question {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #158a8e;
+  margin-bottom: 1rem;
+  min-height: 60px;
+}
+
+.quiz-answers {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.quiz-answers button {
+  background: #e0f7f5;
+  color: #076f74;
+  border: 2px solid #20c4b6;
+  border-radius: 0.7rem;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.3s, color 0.3s, transform 0.15s;
+  box-shadow: inset 0 0 10px rgba(32,196,182,0.25);
+}
+
+.quiz-answers button:hover:not(:disabled) {
+  background: #20c4b6;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(32,196,182,0.5);
+}
+
+.quiz-answers button.selected {
+  background: #20c4b6;
+  color: #fff;
+  pointer-events: none;
+}
+
+.quiz-answers button.incorrect {
+  background: #fd7e25;
+  color: #fff;
+  pointer-events: none;
+}
+
+.quiz-next-btn {
+  margin-top: 1.5rem;
+  background: #20c4b6;
+  color: white;
+  border: none;
+  border-radius: 0.9rem;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
+  box-shadow: 0 8px 25px rgba(32,196,182,0.5);
+  align-self: center;
+  display: none;
+  transition: background 0.3s;
+}
+
+.quiz-next-btn:hover {
+  background: #188f84;
+}
+
+.quiz-result {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  padding: 1rem 0;
+  color: #fd7e25;
+  display: none;
+}
+
+@media (max-width: 640px) {
+  #quiz-section, .quiz-card {
+    padding: 1rem 1.5rem;
+  }
+  .quiz-answers button {
+    font-size: 0.9rem;
+  }
+  .quiz-title {
+    font-size: 1.8rem;
+  }
+}
+
+
+    @media (max-width: 600px) {
+      .quiz-card { padding: 18px; }
+    }
+
+    footer {
+      width: 100%;
+      background: #111827;
+      color: #d1d5db;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      padding: 64px 0 0 0; /* Top gap for natural separation */
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 40px;
+      padding: 0 24px;
+    }
+    .footer-container h3,
+    .footer-container h4 {
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: #10b981;
+    }
+    .footer-container h4 { color: #d1d5db; }
+    .footer-container ul {
+      list-style: none;
+      padding: 0;
+    }
+    .footer-container a {
+      color: #d1d5db;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-container a:hover {
+      color: #10b981;
+    }
+    .footer-note {
+      text-align: center;
+      margin-top: 48px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .newsletter-form input[type="email"] {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      color: #111827;
+    }
+    .newsletter-form button {
+      background: #10b981;
+      border: none;
+      color: #111827;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .newsletter-message {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #6ee7b7;
+    }
+
+
+    .leaderboard-card {
+  border: 3px solid #e1f7ef;
+}
+
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #f9fffa;
+  border-radius: 18px;
+  box-shadow: 0 1px 6px 0 rgba(40,184,163,0.07);
+  padding: 1rem;
+  transition: transform 0.13s;
+}
+.leaderboard-row:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 12px rgba(40,184,163,0.13);
+}
+.leaderboard-row.gold { background: linear-gradient(90deg,#fff7e0 0%,#fffbe8 100%);}
+.leaderboard-row.silver { background: linear-gradient(90deg,#e6f8ff 0%,#f0faff 100%);}
+.leaderboard-row.bronze { background: linear-gradient(90deg,#f7ead9 0%,#ffefde 100%);}
+.leaderboard-row .rank {font-size:1.6rem; font-weight:bold;}
+.leaderboard-row .avatar {
+    width: 48px; height: 48px; object-fit:cover;
+    border-radius:50%; border:2.5px solid #20c4b6; background:#e1f7ef;
+}
+.leaderboard-row .name { font-weight:bold; color:#076f74;}
+.leaderboard-row .eco-points { font-weight:bold; color:#fd7e25; font-size:1.1rem;}
+.leaderboard-row .badge {
+    display:inline-block;
+    padding:2px 8px;
+    background: #e1f7ef;
+    color: #20c4b6;
+    border-radius:8px;
+    font-size:0.92em;
+    margin-left:8px;
+}
+
+
+  </style>
+</head>
+<body class="font-inter">
+
+<!-- Navbar with Profile, Points, Avatar -->
+<nav class="w-full bg-[#f6fcf4] nav-shadow sticky top-0 z-40">
+  <div class="container mx-auto flex items-center justify-between px-8 py-3">
+    <div class="flex items-center gap-3">
+      <img src="LOGO.jpg" alt="EcoSaver Logo" class="w-12 h-12 rounded-lg object-contain bg-[#20c4b6] p-1" />
+      <span class="font-bold text-lg text-gray-900">EcoSaver</span>
+    </div>
+    <div class="hidden md:flex gap-10 text-base font-medium text-gray-600">
+      <a href="#challenges" class="hover:text-[#20c4b6]">Challenges</a>
+      <a href="#learn" class="hover:text-[#20c4b6]">Learn</a>
+      <a href="#community" class="hover:text-[#20c4b6]">Community</a>
+      <a href="#impact" class="hover:text-[#20c4b6]">Impact</a>
+      <a href="#habits" class="hover:text-[#20c4b6]">Habits</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <!-- Eco Points System -->
+      <div class="flex items-center gap-2 px-2 py-1 rounded-xl bg-[#e1f7ef] border border-[#20c4b6] font-semibold text-[#20c4b6]" id="ecoPointsDisplay">
+        <span>♻</span>
+        <span id="ecoPointsNum">120</span> pts
+      </div>
+      <button onclick="logEcoAction()" class="bg-[#20c4b6] text-white px-3 py-1 rounded-lg font-bold shadow hover:bg-teal-500 transition">Log Eco-Action</button>
+      <!-- User Avatar & Profile Dropdown -->
+      <div class="relative" id="profileDropdownArea">
+        <img src="avtar1.png" alt="Profile" id="profileAvatar" class="w-10 h-10 rounded-full border-2 border-[#20c4b6] cursor-pointer" />
+        <div id="profileDropdown" class="absolute right-0 top-12 bg-white rounded-xl shadow-xl w-64 py-4 px-5 z-50 hidden" style="min-width:210px">
+          <div class="flex items-center gap-3 mb-3">
+            <img src="avtar1.png" class="w-11 h-11 rounded-full border-2 border-[#41d9af]" />
+            <div>
+              <div class="font-bold text-lg text-[#20c4b6]" id="profileName">Aman Sharma</div>
+              <div class="text-sm text-gray-500" id="profileEmail">aman@email.com</div>
+            </div>
+          </div>
+          <hr class="mb-3"/>
+          <div>
+            <div class="font-semibold mb-2">Level: <span id="profileLevel">Eco-Warrior</span></div>
+            <div class="flex gap-2 flex-wrap text-sm">
+              <span class="bg-[#e1f7ef] text-[#20c4b6] rounded-lg px-2 py-1">Green Beginner</span>
+              <span class="bg-[#fff2e5] text-[#fd7e25] rounded-lg px-2 py-1">Eco-Warrior</span>
+              <!-- More badges can be added -->
+            </div>
+          </div>
+          <hr class="my-3"/>
+          <div><span class="font-bold">Eco-Points:</span> <span id="profilePoints">120</span></div>
+        </div>
+      </div>
+      <a href="#login" class="text-[#20c4b6] font-semibold px-4 py-2 rounded hover:bg-[#e1f7ef] transition">Login</a>
+      <a href="#signup" class="bg-[#41d9af] text-white font-semibold px-4 py-2 rounded-lg hover:bg-[#20c4b6] transition">Sign Up</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Notification Ticker -->
+<div class="notification-ticker bg-[#20c4b6] text-white py-2 overflow-hidden relative">
+  <div class="ticker-content whitespace-nowrap absolute will-change-transform animate-ticker">
+    🔔 New challenges added weekly! &nbsp;&nbsp;&nbsp; 🌿 Join community cleanups this weekend! &nbsp;&nbsp;&nbsp; 📢 Check out our latest eco tips!
+  </div>
+</div>
+
+
+  <section class="gradient-bg min-h-screen flex items-center px-8 py-12" id="home">
+    <div class="container mx-auto grid lg:grid-cols-2 gap-16 items-center">
+      <!-- Left -->
+      <div>
+        <h1 class="text-white text-5xl md:text-6xl font-bold mb-7 leading-tight">
+          Learn.<br>
+          Act.<span class="accent">Transform</span>Your Environment
+        </h1>
+        <p class="text-white text-lg md:text-xl opacity-95 mb-8 max-w-2xl">
+          Interactive environmental education platform designed for Indian students. Connect with local ecological issues and build sustainable habits through engaging challenges.
+        </p>
+        <div class="flex gap-4 mb-7">
+          <button class="bg-[#fd7e25] text-white text-lg font-bold px-6 py-3 rounded-xl shadow-md hover:bg-orange-600 transition">
+            Start Learning &rarr;
+          </button>
+          <button class="bg-white text-[#20c4b6] text-lg font-bold px-6 py-3 rounded-xl shadow-md hover:bg-gray-200 transition flex items-center">
+            Watch Demo <span class="ml-2">&rarr;</span>
+          </button>
+        </div>
+        <div class="flex gap-14 mt-8">
+          <div>
+            <div class="text-[#fd7e25] text-2xl font-extrabold">50K+</div>
+            <div class="text-white/85 text-md mt-1">Students Learning</div>
+          </div>
+          <div>
+            <div class="text-[#fd7e25] text-2xl font-extrabold">200+</div>
+            <div class="text-white/85 text-md mt-1">Local Issues Covered</div>
+          </div>
+          <div>
+            <div class="text-[#fd7e25] text-2xl font-extrabold">95%</div>
+            <div class="text-white/85 text-md mt-1">Engagement Rate</div>
+          </div>
+        </div>
+      </div>
+      <!-- Right: Challenge Card -->
+      <div class="flex justify-center">
+        <div class="glass-card p-8 w-[360px] flex flex-col items-center shadow-lg">
+          <div class="w-full flex justify-between items-center mb-5">
+            <span class="font-semibold text-lg text-[#076f74]">Today's Challenge</span>
+            <span class="bg-orange-100 text-[#fd7e25] text-sm rounded-full px-4 py-1 font-bold flex items-center">
+              <span class="mr-1">🔥</span> 5 Day Streak
+            </span>
+          </div>
+          <div class="w-full mb-8 text-center">
+            <div class="font-bold text-xl text-[#076f74] mb-3">Water Conservation Quest</div>
+            <div class="text-[#158a8e] mb-5">
+              Track your family's water usage and implement 3 conservation techniques
+            </div>
+            <div class="flex justify-center">
+              <svg width="90" height="90" style="transform:rotate(-90deg)">
+                <circle cx="45" cy="45" r="37" stroke="#20c4b6" stroke-width="8" fill="none" opacity="0.20"/>
+                <circle id="challengeProgress" cx="45" cy="45" r="37" stroke="#20c4b6" stroke-width="8" fill="none"
+                  stroke-dasharray="232.4778563656447"
+                  stroke-dashoffset="232.4778563656447"
+                  stroke-linecap="round"
+                  style="transition: stroke-dashoffset 1s"/>
+                <text x="45" y="53" text-anchor="middle" font-size="23px" fill="#076f74" font-weight="bold" id="challengePercent">0%</text>
+              </svg>
+            </div>
+          </div>
+          <button class="w-full bg-white font-bold text-[#20c4b6] py-3 rounded-xl shadow hover:bg-gray-100 transition mt-2">
+            Continue Challenge
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Cards Section -->
+  <section class="w-full bg-[#f6fcf4] py-20" id="features">
+    <div class="container mx-auto px-8">
+      <h2 class="text-4xl font-bold text-center mb-4">Transform Environmental Learning</h2>
+      <p class="text-lg text-gray-600 text-center mb-14 max-w-3xl mx-auto">
+        Experience environmental education like never before with interactive challenges, real-world applications, and community action focused on Indian ecological contexts.
+      </p>
+      <div class="grid md:grid-cols-3 gap-10 mb-10">
+        <div class="bg-white rounded-2xl shadow p-7 border border-gray-100">
+          <span class="feature-icon text-[#20c4b6]">🎮</span>
+          <h3 class="font-bold text-lg mb-3">Interactive Challenges</h3>
+          <p class="text-gray-600 mb-6">
+            Gamified environmental challenges that make learning fun and engaging. Complete real-world tasks and earn achievements.
+          </p>
+          <a href="#" class="text-[#20c4b6] font-semibold">Try Feature &rarr;</a>
+        </div>
+        <div class="bg-white rounded-2xl shadow p-7 border border-gray-100">
+          <span class="feature-icon text-[#20c4b6]">📍</span>
+          <h3 class="font-bold text-lg mb-3">Local Ecological Issues</h3>
+          <p class="text-gray-600 mb-6">
+            Learn about environmental challenges specific to your region in India. From air pollution in Delhi to water scarcity in Chennai.
+          </p>
+          <a href="#" class="text-[#20c4b6] font-semibold">Try Feature &rarr;</a>
+        </div>
+        <div class="bg-white rounded-2xl shadow p-7 border border-gray-100">
+          <span class="feature-icon accent">🧮</span>
+          <h3 class="font-bold text-lg mb-3">Carbon Footprint Tracker</h3>
+          <p class="text-gray-600 mb-6">
+            Calculate and monitor your personal environmental impact. Get personalized recommendations for sustainable living.
+          </p>
+          <a href="#" class="accent font-semibold">Try Feature &rarr;</a>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="bg-white rounded-2xl shadow p-7 border border-gray-100">
+          <span class="feature-icon text-[#20c4b6]">📈</span>
+          <h3 class="font-bold text-lg mb-3">Eco-Habit Tracking</h3>
+          <p class="text-gray-600 mb-6">
+            Build sustainable habits with daily tracking and motivation. From water conservation to waste reduction.
+          </p>
+          <a href="#" class="text-[#20c4b6] font-semibold">Try Feature &rarr;</a>
+        </div>
+        <div class="bg-white rounded-2xl shadow p-7 border border-gray-100">
+          <span class="feature-icon text-[#20c4b6]">👥</span>
+          <h3 class="font-bold text-lg mb-3">Community Action</h3>
+          <p class="text-gray-600 mb-6">
+            Join local environmental initiatives and connect with like-minded students. Organize cleanup drives and awareness campaigns.
+          </p>
+          <a href="#" class="text-[#20c4b6] font-semibold">Try Feature &rarr;</a>
+        </div>
+        <div class="bg-white rounded-2xl shadow p-7 border border-gray-100">
+          <span class="feature-icon accent">📖</span>
+          <h3 class="font-bold text-lg mb-3">Educational Library</h3>
+          <p class="text-gray-600 mb-6">
+            Access curated content about Indian environmental contexts. Interactive modules and real-world case studies.
+          </p>
+          <a href="#" class="accent font-semibold">Try Feature &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Environmental Impact Section -->
+  <section class="w-full bg-[#f6fcf4] py-20" id="impact">
+    <div class="container mx-auto px-8">
+      <h2 class="text-4xl font-bold text-center mb-3">Your Environmental Impact</h2>
+      <p class="text-lg text-gray-600 text-center mb-10">See how your daily choices affect the environment</p>
+      <div class="flex justify-center">
+        <div class="bg-white rounded-2xl shadow p-9 border border-gray-100 min-w-[510px] max-w-xl">
+          <div class="flex justify-around mb-5">
+            <div class="text-center flex-1">
+              <div class="text-2xl font-extrabold mb-1">75%</div>
+              <div class="text-gray-800 font-semibold text-lg">Water Conservation</div>
+              <div class="text-gray-500 text-sm">15L saved today</div>
+            </div>
+            <div class="text-center flex-1">
+              <div class="text-2xl font-extrabold mb-1">60%</div>
+              <div class="text-gray-800 font-semibold text-lg">Waste Reduction</div>
+              <div class="text-gray-500 text-sm">2.3kg diverted</div>
+            </div>
+          </div>
+          <hr class="my-5">
+          <div class="flex flex-col">
+            <div class="font-semibold text-[#20c4b6] mb-4 flex items-center"><span class="mr-2">🌱</span>Recent Achievements</div>
+            <div class="flex gap-6 ml-2">
+              <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#f6fcf4] text-2xl">🏆</span>
+              <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#f6fcf4] text-2xl">🌳</span>
+              <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#f6fcf4] text-2xl">⭐</span>
+              <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#f6fcf4] text-2xl">＋</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Eco-Tips Section -->
+<section class="w-full bg-[#f6fcf4] py-10" id="eco-tips">
+  <div class="container mx-auto px-8 max-w-4xl">
+    <h2 class="text-3xl font-bold mb-5 text-[#20c4b6]">Eco-Tips</h2>
+    <div id="ecoTipDisplay"
+         class="text-lg text-[#20c4b6] font-semibold bg-white px-6 py-4 rounded-xl shadow-md max-w-xl mx-auto">
+      <!-- Tip content inserted by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- AI Eco-Suggestion Section -->
+<section class="w-full bg-white py-10" id="ai-suggestions">
+  <div class="container mx-auto px-8 max-w-4xl">
+    <h2 class="text-3xl font-bold mb-5 text-[#fd7e25]">AI Eco-Suggestion</h2>
+    <div id="aiSuggestionDisplay"
+         class="text-lg text-[#fd7e25] font-semibold bg-[#fffbe8] px-6 py-4 rounded-xl shadow-md max-w-xl mx-auto">
+      <!-- AI suggestion inserted by JS -->
+    </div>
+  </div>
+</section>
+
+
+  <section id="quiz-section">
+  <h2 class="quiz-title">EcoSaver Quiz Challenge</h2>
+  <div id="quiz-container" class="quiz-card">
+    <div id="question" class="quiz-question"></div>
+    <div id="answers" class="quiz-answers"></div>
+    <button id="nextBtn" class="quiz-next-btn">Next</button>
+    <div id="result" class="quiz-result"></div>
+  </div>
+</section>
+
+
+
+  <!-- LEADER SECTION -->
+<section class="w-full py-12 bg-gradient-to-r from-[#e1f7ef] via-[#c8faf1] to-[#f4fff8]" id="leaderboard">
+  <div class="container mx-auto px-8">
+    <div class="max-w-2xl mx-auto rounded-3xl shadow-xl bg-white p-7 leaderboard-card">
+      <h2 class="text-3xl font-extrabold text-[#20c4b6] text-center mb-6 flex items-center justify-center gap-2">
+        <span>🏆</span> Top Eco-Friendly Learners
+      </h2>
+      <ul id="leaderboardList" class="space-y-3">
+        <!-- JS will render leaderboard rows here -->
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+
+  <footer>
+    <div class="footer-container">
+      <div>
+        <h3>EcoSaver</h3>
+        <p>Connecting students with local environmental challenges and solutions.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#challenges">Challenges</a></li>
+          <li><a href="#learn">Learn</a></li>
+          <li><a href="#community">Community</a></li>
+          <li><a href="#impact">Impact</a></li>
+          <li><a href="#habits">Habits</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>Email: <a href="mailto:support@ecosaver.in" style="color:#10b981;">support@ecosaver.in</a></p>
+        <p>Phone: <a href="tel:+911234567890" style="color:#10b981;">+91 12345 67890</a></p>
+        <p>Address: Bengaluru, India</p>
+      </div>
+      <div>
+        <h4>Newsletter</h4>
+        <form id="newsletterForm" class="newsletter-form">
+          <input type="email" placeholder="Your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p id="newsletterMsg" class="newsletter-message"></p>
+      </div>
+    </div>
+    <div class="footer-note">
+      &copy; 2025 EcoSaver. All rights reserved.
+    </div>
+
+  <script>
+
+
+// Profile Dropdown Toggle
+document.getElementById('profileAvatar').onclick = function() {
+  document.getElementById('profileDropdown').classList.toggle('hidden');
+};
+document.body.onclick = (e) => {
+  if (!document.getElementById('profileDropdownArea').contains(e.target)) {
+    document.getElementById('profileDropdown').classList.add('hidden');
+  }
+};
+
+// User Profile Data & Update Function
+let userProfile = {
+  name: "Aman Sharma",
+  email: "aman@email.com",
+  ecoPoints: 120,
+  badges: ["Green Beginner", "Eco-Warrior"],
+  level: "Eco-Warrior"
+};
+function updateProfileInfo() {
+  document.getElementById('profileName').textContent = userProfile.name;
+  document.getElementById('profileEmail').textContent = userProfile.email;
+  document.getElementById('profileLevel').textContent = userProfile.level;
+  document.getElementById('profilePoints').textContent = userProfile.ecoPoints;
+  document.getElementById('ecoPointsNum').textContent = userProfile.ecoPoints;
+}
+updateProfileInfo();
+
+// Eco-Points System: Earn points on log action
+function logEcoAction() {
+  userProfile.ecoPoints += 10;
+  updateProfileInfo();
+  document.getElementById('ecoPointsDisplay').classList.add('bg-[#aeffd9]');
+  setTimeout(() => document.getElementById('ecoPointsDisplay').classList.remove('bg-[#aeffd9]'), 500);
+  if (userProfile.ecoPoints >= 200 && !userProfile.badges.includes("Eco Hero")) {
+    userProfile.badges.push("Eco Hero");
+    alert("Congrats! Unlocked badge: Eco Hero");
+  }
+}
+
+
+
+const leaderboardData = [
+  {
+    name: "Riya",
+    ecoPoints: 220,
+    avatar: "avtar2.png",
+    badge: "Eco Hero"
+  },
+  {
+    name: "Aman",
+    ecoPoints: 120,
+    avatar: "avtar4.png",
+    badge: "Eco-Warrior"
+  },
+  {
+    name: "Priya",
+    ecoPoints: 110,
+    avatar: "avtar3.png",
+    badge: "Eco-Friend"
+  },
+  {
+    name: "Salman",
+    ecoPoints: 90,
+    avatar: "avtar5.png",
+    badge: "Green Beginner"
+  }
+];
+function renderLeaderboard() {
+  let sorted = leaderboardData.sort((a, b) => b.ecoPoints - a.ecoPoints);
+  const medals = ["🥇","🥈","🥉"];
+  let html = "";
+  sorted.forEach((u, i) => {
+    const rowClass =
+      i === 0 ? "leaderboard-row gold" :
+      i === 1 ? "leaderboard-row silver" :
+      i === 2 ? "leaderboard-row bronze" : "leaderboard-row";
+    html += `<li class="${rowClass}">
+      <span class="rank">${i < 3 ? medals[i] : i + 1}</span>
+      <img class="avatar" src="${u.avatar}" alt="${u.name} avatar"/>
+      <span class="name">${u.name}</span>
+      <span class="eco-points">${u.ecoPoints} pts</span>
+      <span class="badge">${u.badge}</span>
+    </li>`;
+  });
+  document.getElementById("leaderboardList").innerHTML = html;
+}
+renderLeaderboard();
+
+
+const ecoTipsArr = [
+  "Use a bucket instead of shower to save water.",
+  "Bring your own cloth bag for shopping.",
+  "Switch off unwanted lights to reduce energy use.",
+  "Segregate your waste – recycle plastics and paper.",
+  "Plant a tree or care for a plant at home."
+];
+
+let ecoTipIdx = 0;
+function showEcoTip() {
+  const ecoTipDiv = document.getElementById('ecoTipDisplay');
+  ecoTipDiv.textContent = ecoTipsArr[ecoTipIdx];
+  ecoTipIdx = (ecoTipIdx + 1) % ecoTipsArr.length;
+}
+showEcoTip();
+setInterval(showEcoTip, 8000);
+
+const aiSuggestions = [
+  "Try switching off power strips when not in use.",
+  "Use public transport for your next outing.",
+  "Recycle all plastic bottles today.",
+  "Participate in the upcoming tree plantation event.",
+  "Track your water usage for 1 day."
+];
+
+function updateAISuggestion() {
+  const aiDiv = document.getElementById('aiSuggestionDisplay');
+  aiDiv.textContent = aiSuggestions[Math.floor(Math.random() * aiSuggestions.length)];
+}
+updateAISuggestion();
+setInterval(updateAISuggestion, 15000);
+
+
+
+
+
+        // Animate challenge progress to 75%
+    const circle = document.getElementById('challengeProgress');
+    const percentText = document.getElementById('challengePercent');
+    const totalLength = 2 * Math.PI * 37; // r=37
+    const targetPercent = 75;
+    let current = 0;
+    function animate() {
+      if (current <= targetPercent) {
+        let offset = totalLength * (1 - current / 100);
+        circle.setAttribute('stroke-dashoffset', offset);
+        percentText.textContent = ${current}%;
+        current++;
+        setTimeout(animate, 12);
+      }
+    }
+    animate();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const questionsPool = [
+    {
+      question: "What is the main cause of air pollution in Indian cities?",
+      answers: [
+        { text: "Vehicle emissions", correct: true },
+        { text: "Deforestation", correct: false },
+        { text: "Water pollution", correct: false },
+        { text: "Noise pollution", correct: false }
+      ]
+    },
+    {
+      question: "Which of these is a renewable energy source?",
+      answers: [
+        { text: "Coal", correct: false },
+        { text: "Solar power", correct: true },
+        { text: "Natural gas", correct: false },
+        { text: "Petroleum", correct: false }
+      ]
+    },
+    {
+      question: "How can you conserve water at home?",
+      answers: [
+        { text: "Fix leaking taps", correct: true },
+        { text: "Leave taps running", correct: false },
+        { text: "Use more water for cleaning", correct: false },
+        { text: "Water plants at noon", correct: false }
+      ]
+    },
+    {
+      question: "What is the benefit of planting trees?",
+      answers: [
+        { text: "Increase air pollution", correct: false },
+        { text: "Provide oxygen and shade", correct: true },
+        { text: "Reduce biodiversity", correct: false },
+        { text: "Cause soil erosion", correct: false }
+      ]
+    },
+    {
+      question: "Which practice helps reduce plastic waste?",
+      answers: [
+        { text: "Using single-use plastic bags", correct: false },
+        { text: "Recycling and reusing plastic", correct: true },
+        { text: "Throwing plastic in rivers", correct: false },
+        { text: "Burning plastic waste", correct: false }
+      ]
+    },
+    {
+      question: "What is a carbon footprint?",
+      answers: [
+        { text: "Amount of carbon dioxide emissions caused by an individual or organization", correct: true },
+        { text: "A type of tree", correct: false },
+        { text: "A recycling method", correct: false },
+        { text: "A water conservation technique", correct: false }
+      ]
+    },
+    {
+      question: "Which of these is NOT a sustainable habit?",
+      answers: [
+        { text: "Using public transport", correct: false },
+        { text: "Wasting food", correct: true },
+        { text: "Saving electricity", correct: false },
+        { text: "Composting organic waste", correct: false }
+      ]
+    },
+    {
+      question: "What does 'biodegradable' mean?",
+      answers: [
+        { text: "Can be broken down naturally by microorganisms", correct: true },
+        { text: "Cannot be recycled", correct: false },
+        { text: "Is harmful to the environment", correct: false },
+        { text: "Is made of plastic", correct: false }
+      ]
+    }
+  ];
+
+
+
+ // Randomize and pick first 5 questions
+  const quizQuestions = questionsPool.sort(() => 0.5 - Math.random()).slice(0, 5);
+  let currentQuestionIndex = 0;
+  let score = 0;
+
+  const questionEl = document.getElementById('question');
+  const answersEl = document.getElementById('answers');
+  const nextBtn = document.getElementById('nextBtn');
+  const resultEl = document.getElementById('result');
+
+  function showQuestion() {
+    resetState();
+    const currentQuestion = quizQuestions[currentQuestionIndex];
+    questionEl.textContent = Q${currentQuestionIndex + 1}. ${currentQuestion.question};
+    currentQuestion.answers.forEach(answer => {
+      const button = document.createElement('button');
+      button.textContent = answer.text;
+      button.classList.add('quiz-answer-btn');
+      button.addEventListener('click', () => selectAnswer(button, answer.correct));
+      answersEl.appendChild(button);
+    });
+  }
+
+  function resetState() {
+    nextBtn.style.display = 'none';
+    resultEl.style.display = 'none';
+    while (answersEl.firstChild) {
+      answersEl.removeChild(answersEl.firstChild);
+    }
+  }
+
+  function selectAnswer(button, correct) {
+    Array.from(answersEl.children).forEach(btn => {
+      btn.disabled = true;
+      btn.style.cursor = 'default';
+      if (btn === button) {
+        btn.classList.add(correct ? 'selected' : 'incorrect');
+      } else {
+        btn.style.opacity = '0.6';
+      }
+    });
+    if (correct) score++;
+    nextBtn.style.display = 'inline-block';
+  }
+
+  nextBtn.addEventListener('click', () => {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < quizQuestions.length) {
+      showQuestion();
+    } else {
+      showResult();
+    }
+  });
+
+  function showResult() {
+    resetState();
+    questionEl.textContent = 'Quiz Completed!';
+    resultEl.style.display = 'block';
+    resultEl.textContent = Your Score: ${score} / ${quizQuestions.length};
+    nextBtn.style.display = 'none';
+  }
+
+  // Initialize quiz
+  showQuestion();
+});
+
+   document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const msg = document.getElementById('newsletterMsg');
+        msg.textContent = 'Thanks for subscribing!';
+        this.reset();
+        setTimeout(() => { msg.textContent = ''; }, 4000);
+      });
+    
+  </script>
+</footer>
+</body>
+</html>

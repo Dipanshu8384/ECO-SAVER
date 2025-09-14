@@ -1,3 +1,36 @@
+const slider = document.querySelector("#env-slider .slides");
+  const slides = slider.querySelectorAll(".slide");
+  const prev = document.querySelector("#env-slider .prev");
+  const next = document.querySelector("#env-slider .next");
+  const dotsContainer = document.querySelector("#env-slider .dots");
+  let index = 0;
+
+  // Create dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.className = "w-3 h-3 rounded-full bg-gray-400";
+    dot.addEventListener("click", () => showSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+  const dots = dotsContainer.querySelectorAll("button");
+
+  function showSlide(i) {
+    index = (i + slides.length) % slides.length;
+    slider.style.transform = `translateX(${-index * 100}%)`;
+    dots.forEach((d, j) => {
+      d.className = j === index ? "w-3 h-3 rounded-full bg-[#20c4b6]" : "w-3 h-3 rounded-full bg-gray-400";
+    });
+  }
+
+  prev.addEventListener("click", () => showSlide(index - 1));
+  next.addEventListener("click", () => showSlide(index + 1));
+
+  // Auto-play
+  setInterval(() => showSlide(index + 1), 4000);
+
+  showSlide(0);
+
+
 document.addEventListener('DOMContentLoaded', function() {
     // Dropdown menu logic
     const menuButton = document.getElementById('menuButton');

@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+<style>
+
+  /* === GLOBAL RESET === */
+html, body {
+  padding: 0; margin: 0;
+  min-height: 100%;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: transparent;
+  color: #effeff;
+  overflow-x: hidden;
+}
+
+/* === ANIMATED GRADIENT BACKGROUND === */
+.animated-bg {
+  position: fixed;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.animated-gradient {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(ellipse at 70% 30%, #31d47ba2 0, transparent 70%),
+              radial-gradient(ellipse at 20% 80%, #1e8ac6a3 0, transparent 70%),
+              radial-gradient(ellipse at 80% 75%, #feee4ba1 0, transparent 70%),
+              linear-gradient(135deg, #1e3b31 0%, #1c2230 100%);
+  background-blend-mode: lighten, lighten, screen, normal;
+  filter: blur(1.5px) saturate(.8);
+  animation: gradientMove 11s ease-in-out infinite alternate;
+  will-change: background-position, filter;
+}
+@keyframes gradientMove {
+  0% { background-position: 85% 20%, 18% 85%, 80% 80%, 0 0; }
+  60% { background-position: 75% 45%, 30% 65%, 90% 67%, 100% 100%; }
+  100% { background-position: 75% 35%, 28% 60%, 78% 90%, 100% 0; }
+}
+/* ANIMATED PARTICLES */
+.bg-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.bg-particles span {
+  content:'';
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  opacity: .25;
+  filter: blur(2px);
+  background: linear-gradient(135deg, #afffd2 10%, #9fe5f5 70%, #ffe95b 90%);
+  animation: floatParts 17s linear infinite alternate;
+}
+.bg-particles span:nth-child(1) {
+  width: 110px; height: 110px; left: 8vw; top: 18vh; animation-delay:2s;
+}
+.bg-particles span:nth-child(2) {
+  width: 56px; height: 56px; left: 73vw; top: 43vh;
+  background: linear-gradient(120deg,#31d47b 30%,#ffe95b 100%);
+  animation-delay:5s;
+}
+.bg-particles span:nth-child(3) {
+  width: 70px; height: 70px; left: 63vw; top: 78vh;
+  background: linear-gradient(130deg,#ffe95b 50%,#31d47b 80%);
+  animation-delay:11s;
+}
+.bg-particles span:nth-child(4) {
+  width: 40px; height: 40px; left: 26vw; top: 75vh; animation-delay:7s;
+}
+.bg-particles span:nth-child(5) {
+  width: 94px; height: 94px; left: 85vw; top: 10vh;
+  background: linear-gradient(130deg,#1e8ac6 40%,#ffe95b 85%);
+  animation-delay:3s;
+}
+.bg-particles span:nth-child(6) {
+  width: 48px; height: 48px; left: 18vw; top: 58vh;
+  background: linear-gradient(140deg,#31d47b 18%,#9fe5f5 70%,#ffe95b 99%);
+  animation-delay:9s;
+}
+.bg-particles span:nth-child(7) {
+  width: 60px; height: 60px; left: 55vw; top: 23vh;
+  background: linear-gradient(130deg,#1e8ac6 40%,#31d47b 65%);
+  animation-delay:7s;
+}
+.bg-particles span:nth-child(8) {
+  width: 35px; height: 35px; left: 43vw; top: 60vh; animation-delay:12s;
+}
+@keyframes floatParts {
+  0% { transform: translateY(0) scale(1); opacity:.35;}
+  56% { opacity:.3;}
+  80% { transform: translateY(-42px) scale(1.13);}
+  100% { transform: translateY(-99px) scale(.89); opacity:.17;}
+}
+
+/* === HEADER/FOOTER Tweaked for Transparency & Glow === */
+.eco-header, .eco-footer {
+  background: rgba(23,36,48,0.86);
+  box-shadow: 0 2px 30px rgba(40,255,157,0.07), 0 1.5px 8px #e3f9ff16;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.eco-header { border-bottom: 1.5px solid #1e8ac6e0;}
+.eco-footer { border-top: 1.5px solid #31d47ba0;}
+
+.header-logo {
+  filter: drop-shadow(0 2px 10px #31d47bbb);
+  text-shadow: 0 1px 7px #182e23;
+  letter-spacing: 4px;
+}
+.nav-link.active, .nav-link:hover {
+  color: #ffe95b;
+}
+.nav-link.active::before, .nav-link:hover::before {
+  background: linear-gradient(90deg, #ffe95b, #31d47b 90%);
+}
+
+/* === GLASS CARD UPGRADE & ANIMATION === */
+.library-section {
+  background: rgba(29,40,52,0.86);
+  box-shadow: 0 12px 56px -17px #1e8ac6b3, 0 2px 20px #31d47b23;
+  border-radius: 28px;
+  margin-top: 38px;
+  z-index: 6;
+  position: relative;
+}
+.library-title {
+  background: linear-gradient(90deg,#31d47b,#ffe95b 85%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Segoe UI Semibold', Arial,sans-serif;
+  letter-spacing: .02em;
+  filter: drop-shadow(0px 2px 10px #1e8ac6b1);
+  text-shadow: 0 2px 8px #010e1c98;
+}
+
+.library-card, .video-card {
+  background: linear-gradient(120deg,rgba(31, 156, 155, 0.14) 5%,rgba(31,31,44,0.82) 75%);
+  border: 1.5px solid rgba(135,232,227,0.17);
+  box-shadow: 0 2px 16px #00ffdd22, 0 1px 8px #ffe95b0d;
+  transition: 
+    box-shadow .25s cubic-bezier(.31,2,.53,.91),
+    transform .19s cubic-bezier(.23,1.53,.74,1.01),
+    border .23s,
+    background .18s;
+}
+.library-card:hover, .video-card:hover {
+  border: 1.9px solid #ffe95b86;
+  box-shadow: 0 7px 36px 0 #ffe95b66, 0 1px 16px #31d47ba2;
+  background: linear-gradient(100deg,#182b1f 30%,#ffe95b33 95%);
+}
+
+.tag.animated {
+  background: linear-gradient(90deg,#ffe95b 5%,#31d47b 80%);
+  color: #273f2a;
+  filter: drop-shadow(0 2px 6px #ffe95baf);
+  text-shadow: 0 1px 4px #fff79940;
+}
+
+/* === BUTTON, SEARCH, CATEGORIES ANIMATION === */
+.category-btn.active, .category-btn:focus {
+  background: linear-gradient(270deg,#ffe95b 42%,#31d47b 100%) !important;
+  color: #222;
+  filter: drop-shadow(0 1.5px 8px #ffe95b50);
+  font-weight: 700;
+}
+.category-btn {
+  box-shadow: 0 2px 8px #1e8ac631;
+}
+.category-btn:hover {
+  background: linear-gradient(135deg,#31d47b25 10%,#e9f78c49 100%) !important;
+  color: #ffe95b;
+}
+.category-anim-indicator {
+  background: linear-gradient(90deg,#ffe95b 55%,#31d47b 100%);
+  filter: blur(2px);
+}
+
+#library-search {
+  box-shadow: 0 2px 12px #ffe95b22, 0 1px 5px #31d47b15;
+  background: rgba(39,48,66,.93);
+  border: 1.7px solid #31d47ba5;
+  color: #f4fff6;
+}
+#library-search:focus {
+  border: 1.9px solid #ffe95b;
+  background: rgba(31,36,54,0.95);
+  color: #222;
+}
+
+/* === VIDEO: Drop-shadow and Pulse on Hover === */
+.video-thumbnail-anim {
+  box-shadow: 0 9px 24px #ffe95b11,0 1px 7px #31d47b18;
+  background: #182b1f7c;
+  transition: box-shadow .19s, filter .22s;
+}
+.video-card:hover .video-thumbnail-anim {
+  box-shadow:0 13px 34px #ffe95bdd,0 3px 13px #31d47baa;
+  filter: brightness(1.05) saturate(1.21) drop-shadow(0 2px 24px #ffe95b88);
+}
+.video-thumbnail-anim iframe {
+  border-radius: 14px;
+  background: #182b1f;
+}
+
+/* === RESPONSIVE TWEAKS === */
+@media (max-width: 950px) {
+  .animated-bg { display: none; }
+  .library-section { margin:0 1vw; padding: 13px 0 37px 0;}
+}
+@media (max-width: 700px) {
+  .library-section{ border-radius:15px;}
+  .library-title{ font-size:1.45rem; }
+}
+
+
+  :root {
+  --accent: #31d47b;
+  --background: #050f17;
+  --glass-bg: rgba(28,39,53,0.82);
+  --glass-blur: 20px;
+  --text-main: #efffff;
+  --text-muted: #a0eccc;
+  --shadow-lg: 0 8px 48px rgba(37,255,157,0.13);
+  --shadow-btn: 0 2px 10px rgba(0,0,0,0.19);
+}
+
+/* HEADER */
+.eco-header {
+  background: linear-gradient(90deg, #073820 30%, #1c3144 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 6vw 20px 6vw;
+  position: sticky; top: 0; z-index: 20;
+  box-shadow: 0 8px 24px rgba(18,55,43,0.10);
+}
+.header-logo { font-size: 2rem; font-weight: 900; color: var(--accent); letter-spacing:2px;}
+.header-nav { display: flex; gap: 32px;}
+.nav-link {
+  color: var(--text-main);
+  font-size: 1.05rem;
+  font-weight: 700;
+  position: relative;
+  transition: color .15s;
+  padding: 2px 0;
+  text-decoration: none;
+}
+.nav-link.active, .nav-link:hover {
+  color: var(--accent);
+}
+.nav-link.active::before, .nav-link:hover::before {
+  content: "";
+  position: absolute; left: 0; bottom: -4px;
+  width: 100%; height: 3px;
+  border-radius: 5px;
+  background: var(--accent);
+}
+
+/* FOOTER */
+.eco-footer {
+  background: linear-gradient(90deg, #073820 30%, #1c3144 100%);
+  color: #e0ffe6;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 6vw 18px 6vw;
+  margin-top: 60px;
+  border-top: 1.5px solid #184a35;
+}
+.footer-links { display: flex; gap: 22px;}
+.footer-link { color: #b2f8c4; text-decoration:none; font-weight:500;}
+.footer-link:hover { color: #f9ffb3; }
+
+/* MAIN LIBRARY SECTION */
+.library-section {
+  margin: 40px auto 0 auto;
+  max-width: 1200px;
+  background: var(--glass-bg);
+  border-radius: 26px;
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  padding: 48px 0 48px 0;
+}
+.library-title { text-align:center;color:var(--accent); font-size:2.5rem; margin-bottom:32px; font-weight:800;}
+
+.library-controls {
+  display:flex; flex-direction:column; gap:18px; margin: 0 6vw 26px 6vw;
+}
+.search-animated {
+  position: relative;
+  width: 100%;
+}
+#library-search {
+  width: 100%; padding: 16px 18px 16px 44px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.13rem;
+  background: rgba(30,41,54,0.88);
+  color: #e9fff4;
+  box-shadow: 0 2px 15px rgba(40,255,157,0.08);
+  transition: box-shadow .26s, background .2s;
+  outline: none;
+}
+#library-search:focus {
+  background: rgba(30,41,54,0.95);
+  box-shadow: 0 2px 18px rgba(80,237,162,0.19);
+}
+.search-icon {
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  width:23px;height:23px;
+  background:url('https://cdn-icons-png.flaticon.com/512/622/622669.png') no-repeat center center/contain;
+  opacity:0.87;
+  pointer-events:none;
+  transition:filter 0.19s;
+}
+#library-search:focus + .search-icon {
+  filter:drop-shadow(0 1px 0 #4dffb8);
+}
+
+/* Categories Bar */
+.categories-bar { display:flex;align-items:center;gap:14px;overflow-x:auto; position:relative; }
+.category-btn {
+  background:rgba(58,187,97,0.07);
+  border: none;
+  padding: 11px 20px;
+  border-radius: 8px;
+  color:var(--accent);
+  font-weight:600;
+  letter-spacing:0.03em;
+  font-size:1rem;
+  cursor:pointer;
+  margin-right:2px;
+  position:relative;
+  transition:background 0.18s,color 0.17s,box-shadow 0.22s;
+  box-shadow: var(--shadow-btn);
+  overflow:hidden;
+}
+.category-btn.active, .category-btn:focus {
+  background: var(--accent);
+  color: #1c2832;
+  box-shadow: 0 1px 18px rgba(40,255,157,0.11);
+}
+.category-btn:hover {
+  background:rgba(49,212,123,0.10);
+  color: #f2ffda;
+}
+.category-anim-indicator {
+  position: absolute; bottom:0; left:0; height: 3.5px; border-radius:4px;
+  background: linear-gradient(90deg,#57e6a9,#6bc6ff 90%);
+  width: 0; transition: all 0.25s cubic-bezier(.65,1.7,.72,.76);
+  z-index: 2;
+}
+
+/* Content Area */
+.library-content {
+  display: flex; flex-wrap: wrap; gap: 34px;
+  margin: 0 6vw 24px 6vw;
+  justify-content: flex-start;
+  animation: fadeinUp 0.6s cubic-bezier(.47,1.64,.41,.8);
+}
+
+/* Cards (Glassmorphism, Animated) */
+.library-card, .video-card {
+  background: linear-gradient(135deg,rgba(40,70,52,0.43),rgba(14,23,30,0.82));
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(60,255,214,0.13);
+  padding: 30px 24px 22px;
+  min-width: 260px; max-width: 320px;
+  flex: 1 1 290px;
+  display: flex; flex-direction: column;
+  gap: 10px; color:var(--text-main);
+  position:relative;
+  overflow:hidden;
+  opacity:0; transform:translateY(32px) scale(0.97);
+  animation: cardPop 0.8s cubic-bezier(.33,2,.36,1.13) forwards;
+  animation-delay:var(--card-delay, 0s);
+  transition:box-shadow .24s, transform .24s;
+}
+.library-card:hover, .video-card:hover {
+  box-shadow: 0 4px 36px 0 #3edff5b3,0 0 0 5px #2ab57210;
+  transform: translateY(-8px) scale(1.025);
+}
+.library-card h3 { color: var(--accent); margin-bottom:7px; }
+.library-card a {
+  margin-top: 6px;
+  color: #26ffd0;
+  font-weight: 650;
+  text-decoration: none;
+  font-size: 1rem;
+  letter-spacing:0.02em;
+  border-bottom:1.5px solid #26ffd068;
+  transition: color .17s, border-bottom .18s;
+}
+.library-card a:hover { color: #ffea37; border-bottom:1.5px solid #ffea37;}
+
+.tag.animated {
+  display: inline-block;
+  background: linear-gradient(90deg,#4dff8f,#8ec1fa 72%);
+  color: #182822;
+  font-size: 0.85rem;
+  font-weight:700;
+  border-radius: 12px;
+  padding: 4px 14px 4px 10px;
+  margin: 0 8px;
+  animation: pulseTag 2.2s infinite alternate;
+  box-shadow:0 2px 12px #00ffc030;
+}
+@keyframes pulseTag {
+  0% { filter: brightness(1);}
+  100% { filter: brightness(1.12) drop-shadow(0 0 7px #65ffe4);}
+}
+@keyframes fadeinUp { from { opacity:0; transform:translateY(40px);} to {opacity:1;transform:none;} }
+@keyframes cardPop {
+  0% { opacity:0; transform:translateY(32px) scale(0.92);}
+  60%{ opacity:1; transform:translateY(0) scale(1.1);}
+  80%{ transform:scale(0.98);}
+  100%{ opacity:1; transform:none;}
+}
+
+/* VideoThumbnails Anim */
+.video-thumbnail-anim {
+  width:100%; border-radius:13px;overflow:hidden;box-shadow:0 3px 22px #2ab57215;
+  transition: transform .27s cubic-bezier(.23,1.86,.72,.83), box-shadow .23s;
+}
+.video-card:hover .video-thumbnail-anim {
+  transform: scale(1.04) rotate(-.7deg);
+  box-shadow:0 8px 44px #54fff960;
+}
+.video-thumbnail-anim iframe {
+  width:100%;height:180px;min-height:120px;border-radius:13px;
+  border:none; 
+}
+
+/* No Results Message */
+.no-results-message {
+  margin-top:34px;color:#eeff6e;font-weight:700;font-size:1.18rem;text-align:center;opacity:.91;display:none;
+}
+.no-results-message.hidden { display:none; }
+
+/* Responsive */
+@media (max-width: 950px) {
+  .library-controls, .library-content { margin:0 14px;}
+  .library-section{ padding:26px 0 46px 0;}
+}
+@media (max-width: 700px) {
+  .eco-header, .eco-footer {flex-direction:column;gap:13px;}
+  .library-content {flex-direction:column; gap:22px;}
+  .library-card, .video-card { max-width:none;}
+  .categories-bar {gap:8px;}
+}
+
+</style>
+
+
+</head>
+<body>
+  <!-- Animated Background Layers & Particles -->
+<div class="animated-bg">
+  <div class="animated-gradient"></div>
+  <div class="bg-particles">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+</div>
+
+  <!-- HEADER (Eco Habit Tracker style, logo/title and nav) -->
+<header class="eco-header">
+  <div class="header-logo">Eco Saver</div>
+  <nav class="header-nav">
+    <a href="dashboard.html" class="nav-link active">Home</a>
+    <a href="library.html" class="nav-link">Library</a>
+  
+    <a href="/about" class="nav-link">About</a>
+  </nav>
+</header>
+
+<main>
+  <!-- EDUCATION LIBRARY as discussed, enhanced animation, class names changed -->
+  <section id="education-library" class="library-section">
+    <h2 class="library-title">Education Library</h2>
+    <div class="library-controls">
+      <div class="search-animated">
+        <input type="search" id="library-search" placeholder="Search resources..." />
+        <span class="search-icon"></span>
+      </div>
+      <div class="categories-bar">
+        <div class="category-anim-indicator"></div>
+        <button class="category-btn active" data-category="all">All</button>
+        <button class="category-btn" data-category="sustainable">Sustainable Living</button>
+        <button class="category-btn" data-category="climate">Climate Change</button>
+        <button class="category-btn" data-category="tech">Green Technology</button>
+        <button class="category-btn" data-category="recycling">Recycling & Waste</button>
+        <button class="category-btn" data-category="books">Books & Readmes</button>
+        <button class="category-btn" data-category="videos">Video Lectures</button>
+      </div>
+    </div>
+    
+    <div class="library-content" id="library-articles">
+
+  <div class="library-card" data-category="sustainable">
+    <h3>10 Easy Everyday Eco-Friendly Habits</h3>
+    <p>Small, consistent actions can make a big difference for the environment.<br>
+    <ul>
+      <li>Carry a reusable bag and water bottle.</li>
+      <li>Switch off lights/electronics when not in use.</li>
+      <li>Walk, cycle, or use public transport.</li>
+      <li>Refuse single-use plastics and avoid packaged foods.</li>
+      <li>Segregate waste and manage food portions to cut waste.</li>
+    </ul>
+    </p>
+    <a href="#">Learn More</a>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+
+  <div class="library-card" data-category="sustainable">
+    <h3>Energy-Efficient Home Guide</h3>
+    <p>Make your house greener and save money:<br>
+    <ul>
+      <li>Replace old bulbs with LEDs.</li>
+      <li>Insulate doors/windows and use thick curtains.</li>
+      <li>Choose BEE star-rated appliances.</li>
+      <li>Use solar panels or water heaters if possible.</li>
+      <li>Run machines with full loads and air dry laundry.</li>
+    </ul>
+    </p>
+    <a href="#">Full Guide</a>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+
+  <div class="library-card" data-category="sustainable">
+    <h3>Greener Transportation Choices</h3>
+    <p>Move sustainably to reduce air pollution:<br>
+    <ul>
+      <li>Use public transport, cycle, or walk when you can.</li>
+      <li>Carpool or rideshare.</li>
+      <li>Consider electric vehicles or e-rickshaws.</li>
+      <li>Combine errands for fewer total trips.</li>
+    </ul>
+    </p>
+    <a href="#">Read More</a>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+
+  <div class="library-card" data-category="sustainable">
+    <h3>Urban Gardening for Beginners</h3>
+    <p>Grow food at home – easy even in apartments:<br>
+    <ul>
+      <li>Start with herbs (mint, coriander, basil).</li>
+      <li>Use upcycled containers: bottles, buckets, cans.</li>
+      <li>Compost kitchen scraps.</li>
+      <li>Water early or late to save water.</li>
+      <li>Swap plant cuttings with neighbors!</li>
+    </ul>
+    </p>
+    <a href="#">How-To</a>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+
+  <div class="library-card" data-category="sustainable">
+    <h3>Water Conservation at Home</h3>
+    <p>Practical steps for every household:<br>
+    <ul>
+      <li>Fix leaks fast and install aerators.</li>
+      <li>Collect rainwater for plants.</li>
+      <li>Reuse “greywater” for gardens.</li>
+      <li>Run washers only full; bucket-bathe instead of shower!</li>
+    </ul>
+    </p>
+    <a href="#">Save Water</a>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+
+  <div class="library-card" data-category="sustainable">
+    <h3>Low-Waste Starter Kit</h3>
+    <p>Start your low-waste journey—swap these in:<br>
+    <ul>
+      <li>Cloth/jute shopping bag</li>
+      <li>Steel/copper bottle, bamboo toothbrush</li>
+      <li>Lunchbox, handkerchief, metal straws</li>
+      <li>Beeswax wraps for food</li>
+    </ul>
+    </p>
+    <a href="#">See Checklist</a>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+
+  <div class="library-card" data-category="sustainable">
+    <h3>Local, Seasonal Eating Explained</h3>
+    <p>Eat local for health and the planet:<br>
+    <ul>
+      <li>Avoid imported, out-of-season foods.</li>
+      <li>Shop at local markets and use native grains.</li>
+      <li>Try regional recipes and seasonal produce!</li>
+    </ul>
+    </p>
+    <a href="#">Seasonal Guide</a>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+
+  <div class="library-card" data-category="sustainable">
+    <h3>Eco-Friendly Cleaning Recipes</h3>
+    <p>DIY natural cleaners:<br>
+    <ul>
+      <li>All-purpose: vinegar + water + lemon oil</li>
+      <li>Scrub: baking soda + water</li>
+      <li>Glass: water + vinegar + a little alcohol</li>
+      <li>Use citrus peels for scent, avoid harsh chemicals!</li>
+    </ul>
+    </p>
+    <a href="#">Get Recipes</a>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+
+  <div class="library-card" data-category="sustainable">
+    <h3>Minimalism: The Green Lifestyle</h3>
+    <p>Consume less, focus on quality:<br>
+    <ul>
+      <li>Donate or recycle unused items often.</li>
+      <li>Buy what you need, aim for multipurpose products.</li>
+      <li>“One in, one out” rule for new purchases.</li>
+      <li>Longer-lasting goods = less waste.</li>
+    </ul>
+    </p>
+    <a href="#">Learn Minimalism</a>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+
+  <div class="library-card" data-category="sustainable">
+    <h3>Swachh Bharat at Home</h3>
+    <p>Apply the national cleanliness drive at home:<br>
+    <ul>
+      <li>Segregate waste (wet, dry, e-waste)</li>
+      <li>Keep surroundings tidy, use dustbins everywhere</li>
+      <li>Teach waste management to family and neighbors</li>
+      <li>Help organize neighborhood clean-ups</li>
+    </ul>
+    </p>
+    <a href="#">Tips at Home</a>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+
+
+  <!-- CLIMATE CHANGE CONTENT CARDS -->
+<div class="library-card" data-category="climate">
+  <h3>What is Climate Change?</h3>
+  <p>
+    Understand the basics: the difference between weather and climate, and how human activity is driving rapid planetary changes.<br>
+    <ul>
+      <li>Climate = Long-term trends; Weather = Immediate conditions</li>
+      <li>Human activities are increasing greenhouse gases rapidly</li>
+      <li>Global average temperatures rising at an unprecedented rate</li>
+    </ul>
+  </p>
+  <a href="#">Explore Fundamentals</a>
+  <span class="tag animated">Climate Change</span>
+</div>
+
+<div class="library-card" data-category="climate">
+  <h3>Causes of Global Warming</h3>
+  <p>
+    Learn how greenhouse gases from burning fossil fuels, deforestation, and industry trap heat and warm the earth.<br>
+    <ul>
+      <li>Burning coal, oil, and gas releases carbon dioxide (CO₂)</li>
+      <li>Deforestation reduces carbon sinks</li>
+      <li>Industrial and agricultural activities release methane & nitrous oxide</li>
+    </ul>
+  </p>
+  <a href="#">Read Article</a>
+  <span class="tag animated">Climate Change</span>
+</div>
+
+<div class="library-card" data-category="climate">
+  <h3>Effects on India</h3>
+  <p>
+    Discover how climate change is impacting India:<br>
+    <ul>
+      <li>Increasing heatwaves & higher average temperatures</li>
+      <li>Irregular and unpredictable monsoons</li>
+      <li>Glacial melt in the Himalayas; rising sea levels</li>
+      <li>Increased frequency of droughts & extreme weather</li>
+    </ul>
+  </p>
+  <a href="#">See Impacts</a>
+  <span class="tag animated">Climate Change</span>
+</div>
+
+<div class="library-card" data-category="climate">
+  <h3>What are Greenhouse Gases?</h3>
+  <p>
+    Learn about key contributors to warming:<br>
+    <ul>
+      <li>CO₂ (carbon dioxide) from fossil fuel burning</li>
+      <li>Methane (CH₄) mostly from agriculture & landfills</li>
+      <li>Nitrous oxide (N₂O) from fertilizers</li>
+      <li>They trap heat inside the Earth's atmosphere</li>
+    </ul>
+  </p>
+  <a href="#">Greenhouse Facts</a>
+  <span class="tag animated">Climate Change</span>
+</div>
+
+<div class="library-card" data-category="climate">
+  <h3>Renewable Energy Solutions</h3>
+  <p>
+    Switch to clean sources for a better future:<br>
+    <ul>
+      <li>Solar panels and wind turbines for homes, schools, and businesses</li>
+      <li>Hydropower and biogas for rural/urban energy needs</li>
+      <li>Government schemes for rooftop solar in India</li>
+      <li>Reduced dependence on coal and oil</li>
+    </ul>
+  </p>
+  <a href="#">View Solutions</a>
+  <span class="tag animated">Climate Change</span>
+</div>
+
+<div class="library-card" data-category="climate">
+  <h3>Personal Actions to Fight Climate Change</h3>
+  <p>
+    Steps you can take to make a difference:<br>
+    <ul>
+      <li>Reduce electricity and water use</li>
+      <li>Choose public transport, cycling, or walking</li>
+      <li>Eat more plants and less meat</li>
+      <li>Support organizations & leaders for climate action</li>
+    </ul>
+  </p>
+  <a href="#">Take Action</a>
+  <span class="tag animated">Climate Change</span>
+</div>
+
+<div class="library-card" data-category="climate">
+  <h3>Climate Science Explained</h3>
+  <p>
+    Key science concepts for everyone:<br>
+    <ul>
+      <li>The carbon cycle and its importance</li>
+      <li>Feedback loops (e.g., ice-albedo, permafrost melt)</li>
+      <li>Earth’s “energy balance” and why rapid change is urgent</li>
+    </ul>
+  </p>
+  <a href="#">Learn Science</a>
+  <span class="tag animated">Climate Change</span>
+</div>
+
+<div class="library-card" data-category="climate">
+  <h3>International Efforts — Paris Agreement</h3>
+  <p>
+    Global cooperation to cap warming:<br>
+    <ul>
+      <li>What the Paris Agreement is and why it matters</li>
+      <li>India’s role and climate goals</li>
+      <li>“Net zero” targets explained simply</li>
+    </ul>
+  </p>
+  <a href="#">Global Goals</a>
+  <span class="tag animated">Climate Change</span>
+</div>
+
+<div class="library-card" data-category="climate">
+  <h3>Youth Movements and Climate Activism</h3>
+  <p>
+    Youth are driving change worldwide:<br>
+    <ul>
+      <li>Global climate strikes & Fridays for Future</li>
+      <li>Indian youth-led eco-campaigns and volunteer groups</li>
+      <li>How to get involved with local or campus actions</li>
+    </ul>
+  </p>
+  <a href="#">Get Inspired</a>
+  <span class="tag animated">Climate Change</span>
+</div>
+
+<div class="library-card" data-category="climate">
+  <h3>Latest Data & Trends</h3>
+  <p>
+    Stay informed with real numbers:<br>
+    <ul>
+      <li>CO₂ levels, temperature records, sea level rise</li>
+      <li>Arctic ice melt and global precipitation maps</li>
+      <li>Follow trusted sources for updated climate data</li>
+    </ul>
+  </p>
+  <a href="#">See Data</a>
+  <span class="tag animated">Climate Change</span>
+</div>
+
+
+<!-- GREEN TECHNOLOGY CONTENT CARDS -->
+<div class="library-card" data-category="tech">
+  <h3>Solar Power in India</h3>
+  <p>
+    How rooftop solar, solar parks, and rural solar lanterns are transforming energy for homes & businesses.<br>
+    <ul>
+      <li>Solar PV panels reduce electricity costs and emissions</li>
+      <li>Large-scale solar parks like Rewa & Charanka</li>
+      <li>Government incentives: subsidies and rooftop schemes</li>
+      <li>Rural electrification with solar microgrids and lanterns</li>
+    </ul>
+  </p>
+  <a href="#">Explore Solar</a>
+  <span class="tag animated">Green Technology</span>
+</div>
+
+<div class="library-card" data-category="tech">
+  <h3>Wind Energy: Harnessing Clean Air</h3>
+  <p>
+    How wind turbines—from the coasts of Gujarat to the hills of Tamil Nadu—help power India.<br>
+    <ul>
+      <li>Wind farms generate renewable electricity</li>
+      <li>Clean, non-polluting, harnesses India's wind-rich regions</li>
+      <li>Tech advances: tall towers, digital monitoring, hybrid plants</li>
+      <li>India is among the world’s top wind energy producers</li>
+    </ul>
+  </p>
+  <a href="#">Learn About Wind</a>
+  <span class="tag animated">Green Technology</span>
+</div>
+
+<div class="library-card" data-category="tech">
+  <h3>Electric Vehicles & E-Mobility in Cities</h3>
+  <p>
+    E-rickshaws, electric buses, and charging stations are revolutionizing urban transport and lowering pollution.<br>
+    <ul>
+      <li>Growth in affordable electric cars, bikes, e-rickshaws</li>
+      <li>Charging infrastructure in major city hubs</li>
+      <li>Reduces dependence on petrol/diesel, slashes urban emissions</li>
+      <li>Govt. incentives: FAME India scheme</li>
+    </ul>
+  </p>
+  <a href="#">Discover E-Mobility</a>
+  <span class="tag animated">Green Technology</span>
+</div>
+
+<div class="library-card" data-category="tech">
+  <h3>Smart Grids & Smart Meters</h3>
+  <p>
+    Modern grids & meters help save power, reduce outages, and let users see & control their energy use.<br>
+    <ul>
+      <li>Smart meters for real-time consumption tracking</li>
+      <li>Load balancing ensures a stable supply</li>
+      <li>Remote monitoring: Early failure detection and faster repairs</li>
+    </ul>
+  </p>
+  <a href="#">Smart Grid Trends</a>
+  <span class="tag animated">Green Technology</span>
+</div>
+
+<div class="library-card" data-category="tech">
+  <h3>Green Buildings & Construction</h3>
+  <p>
+    Modern buildings save water, energy, and materials—India’s IGBC/GRIHA standards at work.<br>
+    <ul>
+      <li>Efficient HVAC, rainwater harvesting, eco-materials</li>
+      <li>Low-energy designs reduce operational costs</li>
+      <li>IGBC, GRIHA are India's green building rating systems</li>
+    </ul>
+  </p>
+  <a href="#">Green Building Guide</a>
+  <span class="tag animated">Green Technology</span>
+</div>
+
+<div class="library-card" data-category="tech">
+  <h3>Innovations in Water Purification</h3>
+  <p>
+    Affordable tech for clean water: UV filters, membranes, and rainwater harvesters.<br>
+    <ul>
+      <li>Household UV & RO filters clean tap water</li>
+      <li>Community-level treatment for remote villages</li>
+      <li>Rainwater harvesting for homes and schools</li>
+      <li>Low-cost water ATMs using IoT</li>
+    </ul>
+  </p>
+  <a href="#">Get Solutions</a>
+  <span class="tag animated">Green Technology</span>
+</div>
+
+<div class="library-card" data-category="tech">
+  <h3>Urban Farming & Hydroponics</h3>
+  <p>
+    Rooftop gardens and hydroponic farms are bringing greenery—and food—back to cities.<br>
+    <ul>
+      <li>Grow veggies/herbs without soil: hydroponics</li>
+      <li>Maximizes yield with less space and water</li>
+      <li>Reduces food miles and city heat</li>
+      <li>Great for apartments and community rooftops</li>
+    </ul>
+  </p>
+  <a href="#">See Urban Farming</a>
+  <span class="tag animated">Green Technology</span>
+</div>
+
+<div class="library-card" data-category="tech">
+  <h3>Bioplastics & Sustainable Packaging</h3>
+  <p>
+    Plant-based alternatives to plastic are helping fight pollution.<br>
+    <ul>
+      <li>Bioplastics made from corn, cassava, algae, etc.</li>
+      <li>Compostable packaging for food & e-commerce</li>
+      <li>India’s single-use plastic ban driving innovation</li>
+    </ul>
+  </p>
+  <a href="#">About Bioplastics</a>
+  <span class="tag animated">Green Technology</span>
+</div>
+
+<div class="library-card" data-category="tech">
+  <h3>Waste-to-Energy Projects</h3>
+  <p>
+    Turning city waste into electricity and biogas keeps landfills smaller and cities cleaner.<br>
+    <ul>
+      <li>Waste management plants in Delhi, Pune, Hyderabad</li>
+      <li>Converts trash to electricity, compost, or gas</li>
+      <li>Decentralized biogas for rural kitchens & schools</li>
+    </ul>
+  </p>
+  <a href="#">Waste-to-Energy</a>
+  <span class="tag animated">Green Technology</span>
+</div>
+
+<div class="library-card" data-category="tech">
+  <h3>Green Tech Startups & Innovations</h3>
+  <p>
+    Meet Indian startups driving the eco-revolution.<br>
+    <ul>
+      <li>Solar-powered irrigation, EV retrofits, bioenzyme cleaners</li>
+      <li>IIT and student-led green tech projects</li>
+      <li>Smart emission monitors, biodegradable cutlery</li>
+    </ul>
+  </p>
+  <a href="#">Meet Innovators</a>
+  <span class="tag animated">Green Technology</span>
+</div>
+
+<!-- RECYCLING & WASTE CONTENT CARDS -->
+<div class="library-card" data-category="recycling">
+  <h3>Beginner’s Guide to Recycling</h3>
+  <p>
+    Start your recycling journey with the basics:<br>
+    <ul>
+      <li>Separate wet (organic) and dry (recyclable) waste at home</li>
+      <li>Clean recyclables (like bottles, cans) before binning</li>
+      <li>Follow your city’s collection system—know your pickup days!</li>
+      <li>Avoid recycling items with food residue or mixed materials</li>
+    </ul>
+  </p>
+  <a href="#">Start Recycling</a>
+  <span class="tag animated">Recycling & Waste</span>
+</div>
+
+<div class="library-card" data-category="recycling">
+  <h3>What Can Be Recycled?</h3>
+  <p>
+    Learn which materials are recyclable and how to identify them:<br>
+    <ul>
+      <li>Paper, cardboard, clean plastics (types #1, #2, #5), glass, and metals are widely accepted</li>
+      <li>Check for the recycling symbol on packaging</li>
+      <li>Avoid recycling soft plastics, used tissues, or soiled containers</li>
+      <li>Some e-waste and batteries have special drop-off locations</li>
+    </ul>
+  </p>
+  <a href="#">List of Recyclables</a>
+  <span class="tag animated">Recycling & Waste</span>
+</div>
+
+<div class="library-card" data-category="recycling">
+  <h3>Composting at Home: Why & How</h3>
+  <p>
+    Turn kitchen waste into useful compost for plants and gardens:<br>
+    <ul>
+      <li>Collect fruit/veggie peels, tea leaves, coffee grounds in a bin</li>
+      <li>Alternate dry (leaves, paper) and wet (food waste) layers</li>
+      <li>Keep moist and turn regularly for faster results</li>
+      <li>Reduces landfill waste and creates nutrient-rich soil</li>
+    </ul>
+  </p>
+  <a href="#">Compost How-To</a>
+  <span class="tag animated">Recycling & Waste</span>
+</div>
+
+<div class="library-card" data-category="recycling">
+  <h3>Reduce Single-Use Plastics</h3>
+  <p>
+    Curb plastic pollution with these swaps:<br>
+    <ul>
+      <li>Say no to plastic straws, cups, bags, and cutlery</li>
+      <li>Switch to cloth bags, reusable bottles, and containers</li>
+      <li>Choose products with minimal or compostable packaging</li>
+      <li>Support businesses with plastic-free policies</li>
+    </ul>
+  </p>
+  <a href="#">Plastic-Free Tips</a>
+  <span class="tag animated">Recycling & Waste</span>
+</div>
+
+<div class="library-card" data-category="recycling">
+  <h3>How India Handles Waste</h3>
+  <p>
+    India's waste management system is evolving:<br>
+    <ul>
+      <li>Municipal collection is increasingly segregated</li>
+      <li>More cities ban plastics or promote composting</li>
+      <li>E-waste disposal and collection centers are growing</li>
+      <li>Community clean-up drives are making a real impact</li>
+    </ul>
+  </p>
+  <a href="#">See Waste Solutions</a>
+  <span class="tag animated">Recycling & Waste</span>
+</div>
+
+<div class="library-card" data-category="recycling">
+  <h3>E-Waste: Safe Disposal Matters</h3>
+  <p>
+    Electronics should never be thrown in regular bins:<br>
+    <ul>
+      <li>Find your city’s e-waste collection centers</li>
+      <li>Donate/recycle old phones, computers, batteries, chargers</li>
+      <li>Hazardous chemicals can pollute soil and water if landfilled</li>
+      <li>Take-back programs exist for many electronics brands</li>
+    </ul>
+  </p>
+  <a href="#">E-Waste Guide</a>
+  <span class="tag animated">Recycling & Waste</span>
+</div>
+
+<div class="library-card" data-category="recycling">
+  <h3>Wet Waste vs Dry Waste</h3>
+  <p>
+    Know the difference for effective segregation:<br>
+    <ul>
+      <li>Wet: Food scraps, peels, leftovers (compostable)</li>
+      <li>Dry: Paper, plastics, metals, glass (recyclable)</li>
+      <li>Segregation leads to more recycling and less landfill</li>
+      <li>Hazardous: Medicines, cleaners, batteries; handle separately</li>
+    </ul>
+  </p>
+  <a href="#">Segregation 101</a>
+  <span class="tag animated">Recycling & Waste</span>
+</div>
+
+<div class="library-card" data-category="recycling">
+  <h3>Community Recycling Initiatives</h3>
+  <p>
+    Get involved in local sustainability efforts:<br>
+    <ul>
+      <li>Join or start a local clean-up or recycling drive</li>
+      <li>Encourage society/school/office collection bins</li>
+      <li>Promote zero-waste events and workshops</li>
+      <li>Collaborate with NGOs to maximize impact</li>
+    </ul>
+  </p>
+  <a href="#">Find Local Projects</a>
+  <span class="tag animated">Recycling & Waste</span>
+</div>
+
+<div class="library-card" data-category="recycling">
+  <h3>Myths & Facts about Recycling</h3>
+  <p>
+    Clear up common misconceptions:<br>
+    <ul>
+      <li>“Everything with a recycling symbol is recyclable” (not true)</li>
+      <li>Recycling must be clean and sorted to actually work</li>
+      <li>Recycled materials save energy and reduce pollution</li>
+      <li>India’s informal recycling sector is vast and impactful</li>
+    </ul>
+  </p>
+  <a href="#">Bust the Myths</a>
+  <span class="tag animated">Recycling & Waste</span>
+</div>
+
+<div class="library-card" data-category="recycling">
+  <h3>Zero Waste Lifestyle</h3>
+  <p>
+    Live lighter on the planet:<br>
+    <ul>
+      <li>Refuse what you don’t need, reduce what you do</li>
+      <li>Reuse and repair before recycling</li>
+      <li>Compost organic waste for plants/gardens</li>
+      <li>Track your trash for a month—and set goals to shrink it!</li>
+    </ul>
+  </p>
+  <a href="#">Zero Waste Guide</a>
+  <span class="tag animated">Recycling & Waste</span>
+</div>
+
+
+<!-- BOOKS & READMES CONTENT CARDS -->
+<div class="library-card" data-category="books">
+  <h3>The Story of Stuff – Annie Leonard</h3>
+  <p>
+    A deep dive into how our “stuff” is made, used, and discarded—unpacking the hidden costs of consumer culture and how we can do better.<br>
+    <ul>
+      <li>Explains product life cycles and waste</li>
+      <li>Stories from India and global examples</li>
+      <li>Focus: Action for waste reduction and ethical choices</li>
+    </ul>
+  </p>
+  <a href="#">Read Sample Chapter</a>
+  <span class="tag animated">Books & Readmes</span>
+</div>
+
+<div class="library-card" data-category="books">
+  <h3>Zero Waste Home – Bea Johnson</h3>
+  <p>
+    Practical, step-by-step strategies to minimize waste at home—by the world’s leading zero-waste advocate.<br>
+    <ul>
+      <li>Starter tips for Indian households</li>
+      <li>Focus on the 5Rs: Refuse, Reduce, Reuse, Recycle, Rot</li>
+      <li>Includes checklists and DIY guidance</li>
+    </ul>
+  </p>
+  <a href="#">Free Readme Guide</a>
+  <span class="tag animated">Books & Readmes</span>
+</div>
+
+<div class="library-card" data-category="books">
+  <h3>Drawdown – Paul Hawken</h3>
+  <p>
+    A collection of the top 100 solutions to reverse global warming, backed by science and inspiring true stories.<br>
+    <ul>
+      <li>Focus: climate change action, renewable energy, food</li>
+      <li>Simple language for students and activists</li>
+      <li>Visuals, case studies, and future forecasts</li>
+    </ul>
+  </p>
+  <a href="#">Official PDF Overview</a>
+  <span class="tag animated">Books & Readmes</span>
+</div>
+
+<div class="library-card" data-category="books">
+  <h3>Introduction to Environmental Science (OER eBook)</h3>
+  <p>
+    An open-access textbook perfect for beginners and educators, packed with visuals and India-specific examples.<br>
+    <ul>
+      <li>Chapters on pollution, biodiversity, green chemistry</li>
+      <li>Quizzes, project ideas, and further reading links</li>
+      <li>Freely downloadable for all users</li>
+    </ul>
+  </p>
+  <a href="#">Read Full eBook</a>
+  <span class="tag animated">Books & Readmes</span>
+</div>
+
+<div class="library-card" data-category="books">
+  <h3>The Circular Economy – Ken Webster</h3>
+  <p>
+    How products, services, and economies can shift from wasteful linear models to “circle back” and reuse materials.<br>
+    <ul>
+      <li>Illustrated with real world industry and start-up stories</li>
+      <li>How to design out waste from the start</li>
+      <li>Great for students interested in innovation & green business</li>
+    </ul>
+  </p>
+  <a href="#">Guide Overview</a>
+  <span class="tag animated">Books & Readmes</span>
+</div>
+
+<div class="library-card" data-category="books">
+  <h3>Handbook: Composting in Indian Cities</h3>
+  <p>
+    A practical readme for beginners—how to compost kitchen waste, what methods work best, and where to learn more.<br>
+    <ul>
+      <li>Compost basics, troubleshooting, FAQ</li>
+      <li>Model projects and city support programs</li>
+      <li>Stepwise diagrams and checklist included</li>
+    </ul>
+  </p>
+  <a href="#">Download Handbook</a>
+  <span class="tag animated">Books & Readmes</span>
+</div>
+
+<div class="library-card" data-category="books">
+  <h3>Plastic-Free: How I Kicked the Plastic Habit – Beth Terry</h3>
+  <p>
+    Real-life tips and inspiration for reducing single-use plastic in urban lifestyles—adapted for Indian context.<br>
+    <ul>
+      <li>Alternatives for shopping, food storage, traveling</li>
+      <li>Success stories and product recommendations</li>
+      <li>Printable pledge card and daily tracker template</li>
+    </ul>
+  </p>
+  <a href="#">Read Sample & Tools</a>
+  <span class="tag animated">Books & Readmes</span>
+</div>
+
+<div class="library-card" data-category="books">
+  <h3>Green Tech Primer: From Solar to Bioplastics</h3>
+  <p>
+    A curated PDF “readme” explaining today’s top green technologies—perfect for learners and teachers.<br>
+    <ul>
+      <li>Solar, wind, hydro power explained</li>
+      <li>Section on Indian case studies and grassroots innovation</li>
+      <li>Glossary and how-to-get-involved tips</li>
+    </ul>
+  </p>
+  <a href="#">Download Primer</a>
+  <span class="tag animated">Books & Readmes</span>
+</div>
+
+<div class="library-card" data-category="books">
+  <h3>Eco-Anthologies: Stories of Change in India</h3>
+  <p>
+    Inspiring real-life stories of eco-activists, scientists, and youth movements making a difference in India.<br>
+    <ul>
+      <li>Short, engaging chapters suitable for all ages</li>
+      <li>Focus on rivers, forests, cities, and villages</li>
+      <li>Discussion & reflection questions for classrooms</li>
+    </ul>
+  </p>
+  <a href="#">Read Anthology</a>
+  <span class="tag animated">Books & Readmes</span>
+</div>
+
+<div class="library-card" data-category="books">
+  <h3>Zero Waste Festival Toolkit (Readme)</h3>
+  <p>
+    How to plan and run campus/community events with zero-waste principles—includes checklists, posters, templates.<br>
+    <ul>
+      <li>For teachers, coordinators, and student leaders</li>
+      <li>Material sourcing, setup, and post-event reporting</li>
+      <li>Success stories from Indian colleges and NGOs</li>
+    </ul>
+  </p>
+  <a href="#">Download Toolkit</a>
+  <span class="tag animated">Books & Readmes</span>
+</div>
+
+
+<!-- VIDEO LECTURES CONTENT CARDS -->
+<div class="video-card" data-category="videos">
+  <div class="video-thumbnail-anim">
+    <iframe src="https://www.youtube.com/embed/EtW2rrLHs08" title="What is Climate Change? (TED-Ed)" allowfullscreen></iframe>
+  </div>
+  <div>
+    <strong>What is Climate Change? (TED-Ed)</strong>
+    <p>An animated explanation of the science, causes, and effects of climate change worldwide.</p>
+    <span class="tag animated">Climate Change</span>
+  </div>
+</div>
+
+<div class="video-card" data-category="videos">
+  <div class="video-thumbnail-anim">
+    <iframe src="https://www.youtube.com/embed/EwQOD_Ir2vQ" title="How Solar Energy Works (National Geographic)" allowfullscreen></iframe>
+  </div>
+  <div>
+    <strong>How Solar Energy Works (National Geographic)</strong>
+    <p>Clear visuals and real-world examples of solar power systems making a difference globally.</p>
+    <span class="tag animated">Green Technology</span>
+  </div>
+</div>
+
+<div class="video-card" data-category="videos">
+  <div class="video-thumbnail-anim">
+    <iframe src="https://www.youtube.com/embed/vo7zqHJYjtc" title="The Story of Plastic Pollution (Our Changing Climate)" allowfullscreen></iframe>
+  </div>
+  <div>
+    <strong>The Story of Plastic Pollution (Our Changing Climate)</strong>
+    <p>Understand the roots and impacts of plastic pollution, and innovative solutions from around the world.</p>
+    <span class="tag animated">Recycling & Waste</span>
+  </div>
+</div>
+
+<div class="video-card" data-category="videos">
+  <div class="video-thumbnail-anim">
+    <iframe src="https://www.youtube.com/embed/h7eB7ZeLpPo" title="Zero Waste Cooking Challenge (Soultree India)" allowfullscreen></iframe>
+  </div>
+  <div>
+    <strong>Zero Waste Cooking Challenge (Soultree India)</strong>
+    <p>Tips and inspiration for reducing waste in Indian kitchens, featuring creative recipes and family stories.</p>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+</div>
+
+<div class="video-card" data-category="videos">
+  <div class="video-thumbnail-anim">
+    <iframe src="https://www.youtube.com/embed/3B9TjFvbK40" title="Hydroponics in Urban India (DD Kisan)" allowfullscreen></iframe>
+  </div>
+  <div>
+    <strong>Hydroponics in Urban India (DD Kisan)</strong>
+    <p>A tour of modern city farms and how technology is bringing fresh food to urban tables in India.</p>
+    <span class="tag animated">Green Technology</span>
+  </div>
+</div>
+
+<div class="video-card" data-category="videos">
+  <div class="video-thumbnail-anim">
+    <iframe src="https://www.youtube.com/embed/5qfIwQzN97g" title="Understanding Wet Waste vs Dry Waste (MyGov India)" allowfullscreen></iframe>
+  </div>
+  <div>
+    <strong>Wet Waste vs Dry Waste (MyGov India)</strong>
+    <p>Official explainer from MyGov India to help every household get waste segregation right.</p>
+    <span class="tag animated">Recycling & Waste</span>
+  </div>
+</div>
+
+<div class="video-card" data-category="videos">
+  <div class="video-thumbnail-anim">
+    <iframe src="https://www.youtube.com/embed/vpTHi7O66pI" title="How Renewable Energy Can Power the World (Kurzgesagt)" allowfullscreen></iframe>
+  </div>
+  <div>
+    <strong>How Renewable Energy Can Power the World (Kurzgesagt)</strong>
+    <p>Science-based, engaging visuals on how solar, wind, and more could shift the world off fossil fuels.</p>
+    <span class="tag animated">Green Technology</span>
+  </div>
+</div>
+
+<div class="video-card" data-category="videos">
+  <div class="video-thumbnail-anim">
+    <iframe src="https://www.youtube.com/embed/3CM_KkDuzGQ" title="Composting Made Simple (Swachh Bharat Mission)" allowfullscreen></iframe>
+  </div>
+  <div>
+    <strong>Composting Made Simple (Swachh Bharat Mission)</strong>
+    <p>Government-backed guide: Start composting at home with local tips and tools for every Indian family.</p>
+    <span class="tag animated">Recycling & Waste</span>
+  </div>
+</div>
+
+<div class="video-card" data-category="videos">
+  <div class="video-thumbnail-anim">
+    <iframe src="https://www.youtube.com/embed/0zsgNfMBclM" title="Living Green: Easy Eco-Friendly Habits (Crash Course)" allowfullscreen></iframe>
+  </div>
+  <div>
+    <strong>Living Green: Easy Eco-Friendly Habits (Crash Course)</strong>
+    <p>Quick, animated tips to start living more sustainably no matter where you are.</p>
+    <span class="tag animated">Sustainable Living</span>
+  </div>
+</div>
+
+<div class="video-card" data-category="videos">
+  <div class="video-thumbnail-anim">
+    <iframe src="https://www.youtube.com/embed/FDlTjmuiyQY" title="Indian Youth for Climate (The Better India)" allowfullscreen></iframe>
+  </div>
+  <div>
+    <strong>Indian Youth for Climate (The Better India)</strong>
+    <p>Meet young changemakers: how students and grassroots leaders are making a difference for India’s environment.</p>
+    <span class="tag animated">Climate Change</span>
+  </div>
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+    
+    <div id="no-results" class="no-results-message hidden">No matching resources found.</div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="eco-footer">
+  <span>&copy; 2025 Eco Learn Punjab. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="/" class="footer-link">Home</a>
+    <a href="/privacy" class="footer-link">Privacy</a>
+    <a href="/contact" class="footer-link">Contact</a>
+  </div>
+</footer>
+ 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const categoryBtns = document.querySelectorAll('.category-btn');
+  const cards = document.querySelectorAll('.library-card, .video-card');
+  const searchInput = document.getElementById('library-search');
+  const noResultsMsg = document.getElementById('no-results');
+  const animIndicator = document.querySelector('.category-anim-indicator');
+
+  // Animate cards on load
+  cards.forEach((card, i) => {
+    card.style.setProperty('--card-delay', (i * 0.05) + 's'); // Or use: ${i * 0.05}s
+  });
+
+  // Move animated indicator
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      categoryBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      cardFilter(btn.getAttribute('data-category'), searchInput.value);
+
+      // Move bar
+      let rect = btn.getBoundingClientRect();
+      let parentRect = btn.parentNode.getBoundingClientRect();
+      animIndicator.style.width = rect.width + 'px';
+      animIndicator.style.left = (rect.left - parentRect.left) + 'px';
+    });
+  });
+
+  // Search bar live filter + anim
+  searchInput.addEventListener('input', function() {
+    let activeCat = document.querySelector('.category-btn.active').getAttribute('data-category');
+    cardFilter(activeCat, this.value);
+  });
+
+  // Filtering function
+  function cardFilter(category, query) {
+    query = (query || "").toLowerCase().trim();
+    let matches = 0;
+    cards.forEach(card => {
+      let show = (category === 'all' || card.dataset.category === category);
+      if (show && query) {
+        show = card.textContent.toLowerCase().includes(query);
+      }
+      card.style.display = show ? 'flex' : 'none';
+      if (show) matches++;
+    });
+    if (noResultsMsg) {
+      noResultsMsg.classList.toggle('hidden', matches > 0);
+    }
+  }
+
+  // Init animate indicator
+  setTimeout(() => {
+    let btn = document.querySelector('.category-btn.active');
+    if (btn && animIndicator) {
+      let rect = btn.getBoundingClientRect();
+      let parentRect = btn.parentNode.getBoundingClientRect();
+      animIndicator.style.width = rect.width + 'px';
+      animIndicator.style.left = (rect.left - parentRect.left) + 'px';
+    }
+  }, 150);
+});
+
+</script>
+
+</body>
+</html>

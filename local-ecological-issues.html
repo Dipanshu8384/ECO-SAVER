@@ -1,152 +1,205 @@
+<!-- EcoLearn Punjab Animated Environment Page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Local Ecological Issues</title>
+  <title>Major Environmental Issues | EcoLearn Punjab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
-    body { min-height: 100vh; background: #f6fcf4; }
-    .issue-img { width: 100%; max-width: 320px; height: 200px; object-fit: cover; border-radius: 1rem; }
-    .issue-card { background: #fff; border-radius: 1.5rem; box-shadow: 0 4px 24px rgba(32,196,182,0.08); padding: 2rem; margin-bottom: 2rem; display: flex; flex-direction: column; align-items: center; }
-    @media (min-width: 768px) {
-      .issue-card { flex-direction: row; align-items: flex-start; }
-      .issue-content { margin-left: 2rem; }
+    :root {
+      --brand: #17984a;
+      --accent: #23ba6b;
+      --brand-light: #e9fdf2;
+      --brand-shadow: 0 6px 32px #32dfa71b;
+    }
+    body { font-family: 'Open Sans', 'Poppins', Arial, sans-serif; min-height: 100vh; background: linear-gradient(120deg,#eafcf3 60%,#e3fae6 96%);}
+    .eco-card {
+      background: linear-gradient(112deg,#fff 85%,#c0ffe8 100%);
+      border-radius: 1.3em;
+      box-shadow: var(--brand-shadow);
+      border: 2px solid #dcfbe6;
+      padding: 1.8rem 1.5rem 1.5rem 2.1rem;
+      margin-bottom: 1.7em;
+      display: flex; flex-direction:column; align-items:flex-start;
+      opacity: 0; transform: translateY(70px) scale(.97);
+      transition: box-shadow .25s,transform .28s;
+    }
+    .eco-card.visible { opacity:1; transform: none; animation: fadeInUp .95s cubic-bezier(.22,1.25,.47,1.10) both;}
+    .eco-card:hover { box-shadow: 0 10px 34px #23ba6b29, 0 0px 0px #fff; transform: scale(1.03);}
+    .eco-card .eco-icon {
+      font-size:2.3em; margin-bottom:.14em; display:inline-block;
+      animation: heartBeat 1.7s both;
+    }
+    .eco-main-cta {
+      background: linear-gradient(90deg,#23ba6b,#159943 98%);
+      color: #fff;
+      font-weight: 900;
+      border-radius: 1.3em;
+      box-shadow: 0 7px 35px #52e88b1c;
+      font-size:1.17em; letter-spacing:0.03em; transition:.18s;
+      padding:1.1em 2.5em; display:inline-block;
+      animation: bounceIn 1s both, bounce 2.4s 1.4s infinite;
+    }
+    .eco-main-cta:hover {background: linear-gradient(90deg,#17984a,#2de076);}
+    .eco-points-sticky {
+      position: fixed;
+      top: 1.3em; right: 1.8em; z-index: 50;
+      background: #fff;
+      color: var(--brand);
+      border-radius:1em;
+      box-shadow: 0 5px 23px #119e6012;
+      display: flex; align-items: center;
+      gap:.7em;
+      padding:.45em 1.2em;
+      font-family:'Poppins',sans-serif;
+      font-weight: 800;
+      font-size:1.19em;
+      animation:fadeInDown .7s;
+    }
+    @media (max-width:700px) {.eco-points-sticky{top:0.55em;right:.61em; font-size:1em;}}
+    .eco-points-star {font-size:1.35em;color:var(--accent);}
+    .eco-points-val { margin: 0 .09em 0 0; color:#129869;}
+    .eco-level-badge {
+      background:var(--accent);color:#fff;border-radius:.8em;font-size:.82em;font-weight:700;padding:.18em .7em;margin-left:.4em;
+      box-shadow:0 2px 7px #63fcde2e;
+      animation: tada 1.6s .7s infinite;
+    }
+    /* Animate cards on scroll */
+    @keyframes fadeInUp{ from{opacity:0;transform:translateY(60px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes bounceIn{
+      0% {transform: scale(.85);}
+      70% {transform: scale(1.11);}
+      100% {transform:scale(1);}
     }
   </style>
 </head>
-<body class="min-h-screen bg-[#f6fcf4] font-inter">
-  <!-- Navbar with Profile, Points, Avatar -->
-  <nav class="w-full bg-[#f6fcf4] nav-shadow sticky top-0 z-40">
-    <div class="container mx-auto flex items-center justify-between px-8 py-3">
-      <div class="flex items-center gap-3">
-        <img src="LOGO.jpg" alt="EcoSaver Logo" class="w-12 h-12 rounded-lg object-contain bg-[#20c4b6] p-1" />
-        <span class="font-bold text-lg text-gray-900">EcoSaver</span>
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-2 px-2 py-1 rounded-xl bg-[#e1f7ef] border border-[#20c4b6] font-semibold text-[#20c4b6]" id="ecoPointsDisplay">
-          <span>♻</span>
-          <span id="ecoPointsNum">120</span> pts
-        </div>
-        <a href="login.html" class="text-[#20c4b6] font-semibold px-4 py-2 rounded hover:bg-[#e1f7ef] transition">Dashboard</a>
-      </div>
+<body class="min-h-screen bg-gradient-to-br from-emerald-50 via-green-100 to-white text-green-900">
+
+<!-- Sticky Eco Points Card -->
+<div class="eco-points-sticky shadow" id="ecoPointsBadge">
+  <span class="eco-points-star animate__animated animate__tada animate__infinite">★</span>
+  <span class="eco-points-val" id="ecoPointsNum">120</span>
+  <span>points</span>
+  <span class="eco-level-badge">Green Learner</span>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container mx-auto px-2 sm:px-4 py-10">
+  <h1 class="text-4xl font-extrabold text-[#17984a] mb-5 text-center tracking-tight">Major Environmental Issues in Punjab</h1>
+  <p class="max-w-2xl mx-auto text-center mb-12 text-lg text-[#167a50] font-semibold animate__animated animate__fadeIn">
+    Punjab faces urgent ecological challenges. Explore the issues and see how YOU can help build a greener future!
+  </p>
+
+  <div class="space-y-9">
+    <!-- Issue 1 -->
+    <div class="eco-card">
+      <span class="eco-icon animate__animated animate__fadeInDown">💧</span>
+      <h2 class="font-bold text-2xl mb-2 text-[#23ba6b]">Groundwater Depletion</h2>
+      <p class="text-[#25724d] font-medium">
+        Over-extraction for crops like paddy has pushed most districts into “over-exploited” or “critical” zones, threatening farming and future supplies. <br>
+        <span class="text-sm text-[#159943]">Try: Save water at home, campaign for efficient <b>drip irrigation</b>.</span>
+      </p>
     </div>
-    <nav class="flex flex-wrap gap-2 md:gap-4 container mx-auto px-4 mt-2">
-      <a href="login.html#challenges" class="text-white hover:text-green-200 font-semibold">Challenges</a>
-      <a href="login.html#learn" class="text-white hover:text-green-200 font-semibold">Learn</a>
-      <a href="login.html#community" class="text-white hover:text-green-200 font-semibold">Community</a>
-      <a href="login.html#impact" class="text-white hover:text-green-200 font-semibold">Impact</a>
-      <a href="login.html#habits" class="text-white hover:text-green-200 font-semibold">Habits</a>
-      <a href="login.html#eco-tips" class="text-white hover:text-green-200 font-semibold">Eco Tips</a>
-      <a href="login.html#leaderboard" class="text-white hover:text-green-200 font-semibold">Leaderboard</a>
-    </nav>
-  </nav>
-  <div class="container mx-auto px-4 py-10">
-    <h1 class="text-4xl font-bold text-[#20c4b6] mb-8 text-center">Major Local Ecological Issues in India</h1>
-    <div class="space-y-10">
-      <div class="issue-card">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Air Pollution in Delhi" class="issue-img">
-        <div class="issue-content">
-          <h2 class="font-bold text-2xl mb-2">1. Air Pollution in Delhi</h2>
-          <p class="text-gray-700">Delhi, India's capital, is infamous for its hazardous air quality, especially during winter months. The city often records Air Quality Index (AQI) levels in the 'severe' category, making it one of the most polluted cities globally. The primary contributors are vehicular emissions, industrial discharges, construction dust, and the seasonal burning of crop stubble in neighboring states. During November, a thick smog engulfs the city, reducing visibility and causing respiratory issues for millions. Prolonged exposure to such air can lead to chronic bronchitis, asthma, and even heart disease. The government has implemented measures like the odd-even vehicle rule, bans on firecrackers, and promoting public transport, but the problem persists. Citizens are encouraged to use masks, air purifiers, and support green initiatives like tree plantation and carpooling. Addressing Delhi's air pollution requires coordinated efforts from government, industry, and the public to ensure cleaner air for future generations.</p>
-        </div>
-      </div>
-      <div class="issue-card">
-        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80" alt="Water Scarcity in Chennai" class="issue-img">
-        <div class="issue-content">
-          <h2 class="font-bold text-2xl mb-2">2. Water Scarcity in Chennai</h2>
-          <p class="text-gray-700">Chennai, a major metropolitan city in southern India, has faced severe water crises in recent years. In 2019, the city made global headlines when its main reservoirs dried up, forcing residents to depend on water tankers and distant sources. The crisis was caused by a combination of poor rainfall, over-extraction of groundwater, rapid urbanization, and mismanagement of water resources. Many lakes and wetlands that once acted as natural reservoirs have been encroached upon or polluted. The government and NGOs have since promoted rainwater harvesting, restoration of water bodies, and efficient water use in households and industries. However, sustainable water management remains a challenge as the city continues to grow. Citizens are urged to fix leaks, reuse greywater, and support community efforts to revive local lakes and ponds. Ensuring water security for Chennai requires a long-term vision and active participation from all stakeholders.</p>
-        </div>
-      </div>
-      <div class="issue-card">
-        <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80" alt="Plastic Pollution in Mumbai" class="issue-img">
-        <div class="issue-content">
-          <h2 class="font-bold text-2xl mb-2">3. Plastic Pollution in Mumbai</h2>
-          <p class="text-gray-700">Mumbai, India's financial capital, is also a hotspot for plastic pollution, especially along its coastline. Every monsoon, tons of plastic waste are washed onto beaches like Versova and Juhu, endangering marine life and causing urban flooding. Single-use plastics, such as bags, bottles, and packaging, are the main culprits. The city has banned certain plastic items, but enforcement remains a challenge. Local volunteers and NGOs regularly organize beach cleanups, raising awareness about the dangers of plastic to both humans and wildlife. Microplastics have been found in fish and even drinking water, posing health risks. Citizens are encouraged to reduce plastic use, switch to cloth bags and reusable containers, and segregate waste at source. Mumbai's fight against plastic pollution is ongoing, requiring both policy changes and behavioral shifts among its residents.</p>
-        </div>
-      </div>
-      <div class="issue-card">
-        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" alt="Deforestation in North-East India" class="issue-img">
-        <div class="issue-content">
-          <h2 class="font-bold text-2xl mb-2">4. Deforestation in North-East India</h2>
-          <p class="text-gray-700">The North-East region of India is a biodiversity hotspot, home to unique flora and fauna as well as many indigenous communities. However, large-scale deforestation for shifting cultivation (jhum), logging, and infrastructure projects has led to habitat loss and soil erosion. Forest cover is shrinking, threatening endangered species like the Hoolock Gibbon and the Indian Hornbill. Deforestation also disrupts the traditional livelihoods of local tribes, who depend on forests for food, medicine, and culture. Conservation efforts include promoting sustainable agriculture, community forestry, and eco-tourism. Protecting the North-East's forests is crucial for maintaining ecological balance and supporting the region's rich cultural heritage.</p>
-        </div>
-      </div>
-      <div class="issue-card">
-        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="River Pollution in Ganga & Yamuna" class="issue-img">
-        <div class="issue-content">
-          <h2 class="font-bold text-2xl mb-2">5. River Pollution in Ganga & Yamuna</h2>
-          <p class="text-gray-700">The Ganga and Yamuna rivers are considered sacred by millions, but they are also among the most polluted rivers in the world. Industrial effluents, untreated sewage, agricultural runoff, and religious offerings contribute to high levels of toxins and pathogens. This pollution affects not only aquatic life but also the health of people who use river water for drinking, bathing, and irrigation. The government has launched initiatives like Namami Gange to clean and rejuvenate these rivers, but progress is slow. Community participation, stricter enforcement of pollution norms, and investment in sewage treatment are essential for restoring the health of these lifelines of India.</p>
-        </div>
-      </div>
-      <div class="issue-card">
-        <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=800&q=80" alt="Urban Heat Islands in Ahmedabad" class="issue-img">
-        <div class="issue-content">
-          <h2 class="font-bold text-2xl mb-2">6. Urban Heat Islands in Ahmedabad</h2>
-          <p class="text-gray-700">Ahmedabad, like many Indian cities, is experiencing the urban heat island effect, where built-up areas become significantly warmer than surrounding rural regions. This is due to the replacement of natural vegetation with concrete, asphalt, and buildings, which absorb and retain heat. The lack of green spaces and water bodies exacerbates the problem, leading to higher energy consumption for cooling and increased health risks during heatwaves. The city has launched a Heat Action Plan, promoting cool roofs, tree plantation, and public awareness campaigns. Urban planning that prioritizes green infrastructure is key to mitigating heat islands and making cities more livable.</p>
-        </div>
-      </div>
-      <div class="issue-card">
-        <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80" alt="Mangrove Loss in Sundarbans" class="issue-img">
-        <div class="issue-content">
-          <h2 class="font-bold text-2xl mb-2">7. Mangrove Loss in Sundarbans</h2>
-          <p class="text-gray-700">The Sundarbans, the world's largest mangrove forest, straddles India and Bangladesh and is a UNESCO World Heritage Site. Rising sea levels, frequent cyclones, and human encroachment are causing rapid loss of mangrove cover. This threatens the habitat of the endangered Royal Bengal Tiger and many other species. Mangroves act as natural barriers against storms and help in carbon sequestration. Conservation efforts include replanting mangroves, regulating fishing, and involving local communities in protection. Preserving the Sundarbans is vital for biodiversity, climate resilience, and the livelihoods of millions who depend on its resources.</p>
-        </div>
-      </div>
-      <div class="issue-card">
-        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80" alt="Desertification in Rajasthan" class="issue-img">
-        <div class="issue-content">
-          <h2 class="font-bold text-2xl mb-2">8. Desertification in Rajasthan</h2>
-          <p class="text-gray-700">Rajasthan, India's largest state, is facing the threat of desertification, where fertile land turns into desert due to overgrazing, deforestation, and climate change. The Thar Desert is expanding, reducing agricultural productivity and affecting rural livelihoods. Sandstorms, water scarcity, and loss of vegetation are common problems. The government has initiated afforestation drives, water conservation projects, and sustainable farming practices to combat desertification. Community participation is crucial, as local knowledge and traditional methods can help restore degraded lands and ensure food security for future generations.</p>
-        </div>
-      </div>
-      <div class="issue-card">
-        <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80" alt="Human-Wildlife Conflict in Uttarakhand" class="issue-img">
-        <div class="issue-content">
-          <h2 class="font-bold text-2xl mb-2">9. Human-Wildlife Conflict in Uttarakhand</h2>
-          <p class="text-gray-700">Uttarakhand, a Himalayan state, is witnessing increasing conflicts between humans and wildlife as villages expand into forested areas. Elephants, leopards, and bears sometimes enter settlements in search of food, leading to crop damage, livestock loss, and even human casualties. The government has set up compensation schemes, early warning systems, and community awareness programs to reduce conflict. Protecting wildlife corridors, restoring habitats, and involving local people in conservation are essential for peaceful coexistence and biodiversity protection.</p>
-        </div>
-      </div>
-      <div class="issue-card">
-        <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="E-Waste in Bengaluru" class="issue-img">
-        <div class="issue-content">
-          <h2 class="font-bold text-2xl mb-2">10. E-Waste in Bengaluru</h2>
-          <p class="text-gray-700">Bengaluru, India's tech capital, generates thousands of tons of electronic waste every year. Much of this e-waste is processed informally, with workers dismantling devices by hand, often without protective gear. This leads to the release of toxic substances like lead, mercury, and cadmium, contaminating soil and water. The city has set up e-waste collection centers and recycling plants, but awareness and participation remain low. Citizens are encouraged to dispose of old electronics responsibly and support certified recyclers. Managing e-waste sustainably is vital for protecting both the environment and public health in India's rapidly growing cities.</p>
-        </div>
-      </div>
+    <!-- Issue 2 -->
+    <div class="eco-card">
+      <span class="eco-icon animate__animated animate__fadeInDown">🌫️</span>
+      <h2 class="font-bold text-2xl mb-2 text-[#23ba6b]">Air Pollution</h2>
+      <p class="text-[#25724d] font-medium">
+        Stubble burning, plus emissions from vehicles/industry, creates hazardous air—especially every winter. Punjab's air even affects neighboring states.<br>
+        <span class="text-sm text-[#159943]">Try: Join awareness drives, and support alt. uses of crop residue (compost, biogas).</span>
+      </p>
     </div>
-    <div class="text-center mt-10">
-      <a href="login.html" class="inline-block px-6 py-3 bg-gray-200 text-[#20c4b6] rounded hover:bg-[#e1f7ef] font-semibold text-lg">&larr; Back to Dashboard</a>
+    <!-- Issue 3 -->
+    <div class="eco-card">
+      <span class="eco-icon animate__animated animate__fadeInDown">💦</span>
+      <h2 class="font-bold text-2xl mb-2 text-[#23ba6b]">Water Pollution</h2>
+      <p class="text-[#25724d] font-medium">
+        Untreated sewage, chemical run-off and industry pollute rivers and groundwater. This impacts health and biodiversity.<br>
+        <span class="text-sm text-[#159943]">Try: Support wetland clean-up events!</span>
+      </p>
+    </div>
+    <!-- Issue 4 -->
+    <div class="eco-card">
+      <span class="eco-icon animate__animated animate__fadeInDown">🪨</span>
+      <h2 class="font-bold text-2xl mb-2 text-[#23ba6b]">Land Degradation</h2>
+      <p class="text-[#25724d] font-medium">
+        Overuse of fertilizers, single-crop farming, and neglect create erosion and soil loss across Punjab.<br>
+        <span class="text-sm text-[#159943]">Try: Compost, rotate crops, and join neighbourhood “green belt” projects.</span>
+      </p>
+    </div>
+    <!-- Issue 5 -->
+    <div class="eco-card">
+      <span class="eco-icon animate__animated animate__fadeInDown">🌊</span>
+      <h2 class="font-bold text-2xl mb-2 text-[#23ba6b]">Floods & Climate Impacts</h2>
+      <p class="text-[#25724d] font-medium">
+        2025’s devastating floods—Punjab’s worst in decades—were worsened by heavy rain, lost wetlands, and climate change.<br>
+        <span class="text-sm text-[#159943]">Try: Plant trees, join floodplain cleanups, advocate for resilient infrastructure.</span>
+      </p>
+    </div>
+    <!-- Issue 6 -->
+    <div class="eco-card">
+      <span class="eco-icon animate__animated animate__fadeInDown">🦋</span>
+      <h2 class="font-bold text-2xl mb-2 text-[#23ba6b]">Biodiversity Loss</h2>
+      <p class="text-[#25724d] font-medium">
+        Loss of forests and wetlands puts Punjab’s unique species at risk, from sarus cranes to local herbs.<br>
+        <span class="text-sm text-[#159943]">Try: Support local afforestation, help map local species!</span>
+      </p>
     </div>
   </div>
-  <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const darkModeToggle = document.getElementById('darkModeToggle');
-  const iconSun = document.getElementById('iconSun');
-  const iconMoon = document.getElementById('iconMoon');
-  // On page load, check localStorage
-  if (localStorage.getItem('darkMode') === 'enabled') {
-    document.body.classList.add('dark');
-    if (iconSun && iconMoon) {
-      iconSun.classList.add('hidden');
-      iconMoon.classList.remove('hidden');
-    }
-  }
-  if (darkModeToggle && iconSun && iconMoon) {
-    darkModeToggle.addEventListener('click', function() {
-      document.body.classList.toggle('dark');
-      const isDark = document.body.classList.contains('dark');
-      if (isDark) {
-        localStorage.setItem('darkMode', 'enabled');
-        iconSun.classList.add('hidden');
-        iconMoon.classList.remove('hidden');
-      } else {
-        localStorage.setItem('darkMode', 'disabled');
-        iconSun.classList.remove('hidden');
-        iconMoon.classList.add('hidden');
-      }
-    });
-  }
-});
+
+  <h2 class="text-2xl font-extrabold text-[#159943] mt-14 mb-5 text-center animate__animated animate__fadeInDown">
+    How You Can Make a Difference ✨
+  </h2>
+  <ul class="max-w-2xl mx-auto bg-[#e7fbee] rounded-2xl shadow px-6 py-6 mb-10 space-y-3 border border-[#20c4b6] text-[#189e68] text-base font-semibold animate__animated animate__fadeInUp">
+    <li>💦 <b>Be a Water Saver:</b> Fix leaks, collect rainwater, and spread water-saving tips.</li>
+    <li>🌱 <b>Promote Crop Diversity:</b> Encourage less water-intensive crops & multi-cropping at community level.</li>
+    <li>♻️ <b>Reduce, Reuse, Compost:</b> Minimize plastics, sort waste, compost at home, and clean public spaces.</li>
+    <li>🔥 <b>Say No to Stubble Burning:</b> Share alt. uses (compost, fuel, crafts) and join village education sessions.</li>
+    <li>🌳 <b>Plant & Protect Trees:</b> Help at planting events, adopt a tree, and defend local parks!</li>
+    <li>📢 <b>Be a Green Messenger:</b> Encourage schools and groups to hold “Eco Days”, rallies, and workshops.</li>
+    <li>🤝 <b>Support Punjab’s NGOs:</b> Volunteer, advocate, or donate to groups like Grow Billion Trees or Nanhi Chhaan Foundation.</li>
+    <li>☀️ <b>Switch to Clean Energy:</b> Back rooftop solar, take public transport, carpool, or bike!</li>
+  </ul>
+
+  <div class="bg-[#f8fff9] px-5 py-6 rounded-xl border border-[#b6efd7] mb-12 max-w-3xl mx-auto animate__animated animate__fadeIn">
+    <h3 class="font-semibold text-lg text-[#17984a] mb-1">Community & NGO Efforts</h3>
+    <ul class="text-[#17984a] text-base space-y-1 ml-4 list-disc">
+      <li><b>Grow Billion Trees</b>, <b>Nanhi Chhaan Foundation</b>: Tree plantation, eco-education, and farmer training across Punjab.</li>
+      <li><b>Kala Pani Morcha</b>: Citizen campaign for clean, rivers—joining voices for urgent, positive government action.</li>
+      <li class="text-[#159943] font-bold">Every step—especially together—helps save Punjab’s future.</li>
+    </ul>
+  </div>
+  <div class="flex justify-center mt-8">
+    <a href="#" class="eco-main-cta shadow-lg animate__animated animate__pulse">
+      🌱 Join the EcoPunjab Movement
+    </a>
+  </div>
+</div>
+<script>
+// Animate cards on scroll
+function revealCards(){
+  document.querySelectorAll('.eco-card').forEach(card=>{
+    const rect = card.getBoundingClientRect();
+    if(rect.top < window.innerHeight-40) card.classList.add('visible');
+  });
+}
+window.addEventListener('scroll',revealCards);
+window.addEventListener('load',revealCards);
+// Animate points (and save for demo)
+let userPts = parseInt(localStorage.getItem('ecoPoints')||120,10);
+document.getElementById('ecoPointsNum').textContent = userPts;
+function addEcoPoints(amt){
+  userPts += amt;
+  document.getElementById('ecoPointsNum').textContent = userPts;
+  localStorage.setItem('ecoPoints', userPts+"");
+  // Sparkle animation on update
+  let badge = document.getElementById('ecoPointsBadge');
+  badge.classList.remove("animate__tada");
+  badge.classList.add("animate__heartBeat");
+  setTimeout(()=>{badge.classList.remove("animate__heartBeat");badge.classList.add("animate__tada");},950);
+}
 </script>
 </body>
 </html>

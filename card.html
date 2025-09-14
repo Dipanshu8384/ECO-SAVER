@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quote of the Day</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0fdf4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .card {
+      background: linear-gradient(to bottom right, #dcfce7, #dbeafe);
+      border: 1px solid #86efac;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 400px;
+      padding: 16px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #166534;
+    }
+
+    .refresh-btn {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #15803d;
+      padding: 6px;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    .refresh-btn:hover {
+      background: rgba(134, 239, 172, 0.4);
+    }
+
+    .refresh-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .spin {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .quote {
+      border-left: 4px solid #22c55e;
+      padding-left: 10px;
+      font-style: italic;
+      color: #374151;
+    }
+
+    .author {
+      text-align: right;
+      margin-top: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #15803d;
+    }
+
+    /* Loader skeleton */
+    .skeleton {
+      height: 12px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      background: linear-gradient(90deg, #bbf7d0 25%, #86efac 50%, #bbf7d0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      100% { background-position: -200% 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Quote of the Day</div>
+      <button class="refresh-btn" id="refreshBtn">
+        <svg class="refresh-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v6h6M20 20v-6h-6M5 19a9 9 0 1014-6"/>
+        </svg>
+      </button>
+    </div>
+    <div id="quoteContent">
+      <div class="skeleton" style="width: 100%;"></div>
+      <div class="skeleton" style="width: 75%;"></div>
+      <div class="skeleton" style="width: 50%; margin-top: 8px;"></div>
+    </div>
+  </div>
+
+  <script>
+    const refreshBtn = document.getElementById("refreshBtn");
+    const quoteContent = document.getElementById("quoteContent");
+
+    async function fetchQuote() {
+      quoteContent.innerHTML = `
+        <div class="skeleton" style="width: 100%;"></div>
+        <div class="skeleton" style="width: 75%;"></div>
+        <div class="skeleton" style="width: 50%; margin-top: 8px;"></div>
+      `;
+
+      refreshBtn.querySelector("svg").classList.add("spin");
+
+      try {
+        // Simulate API call with random quotes
+        const quotes = [
+          { quote: "The Earth does not belong to us: we belong to the Earth.", author: "Marlee Matlin" },
+          { quote: "We do not inherit the Earth from our ancestors; we borrow it from our children.", author: "Native Proverb" },
+          { quote: "Sustainability is not a choice, it is a responsibility.", author: "Unknown" },
+          { quote: "In every walk with nature, one receives far more than he seeks.", author: "John Muir" }
+        ];
+        const random = quotes[Math.floor(Math.random() * quotes.length)];
+
+        setTimeout(() => {
+          quoteContent.innerHTML = `
+            <blockquote class="quote">"${random.quote}"</blockquote>
+            <p class="author">- ${random.author}</p>
+          `;
+          refreshBtn.querySelector("svg").classList.remove("spin");
+        }, 1200);
+      } catch (error) {
+        quoteContent.innerHTML = `
+          <blockquote class="quote">"The Earth does not belong to us: we belong to the Earth."</blockquote>
+          <p class="author">- Marlee Matlin</p>
+        `;
+        refreshBtn.querySelector("svg").classList.remove("spin");
+      }
+    }
+
+    refreshBtn.addEventListener("click", fetchQuote);
+
+    // Initial load
+    fetchQuote();
+  </script>
+</body>
+</html>
