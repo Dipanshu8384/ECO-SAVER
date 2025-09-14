@@ -1,529 +1,439 @@
+<!-- Verification Modal -->
+        <div id="verifyModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6 max-w-xs w-full text-center">
+                <h3 class="text-lg font-bold mb-3 text-green-700">Task Verification</h3>
+                <p class="mb-4">Are you sure you have completed this task honestly?</p>
+                <div class="flex justify-center gap-4">
+                    <button id="verifyYes" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Yes, I did it</button>
+                    <button id="verifyNo" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                </div>
+            </div>
+        </div>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Eco Habit Tracker - EcoSaver</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --background-eco: linear-gradient(120deg, #f1fff6 0%, #e7fcf7 100%);
-  --card: #fff;
-  --primary: #17984a;
-  --primary-light: #1cd05a;
-  --primary-gradient: linear-gradient(120deg, #14662c 0%, #23ba6b 100%);
-  --primary-tint: #e7f8ec;
-  --primary-glow: 0 0 28px #2bc96b2a, 0 1.5px 8px #23ba6b11;
-  --secondary: #23a6ea;
-  --secondary-gradient: linear-gradient(120deg, #209adc 0%, #60c4eb 100%);
-  --accent: #bd8730;
-  --success: #1fa370;
-  --muted: #f0f9f0;
-  --muted2: #f6faf7;
-  --danger: #e96030;
-  --border: #e4eaea;
-  --radius: 1.15em;
-  --shadow: 0 4px 30px #96d1c729, 0 1.5px 6px #0001;
-  --font-main: 'Open Sans', Arial, sans-serif;
-  --font-display: 'Poppins', Arial, sans-serif;
-}
-html, body {
-  margin:0; padding:0; height:100%; background: var(--background-eco); color: var(--primary);
-  font-family: var(--font-main); min-height:100vh; width:100vw; overflow-x:hidden;
-  box-sizing: border-box;
-}
-*,*::before,*::after { box-sizing: border-box; }
-a { color: var(--secondary); text-decoration: none; }
-a:hover { color: #0fa35a; }
-body::before {
-  content: "";
-  position: fixed; top:0; left:0; width:100vw; height:100vh; z-index:0;
-  pointer-events:none;
-  background-image:
-    url('data:image/svg+xml;utf8,<svg fill="none" xmlns="http://www.w3.org/2000/svg" width="450" height="220"><ellipse cx="200" cy="100" rx="140" ry="75" fill="%2396e5a0" fill-opacity="0.08"/><ellipse cx="390" cy="160" rx="50" ry="32" fill="%2323ba6b" fill-opacity="0.03"/><ellipse cx="80" cy="160" rx="50" ry="32" fill="%23109be0" fill-opacity="0.04"/></svg>');
-  background-size: cover; background-repeat: no-repeat; background-position: 50vw 7vh;
-  opacity:.65;
-  animation: ecoBGMove 45s linear infinite alternate;
-}
-@keyframes ecoBGMove { to{ background-position: 44vw 11vh; }}
-
-/* HEADER / FOOTER */
-.eco-header, .eco-footer { width: 100vw; min-width: 0; margin:0; z-index:20; }
-.eco-header {
-  background: var(--primary-gradient); color: #fff; box-shadow: var(--shadow);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1.4em 2vw 1.1em 2vw; border-bottom: 1.5px solid var(--border); position:relative;
-}
-.eco-header .logo { display:flex;align-items:center;gap:12px; font-family:var(--font-display);}
-.eco-header .logo svg { height:2.3em;width:2.3em;filter:drop-shadow(0 2px 6px #23ba6c49);}
-.eco-header .brand { font-size:2em;font-weight:700;}
-.eco-header .eco-menu { display:flex;gap:2vw;font-size:1.13em;flex-wrap:wrap; }
-.eco-header .eco-menu a {
-  color:#fff;opacity:.87;font-weight:600;padding:0.35em 0.97em;border-radius:0.65em;transition:.18s;
-}
-.eco-header .eco-menu a.active, .eco-header .eco-menu a:hover {
-  background: #fff2;opacity:1;color:#fff;
-}
-.eco-header .header-btn {
-  background: #fff; color: var(--primary)!important; border-radius:.99em; padding:.42em 1.6em .38em 1.6em;
-  font-weight:600; font-family:var(--font-display); font-size:1.12em; margin-left:1em;
-  border:none; box-shadow:0 2px 8px #3a694514; cursor:pointer; transition:.15s;
-}
-.eco-header .header-btn:hover { background: var(--muted); color: var(--secondary)!important; }
-.eco-footer {
-  background: linear-gradient(90deg, #14662c09 0%, #23ba6b17 90%);
-  border-top: 2px solid var(--border);color:#43896c;font-family:var(--font-display);
-  margin-top:2em;padding:2.1em 0 1em 0;text-align:center;position:relative;
-}
-.eco-footer .brand { color:var(--primary);font-size:1.12em;font-weight:700;margin-bottom:.8em;}
-.eco-footer .footer-links {margin:1.1em 0 1.4em 0;}
-.eco-footer .footer-links a {color:var(--secondary);margin:0 1em;opacity:.85;font-weight:500;}
-.eco-footer .footer-links a:hover{text-decoration:underline;opacity:1;}
-.footer-quote {font-size:1.19em;color:var(--success);margin-bottom:1em;}
-.footer-copy {color:#a9bdb7;font-size:.97em;}
-
-/* POINTS WIDGET */
-.points-widget {
-  position:fixed;top:6.4em;right:1vw;background:var(--primary-tint);border-radius:1.1em;
-  padding:1.3em 2em 1.15em 1.6em;min-width:275px;max-width:330px;z-index:22;
-  border:2.5px solid var(--border);box-shadow:0 8px 38px #4add803d,0 3px 30px #23ba6b13, 0 1px 5px #0001;
-  animation: floatIn .8s cubic-bezier(.31,.62,.42,1.17);
-}
-@keyframes floatIn {
-  from{opacity:0;transform:translateY(60px) scale(.98);}
-  to{opacity:1;transform:translateY(0) scale(1);}
-}
-@media (max-width: 900px){ .points-widget { right: 0; left:0; margin:2.2em auto .2em auto!important; }}
-@media (max-width:700px){ .points-widget{ position:static; margin:1em auto .5em auto;padding:1em 1.1em 1.1em 1.1em; min-width:0;width:95vw;} }
-.pw-header-row { display:flex;align-items:center;justify-content:space-between;}
-.pw-header-row .icon-star { color:#167117;margin-right:11px;font-size:1.19em;filter:drop-shadow(0 0 4px #8fd299b8);}
-.pw-header-row .pw-title { font-weight:600;color:#167117;font-size:1.08em; }
-.pw-header-row .pw-points { font-size:2.18em;font-weight:bold;color:#14842b;text-align:right;min-width:56px;letter-spacing:-1px;text-shadow:0 1.5px 9px #b8ffd380;}
-.pw-level-row { display:flex;align-items:center;gap:12px;margin:1em 0 .7em 0;}
-.pw-level-row .icon-leaf { font-size:1.3em;color:#279d45;filter:drop-shadow(0 1.5px 6px #7ddb8e2d);}
-.pw-level-row .pw-ach-title { font-weight:500;color:#2c6b3c;background:#f4f7f2;padding:.27em 1.12em .27em .7em;border-radius:1.09em;font-size:1.13em; }
-.pw-prog-labels { font-size:.97em;color:#578a4a;display:flex;justify-content:space-between;margin-top:.06em;margin-bottom:.34em;}
-.pw-prog-bg { background:#f3f7f6;border-radius:1em;height:1.13em;width:100%;overflow:hidden;}
-.pw-prog-bar { background:linear-gradient(90deg, #69de76 20%, #3c995e 95%);height:100%;border-radius:1em;transition:width 1.1s cubic-bezier(.7,.31,.41,1.19);}
-.pw-stat-grid { display:flex;margin-top:.83em;gap:.67em;}
-.pw-stat-cell { background:#f2f6fb;border-radius:.7em;padding:.28em 1em .22em 1em;color:#466d93;text-align:center;flex:1;}
-.pw-stat-title { display:block;font-weight:600;font-size:.98em;margin-bottom:.09em;}
-.pw-stat-value { font-weight:600;color:#1977c7;font-size:1.09em;}
-.pw-uploads { background:#f6f3f1;color:#977d57; }
-.pw-uploads .pw-stat-title { color:#b18f61; }
-.pw-uploads .pw-stat-value { color:#ad6218; }
-
-.eco-tracker-main { max-width:100vw; margin:0;padding:4em 0 0 0; min-width:0;}
-.eco-section-title {
-  font-family:var(--font-display); font-size:2.6em; color:var(--primary);
-  font-weight:800;margin: 1.3em 0 .7em 0; text-align: center; letter-spacing:-1px;  
-  text-shadow:0 2px 18px #25d48515;filter:drop-shadow(0 2px 6px #c8f7e470);
-}
-.section-divider {height:3px; border-radius:100px; margin:4em auto 2.5em auto; display:block; width:6em;
-    background: linear-gradient(90deg, #46de55 10%, #0fa797 90%); opacity:.13;}
-.tracker-task-tabs { display:flex;justify-content:center;gap:0;margin-bottom:2.3em;box-shadow: 0px 5px 18px #a8efb22e;width:99vw;max-width:650px;margin-left:auto;margin-right:auto;}
-.tracker-tab-btn {background:var(--primary-tint);color:var(--primary);font-family:var(--font-display);font-weight:600;
-  font-size:1.21em;border:none;border-radius:1.08em 1.08em 0 0;padding: 0.99em 2.27em .91em 2.27em;
-  margin:0 -2px 0 0;cursor:pointer;box-shadow:0 2px 12px #c9eddc39;outline:none;position:relative;z-index:1;letter-spacing:0;}
-.tracker-tab-btn.active, .tracker-tab-btn:hover {
-  background:var(--primary-gradient);color:#fff;box-shadow:0px 8px 20px #80e6b132;z-index:2;animation:tabPop .3s cubic-bezier(.67,1.56,.33,1.02) alternate;
-}
-@keyframes tabPop {from{transform:scale(.96);}to{transform:scale(1.02);}}
-.tracker-tasks-grid {
-  display:grid;grid-gap:2.1em;padding: 0 2vw 0 2vw;width:100%;max-width:1440px;margin:0 auto 0 auto;
-}
-@media (min-width:620px){.tracker-tasks-grid{ grid-template-columns: repeat(2,1fr);}}
-@media (min-width:980px){.tracker-tasks-grid{ grid-template-columns: repeat(3,1fr);}}
-.tracker-task-card {background:var(--card);border-radius:1.4em; border:2.5px solid var(--border);
-  box-shadow:0 7px 40px #a1fad029, 0 1.5px 7px #43deae09; padding:2.9em 2em 2.25em 2em;
-  text-align:center;position:relative;overflow:hidden;transition:.22s cubic-bezier(.83,.11,.59,1.25);
-  animation: fadeIn .85s cubic-bezier(.27,.77,.37,1.21); background:linear-gradient(120deg, #f2fff7 90%, #f8faf5 100%);
-  border-bottom:5.5px solid #b3e3c1;
-}
-.tracker-task-card:hover {
-  box-shadow:0 20px 56px #0fc97833, 0 2px 38px #11eaa427; border-color:var(--secondary);
-  transform: translateY(-7px) scale(1.026); z-index:6;
-}
-@keyframes fadeIn {from{opacity:0;transform:translateY(60px);}to{opacity:1;transform:translateY(0);}}
-.tracker-task-icon {font-size:2.7em; margin-bottom:.37em; display:inline-block; filter:drop-shadow(0 2px 10px #a9f7a166);color:#33c941; animation:iconBounceIn .8s cubic-bezier(.17,.73,.62,1.41);}
-@keyframes iconBounceIn {from{transform:scale(.45) translateY(55px);}to{transform:scale(1) translateY(0);}}
-.tracker-task-card h3 {font-family:var(--font-display);font-size:1.28em;font-weight:700;margin-bottom:.25em;color:var(--primary);letter-spacing:-.5px;}
-.tracker-task-desc {margin-bottom:.85em;color:var(--primary);}
-.tracker-task-btn {
-  background:var(--secondary-gradient);color:#fff;font-size:1.17em;font-family:var(--font-display); font-weight:600;
-  border:none;border-radius:.96em;padding:.81em 2.2em; cursor:pointer;transition:box-shadow .22s, transform .21s, background .18s;
-  box-shadow:0 5px 22px #19bcffa4, 0 1.5px 9px #69b7ee0c;position:relative;z-index:2;margin-top:.5em;
-}
-.tracker-task-btn:hover:not(:disabled) {
-  box-shadow:0 12px 35px #1cd68f28; background:linear-gradient(111deg,#60e291 20%,#22ba81 100%);
-  color:#14421e; transform:translateY(-2px) scale(1.04); animation:btnPulse .37s;
-}
-@keyframes btnPulse {0%{filter:brightness(1.22);}80%{filter:brightness(0.99);}100%{filter: brightness(1);}}
-.tracker-task-btn:disabled { cursor:default; opacity:.73; filter: grayscale(0.3);}
-.tracker-task-badge {position:absolute;top:1em;left:1.12em;background:#fffbea;
-  color:#c79614;font-family:var(--font-display);font-size:.89em;font-weight:700;
-  border-radius:2em;padding:.2em 1em;z-index:5;letter-spacing:0.5px;box-shadow:0 0px 4px #f3c6190f;animation:fadeIn .48s cubic-bezier(.17,.73,.32,1.19);}
-.tracker-task-card .tracker-task-badge.streak {background:#e5fdec;color:#1bc97a;}
-.tracker-task-card .tracker-task-badge.new {
-  animation: shimmer 1.6s infinite linear alternate; border:1px solid #fff7b1;
-}
-@keyframes shimmer {0%{box-shadow:0 0 2px #fffcee;}100%{box-shadow:0 0 14px #ffe59a;}}
-/* ---------- ECOLOGY CELEBRATION ANIMATION ----------- */
-.eco-anim-overlay {
-  position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40;
-  display: flex; align-items: center; justify-content: center; opacity:0; transition:opacity .33s;
-}
-.eco-anim-overlay.active { opacity:1; }
-.eco-ecogrow-bg {
-  position:absolute; left:0;top:0; width:100%;height:100%;z-index:-1; 
-  background: radial-gradient(ellipse at center, #e6ffe7c2 60%, transparent 90%);
-  animation: eco-burst .5s cubic-bezier(.85,-0.09,.34,1.48);
-}
-@keyframes eco-burst {from{transform:scale(.6);opacity:.7;}to{transform:scale(1);opacity:1;}}
-#eco-svg-tree {
-  width: 75px; height: 110px; margin-top:35px; pointer-events:none;
-  transform: scaleY(0.2) scaleX(.7);
-  opacity: 0; 
-  animation: tree-grow-up .9s cubic-bezier(.22,1.2,.16,1.09) forwards;
-}
-@keyframes tree-grow-up{
-  0% { transform: scaleY(.1) scaleX(1.1); opacity: 0;}
-  50%{transform:scaleY(.65) scaleX(.93); opacity:.8;}
-  100% { transform: scaleY(1) scaleX(1); opacity: 1;}
-}
-#eco-svg-leafgroup {
-  opacity: 0;
-  animation: leaves-pop .7s .6s cubic-bezier(.31,.87,.44,1.21) forwards;
-}
-@keyframes leaves-pop {
-  to { opacity: 1; }
-}
-#eco-svg-sun {
-  opacity: 0; transform: scale(.7) rotate(85deg);
-  animation: eco-sunrise 0.9s .3s cubic-bezier(.21,.81,.37,1.08) forwards;
-}
-@keyframes eco-sunrise {
-  to { opacity: 1; transform: scale(1) rotate(0deg);}
-}
-#eco-celebrate-msg {
-  position: absolute; bottom:12px; left:50%; transform:translateX(-50%);
-  background: #fffef7f2; color: #17984a; font-family: var(--font-display);
-  font-size:1em; font-weight:700; letter-spacing:.5px;
-  border-radius:2em; padding:.22em 1.4em; border:2px solid #e8f3da;
-  box-shadow:0 4px 18px #b4fab370;
-  animation: msg-pop-in .35s cubic-bezier(.22,1.4,.34,.94);
-}
-@keyframes msg-pop-in {from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
-::-webkit-scrollbar{width:7px; background:#ecf5ee;}
-::-webkit-scrollbar-thumb{background:#d7f3e2; border-radius:6px;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Tasks Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html, body { font-family: 'Arial', sans-serif; overflow-x: hidden; max-width: 100vw; }
+        .task-card { transition: transform 0.3s; }
+        .task-card:hover { transform: scale(1.05); }
+        .progress-bar { transition: width 0.5s; }
+        .container, .mx-auto, .main, .task-section, .task-grid { max-width: 100vw !important; }
+        @media (max-width: 768px) {
+            .task-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-<body>
-<!-- Header -->
-<header class="eco-header">
-  <div class="logo">
-    <svg viewBox="0 0 40 40" fill="none"><ellipse cx="20" cy="20" rx="18" ry="16" fill="#23ba6b" opacity="0.18"/><path d="M34 10C34 10 30 32 14 27C7 25 6 15 13 13C17 12 23 10 34 10Z" stroke="#1b7f36" stroke-width="2.5" fill="#23ba6b" /><path d="M20 30L20 17" stroke="#176d28" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="12.5" r="2.3" fill="#fff" opacity="0.53"/></svg>
-    <span class="brand">EcoLearn Punjab</span>
-  </div>
-  <nav class="eco-menu">
-    <a href="#" class="active">Tracker</a>
-    <a href="#">Games</a>
-    <a href="#">Articles</a>
-    <a href="#">Upload</a>
-    <a href="#">About</a>
-    <button class="header-btn">Login</button>
-  </nav>
-</header>
+<body class="bg-green-100 min-h-screen">
 
-<main class="eco-tracker-main">
-    <h1 class="eco-section-title">Eco Habit Tracker</h1>
-    <div class="text-xl text-muted-foreground mb-6" style="text-align:center;max-width:460px;margin:0 auto 2em auto;">
-      Track your green actions, complete eco challenges, and power up your habit streak!
-    </div>
-    <div class="card-eco text-center mb-12 bg-pattern max-w-2xl mx-auto p-8" style="margin-bottom:3.2em;">
-        <h2 class="font-display text-2xl font-bold text-primary mb-2">Overall Progress</h2>
-        <div class="mb-2">
-            <span class="font-medium text-muted-foreground">Points:</span>
-            <span id="main-points" class="font-bold text-2xl text-primary">150</span>
-        </div>
-        <div class="w-full bg-muted rounded-full h-3 my-4" style="position:relative;">
-            <div id="main-progress-bar" class="bg-primary h-3 rounded-full" style="width:30%;transition:width 1s;"></div>
-            <span id="progress-label" style="position:absolute;right:10px;top:0.09em;color:#1977c7;font-size:.92em;font-weight:600;">150/500</span>
-        </div>
-        <div class="mt-6 font-semibold text-muted-foreground">
-            Habit Streak: <span id="main-habit-streak" class="text-primary">7 days</span>
-        </div>
-    </div>
-    <div class="section-divider"></div>
-    <div class="tracker-task-tabs">
-        <button id="daily-tab" class="tracker-tab-btn active">🌱 Daily Tasks</button>
-        <button id="weekly-tab" class="tracker-tab-btn">🌳 Weekly Tasks</button>
-    </div>
-    <div id="daily-tasks">
-        <div class="tracker-tasks-grid">
-            <div class="tracker-task-card" data-task="recycle">
-                <span class="tracker-task-icon">♻️</span>
-                <span class="tracker-task-badge new">NEW</span>
-                <h3>Recycle Bottles</h3>
-                <div class="tracker-task-desc">Recycle all plastic bottles used today.</div>
-                <button class="tracker-task-btn" data-task="recycle" onclick="ecoCelebrate(this,5,'Recycle Bottles')">Mark Done (+5)</button>
-                <div class="eco-anim-overlay"></div>
+    <!-- EcoSaver Navbar/Header from login.html -->
+    <nav class="w-full bg-[#f6fcf4] nav-shadow sticky top-0 z-40">
+        <div class="container mx-auto flex items-center justify-between px-8 py-3">
+            <div class="flex items-center gap-3">
+                <img src="LOGO.jpg" alt="EcoSaver Logo" class="w-12 h-12 rounded-lg object-contain bg-[#20c4b6] p-1" />
+                <span class="font-bold text-lg text-gray-900">EcoSaver</span>
             </div>
-            <div class="tracker-task-card" data-task="shower">
-                <span class="tracker-task-icon">🚿</span>
-                <span class="tracker-task-badge streak">7 DAY STREAK!</span>
-                <h3>Take a Short Shower</h3>
-                <div class="tracker-task-desc">Keep your shower under 5 minutes.</div>
-                <button class="tracker-task-btn" data-task="shower" onclick="ecoCelebrate(this,4,'Take a Short Shower')">Mark Done (+4)</button>
-                <div class="eco-anim-overlay"></div>
+            <div class="hidden md:flex gap-10 text-base font-medium text-gray-600">
+                <a href="login.html#challenges" class="hover:text-[#20c4b6]">Challenges</a>
+                <a href="login.html#learn" class="hover:text-[#20c4b6]">Learn</a>
+                <a href="login.html#community" class="hover:text-[#20c4b6]">Community</a>
+                <a href="login.html#impact" class="hover:text-[#20c4b6]">Impact</a>
+                <a href="login.html#habits" class="hover:text-[#20c4b6]">Habits</a>
+                <a href="ecotracker.html" class="hover:text-[#fd7e25] font-semibold">Eco Tracker</a>
             </div>
-            <div class="tracker-task-card" data-task="lights">
-                <span class="tracker-task-icon">💡</span>
-                <h3>Switch Off Lights</h3>
-                <div class="tracker-task-desc">Turn off lights in unused rooms for 1 hour.</div>
-                <button class="tracker-task-btn" data-task="lights" onclick="ecoCelebrate(this,3,'Switch Off Lights')">Mark Done (+3)</button>
-                <div class="eco-anim-overlay"></div>
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 px-2 py-1 rounded-xl bg-[#e1f7ef] border border-[#20c4b6] font-semibold text-[#20c4b6]" id="ecoPointsDisplay">
+                    <span>♻️</span>
+                    <span id="ecoPointsNum">120</span> pts
+                </div>
+                <a href="login.html" class="text-[#20c4b6] font-semibold px-4 py-2 rounded hover:bg-[#e1f7ef] transition">Home</a>
+                <a href="signup.html" class="bg-[#41d9af] text-white font-semibold px-4 py-2 rounded-lg hover:bg-[#20c4b6] transition">Sign Up</a>
             </div>
         </div>
-    </div>
-    <div id="weekly-tasks" class="hidden">
-        <div class="tracker-tasks-grid">
-            <div class="tracker-task-card" data-task="tree">
-                <span class="tracker-task-icon">🌲</span>
-                <span class="tracker-task-badge new">NEW</span>
-                <h3>Plant a Tree</h3>
-                <div class="tracker-task-desc">Plant and care for a new tree.</div>
-                <button class="tracker-task-btn" data-task="tree" onclick="ecoCelebrate(this,10,'Plant a Tree')">Mark Done (+10)</button>
-                <div class="eco-anim-overlay"></div>
-            </div>
-            <div class="tracker-task-card" data-task="compost">
-                <span class="tracker-task-icon">🍃</span>
-                <h3>Start Composting</h3>
-                <div class="tracker-task-desc">Begin composting organic waste at home.</div>
-                <button class="tracker-task-btn" data-task="compost" onclick="ecoCelebrate(this,12,'Start Composting')">Mark Done (+12)</button>
-                <div class="eco-anim-overlay"></div>
+    </nav>
+    <!-- End EcoSaver Navbar/Header -->
+
+        <header class="bg-green-600 text-white py-6">
+                <div class="container mx-auto text-center">
+                        <h1 class="text-4xl font-bold">Eco-Tasks Tracker</h1>
+                        <p class="mt-2">Complete daily and weekly tasks to contribute to a greener planet!</p>
+                </div>
+        </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-center">Your Progress</h2>
+            <div class="bg-white rounded-lg shadow p-4">
+                <div class="mb-2">Points: <span id="total-points" class="font-bold">0</span></div>
+                <div class="w-full bg-gray-200 rounded-full h-4">
+                    <div id="progress-bar" class="bg-green-600 h-4 rounded-full progress-bar" style="width: 0%"></div>
+                </div>
             </div>
         </div>
-    </div>
-</main>
-<!-- Points Widget -->
-<div class="points-widget" id="pointsWidget">
-    <div class="pw-header-row">
-        <div style="display:flex;align-items:center;"><span class="icon-star">★</span><span class="pw-title">Points</span></div>
-        <div class="pw-points" id="pwPointsNum">150</div>
-    </div>
-    <div class="pw-level-row"><span class="icon-leaf">🌿</span><span class="pw-ach-title" id="pwAchTitle">Nature Friend</span></div>
-    <div class="pw-prog-labels"><span>Progress</span> <span id="pwProgressLabel">150/500</span></div>
-    <div class="pw-prog-bg"><div class="pw-prog-bar" id="pwProgressBar" style="width:30%"></div></div>
-    <div class="pw-stat-grid">
-        <div class="pw-stat-cell"><span class="pw-stat-title">Games</span><div class="pw-stat-value" id="pwGames">5 played</div></div>
-        <div class="pw-stat-cell pw-uploads"><span class="pw-stat-title">Uploads</span><div class="pw-stat-value" id="pwUploads">3 shared</div></div>
-    </div>
-</div>
-<footer class="eco-footer">
-    <div class="brand">EcoLearn Punjab – Eco Saver Platform</div>
-    <div class="footer-links">
-        <a href="#">Home</a>
-        <a href="#">Tracker</a>
-        <a href="#">Games</a>
-        <a href="#">Articles</a>
-        <a href="#">Upload</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-    </div>
-    <div class="footer-quote">"Together for a Greener Tomorrow"</div>
-    <div class="footer-copy">
-        © 2024 Government of Punjab. All rights reserved.<br>
-        Powered by Punjab Government Digital Initiative | Building Digital Punjab
-    </div>
-</footer>
-<script>
-//--- Helper for date string: returns "YYYY-MM-DD"
-function todayStr(){
-  let now = new Date();
-  return now.getFullYear()+"-"+(now.getMonth()+1).toString().padStart(2,'0')+"-"+now.getDate().toString().padStart(2,'0');
-}
 
-//--- List of all task keys
-const ALL_TASKS = ['recycle','shower','lights','tree','compost'];
+        <div class="tabs flex justify-center mb-8">
+            <button id="daily-tab" class="px-6 py-2 bg-green-600 text-white rounded-l">Daily Eco-Tasks</button>
+            <button id="weekly-tab" class="px-6 py-2 bg-gray-200 text-green-600 rounded-r">Weekly Eco-Tasks</button>
+        </div>
 
-//--- Save to and read from LocalStorage
-function markTaskComplete(taskKey){
-  let done = JSON.parse(localStorage.getItem('habits_completed')||"{}");
-  done[taskKey]=todayStr();
-  localStorage.setItem('habits_completed',JSON.stringify(done));
-}
-function getDoneTasks(){
-  let doneRaw=localStorage.getItem('habits_completed');
-  if(!doneRaw) return {};
-  return JSON.parse(doneRaw);
-}
-function resetTasksIfNewDay(){
-  let last = localStorage.getItem('habits_last_check')||"";
-  let today = todayStr();
-  if(last!==today){
-    localStorage.setItem('habits_completed', "{}");
-    localStorage.setItem('habits_last_check', today);
-  }
-}
-resetTasksIfNewDay();
+        <div id="daily-tasks" class="task-section">
+            <div class="grid task-grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Daily Tasks -->
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a88703fa-3645-4ee2-b860-14be8c2d1a74.png" alt="Illustrated recycling bin filled with plastic bottles, green background with arrows pointing downward to symbolize waste sorting" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Recycle Plastic Bottles</h3>
+                    <p class="text-sm text-gray-600 mb-4">Sort and recycle your used plastic bottles.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="5" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7d24cf7f-6c95-490d-8682-fd8eae8d1ada.png" alt="Cartoon light switch being turned off, dimming room illustration with energy savings symbols like dollar signs" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Switch Off Lights for 1 Hour</h3>
+                    <p class="text-sm text-gray-600 mb-4">Turn off unused lights to save electricity.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="3" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ed1fa1f5-ea0f-4d68-b6cd-361cf79804f0.png" alt="Person taking a quick shower under water droplets, green leaves around depicting freshness and water conservation" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Take a Short Shower</h3>
+                    <p class="text-sm text-gray-600 mb-4">Limit showers to 5 minutes to conserve water.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="4">
+                            Mark as Done
+                        </label>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5ccc3168-4cc7-47fb-9df3-5747b97e285e.png" alt="Tote bag and reusable water bottle on a table, colorful fruits and veggies next to them" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Use Reusable Bags and Bottles</h3>
+                    <p class="text-sm text-gray-600 mb-4">Avoid single-use plastics for your daily needs.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="5" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/317b08cb-eb54-4ee9-8b9b-db656df72302.png" alt="Young tree seedling planted in soil with watering can nearby, sunny sky and earth silhouette" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Plant a Seed or Water Plants</h3>
+                    <p class="text-sm text-gray-600 mb-4">Nurture plant life in your home or garden.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="6" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
 
-//--- Update button states for all tasks
-function updateTaskStates(){
-  let done = getDoneTasks();
-  ALL_TASKS.forEach(key=>{
-    // Find the button for this task
-    let btn = document.querySelector('.tracker-task-btn[data-task="'+key+'"]');
-    if(btn){
-      if(done[key]===todayStr()){
-        btn.disabled = true;
-        btn.textContent = '✓ Completed!';
-      }else{
-        btn.disabled = false;
-        // Put points back in label
-        let pts = btn.onclick.toString().match(/,(\d+),/); // crude parse for demo
-        pts = pts && pts[1] ? pts[1] : "";
-        btn.textContent = pts ? `Mark Done (+${pts})` : "Mark Done";
-      }
-    }
-  });
-}
-//--- Rest of tracking as before
-let points = parseInt(localStorage.getItem('eco_points')||'150');
-let progressNext = 500, games = 5, uploads = 3, streak = 7, levelBadge = "Nature Friend";
-function updateAllPoints() {
-    document.getElementById('pwPointsNum').textContent = points;
-    document.getElementById('pwProgressLabel').textContent = `${points}/${progressNext}`;
-    let percent = Math.floor(100*points/progressNext);
-    document.getElementById('pwProgressBar').style.width = `${percent}%`;
-    document.getElementById('main-points').textContent = points;
-    document.getElementById('main-progress-bar').style.width = `${percent}%`;
-    document.getElementById('pwGames').textContent = `${games} played`;
-    document.getElementById('pwUploads').textContent = `${uploads} shared`;
-    document.getElementById('main-habit-streak').textContent = streak+" days";
-    document.getElementById('pwAchTitle').textContent = levelBadge;
-    document.getElementById('progress-label').textContent = `${points}/${progressNext}`;
-    // Level up badge
-    if(points>=500) {
-        levelBadge="EcoChampion";
-        document.getElementById('pwAchTitle').textContent = levelBadge;
-    } else if(points>=350) {
-        levelBadge="Eco Leader";
-        document.getElementById('pwAchTitle').textContent = levelBadge;
-    }
-}
-//--- Enhanced ecoCelebrate to track per-task and persist points
-function ecoCelebrate(btn, pts, taskKey) {
-    if(btn.disabled) return;
-    btn.disabled = true;
-    btn.textContent = "✓ Completed!";
-    points = points + pts;
-    streak += 1;
-    localStorage.setItem('eco_points', points+"");
-    markTaskComplete(taskKey);
-    updateAllPoints();
-    updateTaskStates();
+        <div id="weekly-tasks" class="task-section hidden">
+            <div class="grid task-grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Weekly Tasks -->
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0719557b-53c3-477b-9134-32faff09cc3d.png" alt="Compost bin with vegetable scraps and worms, lush green compost mound" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Start Composting Organic Waste</h3>
+                    <p class="text-sm text-gray-600 mb-4">Set up a compost bin for food scraps.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="10" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/93376b83-2446-4429-bc6e-5995ecc1f02c.png" alt="Veggie stir-fry in a bowl, colorful vegetables and grains, no meat visible" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Go Meatless for a Day</h3>
+                    <p class="text-sm text-gray-600 mb-4">Choose plant-based meals to reduce carbon footprint.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="10" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a885af41-33b4-40a5-b9a4-2231e5cc2f2e.png" alt="Person fixing a bicycle chain with tools, bike parts scattered around" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Repair or Reuse Broken Items</h3>
+                    <p class="text-sm text-gray-600 mb-4">Fix things instead of throwing them away.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="8" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/962aa78d-3d1f-4181-bf3a-b6fd30bd8c6a.png" alt="Group of people picking up litter in a park, smiling faces and gloves on" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Join a Local Cleanup</h3>
+                    <p class="text-sm text-gray-600 mb-4">Participate in community litter removal.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="15" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fbb66f85-a003-4ed8-b2a9-e19a4237e821.png" alt="Home floor plan with energy meters and light bulbs, calculator for efficiency" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Conduct an Energy Audit at Home</h3>
+                    <p class="text-sm text-gray-600 mb-4">Check for areas to improve energy efficiency.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="12" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    // Animate overlay
-    let card = btn.closest('.tracker-task-card');
-    let overlay = card.querySelector('.eco-anim-overlay');
-    overlay.innerHTML = `
-    <div class="eco-ecogrow-bg"></div>
-    <svg id="eco-svg-tree" viewBox="0 0 52 76">
-      <rect x="24" y="52" width="4" height="20" rx="2" fill="#ab8c5b" />
-      <ellipse cx="26" cy="36" rx="21" ry="19" fill="#53db7f" />
-      <ellipse cx="26" cy="24" rx="14" ry="12" fill="#43c46a" />
-      <ellipse cx="39" cy="34" rx="8" ry="6" fill="#afe96b" opacity="0.9"/>
-      <ellipse cx="13" cy="34" rx="8" ry="6" fill="#96dca2" opacity="0.82"/>
-      <ellipse cx="26" cy="45" rx="12" ry="8" fill="#43c46a" opacity="0.92"/>
-      <ellipse cx="26" cy="38" rx="13" ry="10" fill="#97e1b1" opacity="0.7"/>
-      <g id="eco-svg-leafgroup">
-        <ellipse cx="16.5" cy="23" rx="2" ry="4" fill="#21ad6c" />
-        <ellipse cx="36" cy="19" rx="2" ry="5" fill="#21ad6c" />
-        <ellipse cx="33" cy="44.8" rx="1.4" ry="3.5" fill="#22e880" />
-      </g>
-    </svg>
-    <svg id="eco-svg-sun" viewBox="0 0 44 44" style="position:absolute;right:17px;top:0;width:42px;height:42px;">
-        <circle cx="22" cy="22" r="11" fill="#ffe396"/>
-        <g stroke="#ffe396" stroke-width="2">
-          <line x1="22" y1="2" x2="22" y2="10"/>
-          <line x1="22" y1="34" x2="22" y2="42"/>
-          <line x1="2" y1="22" x2="10" y2="22"/>
-          <line x1="34" y1="22" x2="42" y2="22"/>
-          <line x1="9" y1="9" x2="15" y2="15"/>
-          <line x1="29" y1="29" x2="35" y2="35"/>
-          <line x1="29" y1="15" x2="35" y2="9"/>
-          <line x1="9" y1="35" x2="15" y2="29"/>
-        </g>
-    </svg>
-    <div id="eco-celebrate-msg">Great job! 🌳</div>
-    `;
+        <div class="text-center mt-8">
+            <button id="reset-btn" class="px-6 py-2 bg-red-600 text-white rounded">Reset for New Period</button>
+        </div>
+    </main>
 
-    overlay.classList.add('active');
+    <footer class="bg-green-600 text-white py-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>Tip: Small actions add up! Every task helps the planet.</p>
+        </div>
+    </footer>
 
-    // Optional: confetti as before
-    let c = document.createElement('canvas');
-    overlay.appendChild(c);
-    fireConfetti(c);
-    setTimeout(()=>c.remove(),1400);
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dailyTab = document.getElementById('daily-tab');
+            const weeklyTab = document.getElementById('weekly-tab');
+            const dailySection = document.getElementById('daily-tasks');
+            const weeklySection = document.getElementById('weekly-tasks');
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const imageInputs = document.querySelectorAll('.task-image-upload');
+            const imagePreviews = document.querySelectorAll('.task-image-preview');
+            // Enable checkbox only if image is uploaded
+                        imageInputs.forEach((input, idx) => {
+                                input.addEventListener('change', async function() {
+                                        const file = this.files[0];
+                                        if (file) {
+                                                const reader = new FileReader();
+                                                reader.onload = function(e) {
+                                                        imagePreviews[idx].src = e.target.result;
+                                                        imagePreviews[idx].classList.remove('hidden');
+                                                };
+                                                reader.readAsDataURL(file);
+                                                // AI Verification
+                                                const formData = new FormData();
+                                                formData.append('image', file);
+                                                // Map idx to task type (customize as needed)
+                                                const taskTypes = ['recycle', 'lights', 'shower', 'reuse', 'plant', 'compost', 'meatless', 'repair', 'cleanup', 'audit'];
+                                                formData.append('task', taskTypes[idx] || 'other');
+                                                checkboxes[idx].disabled = true;
+                                                checkboxes[idx].checked = false;
+                                                // Show loading
+                                                let msg = document.getElementById('ai-verify-msg-' + idx);
+                                                if (!msg) {
+                                                    msg = document.createElement('div');
+                                                    msg.id = 'ai-verify-msg-' + idx;
+                                                    msg.className = 'text-xs text-blue-600 mt-1';
+                                                    input.parentNode.appendChild(msg);
+                                                }
+                                                msg.textContent = 'Verifying image...';
+                                                try {
+                                                    const res = await fetch('http://localhost:3001/verify-image', { method: 'POST', body: formData });
+                                                    const data = await res.json();
+                                                    if (data.verified) {
+                                                        checkboxes[idx].disabled = false;
+                                                        msg.textContent = '✅ Verified: ' + data.reason;
+                                                    } else {
+                                                        checkboxes[idx].disabled = true;
+                                                        msg.textContent = '❌ Not verified: ' + data.reason;
+                                                    }
+                                                } catch (err) {
+                                                    checkboxes[idx].disabled = true;
+                                                    msg.textContent = '❌ Verification failed. Try again.';
+                                                }
+                                        } else {
+                                                imagePreviews[idx].src = '';
+                                                imagePreviews[idx].classList.add('hidden');
+                                                checkboxes[idx].checked = false;
+                                                checkboxes[idx].disabled = true;
+                                                let msg = document.getElementById('ai-verify-msg-' + idx);
+                                                if (msg) msg.textContent = '';
+                                        }
+                                });
+                        });
+            const totalPointsEl = document.getElementById('total-points');
+            const progressBar = document.getElementById('progress-bar');
+            const resetBtn = document.getElementById('reset-btn');
 
-    setTimeout(()=>{
-        overlay.classList.remove('active');
-        setTimeout(()=>{overlay.innerHTML='';},360);
-        btn.textContent = "✓ Completed!";
-    }, 2100);
+            let totalTasks = checkboxes.length;
+            let totalPoints = 0;
+            let completedTasks = 0;
 
-    // Animate badge level up
-    if(points==500 || points==350) {
-      document.getElementById('pwAchTitle').style.animation="shimmer 1.7s";
-      setTimeout(()=>{document.getElementById('pwAchTitle').style.animation="";},1600)
-    }
-}
-function fireConfetti(canvas){
-  canvas.width = 140; canvas.height = 70;
-  const ctx = canvas.getContext('2d');
-  let pieces = Array.from({length: 23}, ()=>({
-      x:Math.random()*canvas.width,
-      y:Math.random()*canvas.height/2,
-      w:4+Math.random()*3,
-      h:8+Math.random()*6,
-      vx:Math.random()-.5,vy:Math.random()*2+2,ay:Math.random()*.1+.1,
-      color: ["#23ba6b","#138f44","#f4c844","#3ad5c7","#15aae0","#ec88b2"][Math.floor(Math.random()*6)],
-      rot:Math.random()*360
-  }));
-  let t=0, maxT=35;
-  function draw(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    for (let p of pieces) {
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot*Math.PI/180);
-      ctx.fillStyle=p.color;
-      ctx.fillRect(-p.w/2, -p.h/2, p.w,p.h);
-      ctx.restore();
-      p.x += p.vx; p.y += p.vy+=p.ay; p.rot += (Math.random()-.5)*6;
-    }
-    t++; if(t<maxT) requestAnimationFrame(draw);
-    else ctx.clearRect(0,0,canvas.width,canvas.height);
-  }
-  draw();
-}
-// Tabs and UI state as before
-document.getElementById('daily-tab').onclick = function() {
-    this.classList.add('active');
-    document.getElementById('weekly-tab').classList.remove('active');
-    document.getElementById('daily-tasks').classList.remove('hidden');
-    document.getElementById('weekly-tasks').classList.add('hidden');
-};
-document.getElementById('weekly-tab').onclick = function() {
-    this.classList.add('active');
-    document.getElementById('daily-tab').classList.remove('active');
-    document.getElementById('weekly-tasks').classList.remove('hidden');
-    document.getElementById('daily-tasks').classList.add('hidden');
-};
-// Initial boot
-updateAllPoints();
-updateTaskStates();
-</script>
+            // Tab switching
+            dailyTab.addEventListener('click', () => {
+                dailyTab.classList.add('bg-green-600', 'text-white');
+                dailyTab.classList.remove('bg-gray-200', 'text-green-600');
+                weeklyTab.classList.add('bg-gray-200', 'text-green-600');
+                weeklyTab.classList.remove('bg-green-600', 'text-white');
+                dailySection.classList.remove('hidden');
+                weeklySection.classList.add('hidden');
+            });
+
+            weeklyTab.addEventListener('click', () => {
+                weeklyTab.classList.add('bg-green-600', 'text-white');
+                weeklyTab.classList.remove('bg-gray-200', 'text-green-600');
+                dailyTab.classList.add('bg-gray-200', 'text-green-600');
+                dailyTab.classList.remove('bg-green-600', 'text-white');
+                weeklySection.classList.remove('hidden');
+                dailySection.classList.add('hidden');
+            });
+
+            // Load saved data
+            loadProgress();
+
+
+            function updateProgress() {
+                totalPointsEl.textContent = totalPoints;
+                progressBar.style.width = `${(completedTasks / totalTasks) * 100}%`;
+                // Update ecoPoints in localStorage and header
+                localStorage.setItem('ecoPoints', totalPoints);
+                document.querySelectorAll('#ecoPointsNum').forEach(el => el.textContent = totalPoints);
+                if (completedTasks === totalTasks) {
+                    alert('Congratulations! You completed all tasks!');
+                }
+                saveProgress();
+            }
+
+            // Sync ecoPoints header if changed in another tab
+            function updateEcoPointsHeader() {
+                const points = localStorage.getItem('ecoPoints') || 0;
+                document.querySelectorAll('#ecoPointsNum').forEach(el => el.textContent = points);
+            }
+            window.addEventListener('storage', updateEcoPointsHeader);
+            document.addEventListener('DOMContentLoaded', updateEcoPointsHeader);
+
+            let pendingCheckIdx = null;
+            checkboxes.forEach((chk, idx) => {
+                chk.addEventListener('change', function(e) {
+                    // Index 2 is 'Take a Short Shower' (3rd task, 0-based)
+                    if (this.checked) {
+                        if (idx === 2) {
+                            // No image or verification for 'Take a Short Shower'
+                            const points = parseInt(this.dataset.points);
+                            totalPoints += points;
+                            completedTasks++;
+                            this.disabled = true;
+                            updateProgress();
+                            return;
+                        }
+                        if (!imageInputs[idx].files[0]) {
+                            alert('Please upload an image as proof before marking as done.');
+                            this.checked = false;
+                            return;
+                        }
+                        // Show verification modal for all other tasks
+                        e.preventDefault();
+                        this.checked = false;
+                        pendingCheckIdx = idx;
+                        document.getElementById('verifyModal').classList.remove('hidden');
+                        return;
+                    } else {
+                        const points = parseInt(this.dataset.points);
+                        totalPoints -= points;
+                        completedTasks--;
+                        if (idx !== 2) imageInputs[idx].disabled = false;
+                        updateProgress();
+                    }
+                });
+            });
+
+            // Modal button handlers
+            document.getElementById('verifyYes').onclick = function() {
+                if (pendingCheckIdx !== null) {
+                    const chk = checkboxes[pendingCheckIdx];
+                    const points = parseInt(chk.dataset.points);
+                    chk.checked = true;
+                    totalPoints += points;
+                    completedTasks++;
+                    chk.disabled = true;
+                    imageInputs[pendingCheckIdx].disabled = true;
+                    updateProgress();
+                    pendingCheckIdx = null;
+                }
+                document.getElementById('verifyModal').classList.add('hidden');
+            };
+            document.getElementById('verifyNo').onclick = function() {
+                pendingCheckIdx = null;
+                document.getElementById('verifyModal').classList.add('hidden');
+            };
+
+            resetBtn.addEventListener('click', () => {
+                if (confirm('Reset progress for new period?')) {
+                    checkboxes.forEach((chk, idx) => {
+                        chk.checked = false;
+                        chk.disabled = true;
+                        imageInputs[idx].disabled = false;
+                        imageInputs[idx].value = '';
+                        imagePreviews[idx].src = '';
+                        imagePreviews[idx].classList.add('hidden');
+                    });
+                    totalPoints = 0;
+                    completedTasks = 0;
+                    updateProgress();
+                }
+            });
+
+            function saveProgress() {
+                const state = Array.from(checkboxes).map(chk => ({ checked: chk.checked, disabled: chk.disabled }));
+                localStorage.setItem('ecoTasks', JSON.stringify({ totalPoints, completedTasks, state }));
+            }
+
+            function loadProgress() {
+                const saved = localStorage.getItem('ecoTasks');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    totalPoints = data.totalPoints || 0;
+                    completedTasks = data.completedTasks || 0;
+                    data.state.forEach((item, index) => {
+                        if (item.checked) checkboxes[index].checked = true;
+                        if (item.disabled) checkboxes[index].disabled = true;
+                    });
+                }
+                updateProgress();
+            }
+        });
+    </script>
 </body>
 </html>
+</content>
+</create_file>
