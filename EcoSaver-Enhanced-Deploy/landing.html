@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSaver - Your Adventure to Save the Planet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Quicksand:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --background-dark: hsl(222, 47%, 11%);
+            --text-light: hsl(210, 40%, 98%);
+            --text-muted: hsl(215, 20%, 65%);
+            --primary-green: hsl(142, 71%, 41%);
+            --primary-green-light: hsl(142, 80%, 98%);
+            --primary-green-darker: hsl(142, 76%, 36%);
+            --accent-yellow: hsl(45, 93%, 62%);
+            --font-heading: 'Poppins', sans-serif;
+            --font-body: 'Quicksand', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .main-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            padding: 1rem 0;
+        }
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+        .logo-icon-wrapper {
+            padding: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 0.5rem;
+            backdrop-filter: blur(5px);
+        }
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+        .logo-text {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+        }
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-family: var(--font-body);
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-ghost {
+            background-color: transparent;
+            color: white;
+        }
+        .btn-ghost:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .btn-primary {
+            background-color: white;
+            color: var(--primary-green-darker);
+        }
+        .btn-primary:hover {
+            background-color: hsl(142, 60%, 92%);
+        }
+        .btn-lg {
+            padding: 0.8rem 1.8rem;
+            font-size: 1.1rem;
+        }
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hero-bg-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, hsl(150, 56%, 28%), hsl(222, 47%, 11%));
+            opacity: 0.8;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+        .hero .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .section {
+            padding: 5rem 0;
+        }
+        .section-features {
+            background-color: rgba(30, 41, 59, 0.5);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            text-align: center;
+        }
+        .feature-item .icon-wrapper {
+            margin: 0 auto 1rem;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(22, 163, 74, 0.15);
+            border: 1px solid rgba(22, 163, 74, 0.3);
+        }
+        .feature-item .icon {
+            width: 32px;
+            height: 32px;
+            color: hsl(142, 60%, 70%);
+        }
+        .feature-item h3 {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .feature-item p {
+            color: var(--text-muted);
+        }
+        .section-testimonial { text-align: center; }
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+            color: var(--accent-yellow);
+        }
+        .stars .icon { width: 24px; height: 24px; }
+        .testimonial-quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+        .testimonial-author {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .section-cta {
+            background-color: rgba(30, 41, 59, 0.5);
+            text-align: center;
+        }
+        .section-cta h2 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .section-cta p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        .main-footer {
+            background-color: hsl(222, 47%, 8%);
+            color: var(--text-muted);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover { color: white; }
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+            .features-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .testimonial-quote { font-size: 1.25rem; }
+            .section-cta h2 { font-size: 2rem; }
+            .main-header .container { padding: 0 15px; }
+            .container { padding: 0 15px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="#" class="logo">
+                <div class="logo-icon-wrapper">
+                    <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 20A7 7 0 0 1 4 13H2a9 9 0 0 0 18 0h-2a7 7 0 0 1-7 7Z" />
+                        <path d="M12 12a4 4 0 0 0 4-4H8a4 4 0 0 0 4 4Z" />
+                        <path d="M12 12v9" />
+                    </svg>
+                </div>
+                <span class="logo-text">EcoSaver</span>
+            </a>
+            <!-- Dynamic Nav/Profile buttons -->
+            <nav class="nav-buttons" id="navProfileContainer">
+                <!-- JS will populate here for logged-in or guest state -->
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="hero"><img
+                src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=1974&auto=format&fit=crop"
+                alt="Lush green forest" class="hero-bg-image">
+            <div class="hero-overlay"></div>
+            <div class="hero-content container">
+                <h1>Your Adventure to Save the Planet Starts Here.</h1>
+                <p>EcoSaver transforms learning about our environment into a captivating game. Join a global community
+                    on a mission to create a sustainable future.</p>
+                <a href="dashboard.html" class="btn btn-primary btn-lg">
+                    Start Your Quest for Free
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        style="width: 20px; height: 20px;">
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        </section>
+        <section class="section section-features fade-in-section">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="icon-wrapper"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                            </svg></div>
+                        <h3>Eco-Habit Tracking</h3>
+                        <p>Track habits and make the most out of them.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="icon-wrapper"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+                            </svg></div>
+                        <h3>Engaging Challenges</h3>
+                        <p>Apply your knowledge in fun, real-world activities.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="icon-wrapper"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="m15.478 14.83 3.06-3.06a1.5 1.5 0 0 0 0-2.121l-3.06-3.06a1.5 1.5 0 0 0-2.121 0l-3.06 3.06a1.5 1.5 0 0 0 0 2.121l3.06 3.06a1.5 1.5 0 0 0 2.121 0z" />
+                                <path
+                                    d="M6.161 12.18a3 3 0 1 0-4.242 0l.048.048a3 3 0 1 0 4.242 0l-2.07-2.07-2.071 2.07" />
+                                <path d="m18.243 11.757.048.048a3 3 0 1 0 4.242 0l-2.122-2.121-2.12.001-2.121 2.12Z" />
+                            </svg></div>
+                        <h3>Earn Points & Badges</h3>
+                        <p>Track your progress and showcase your achievements.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section section-testimonial fade-in-section">
+            <div class="container">
+                <div class="stars"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg></div>
+                <blockquote class="testimonial-quote">
+                    "EcoSaver made learning about climate change genuinely fun for my students. They were so motivated
+                    by the badges and points, they started an eco-club at school!"
+                </blockquote>
+                <p class="testimonial-author">- Sarah J., High School Teacher</p>
+            </div>
+        </section>
+        <section class="section section-cta fade-in-section">
+            <div class="container">
+                <h2>Ready to Make a Difference?</h2>
+                <p>Your journey to becoming an environmental champion is just a click away.</p><a href="dashboard.html"
+                    class="btn btn-primary btn-lg">Join the EcoSaver Community</a>
+            </div>
+        </section>
+    </main>
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 EcoSaver. All rights reserved.</p>
+            <div class="footer-links"><a href="#">About</a><a href="#">Courses</a><a href="#">Articles</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Fade-in observer for sections
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => { observer.observe(section); });
+
+            // Dynamic profile display logic for header nav
+            const nav = document.getElementById('navProfileContainer');
+            const ecoUser = JSON.parse(localStorage.getItem("ecoUser") || "null");
+            if (ecoUser) {
+                nav.innerHTML = `
+                    <div style="display:flex;align-items:center;gap:.6em;">
+                        <img src="${ecoUser.avatar}" alt="Avatar" style="width:38px;height:38px;border-radius:50%;border:2px solid #22d3ee;object-fit:cover;">
+                        <div style="line-height:1;">
+                            <div style="font-weight:bold;color:#23ba6b;font-size:1.08em;">${ecoUser.name}</div>
+                            <div style="font-size:.9em;color:#7ad6a5;">${ecoUser.level || 'Green Beginner'} • ${ecoUser.points || 0} pts</div>
+                        </div>
+                        <a href="#" id="logoutBtn" class="btn btn-ghost" style="background:#f1fff6;color:#23ba6b;font-weight:600;margin-left:.9em;">Log out</a>
+                    </div>
+                `;
+                document.getElementById('logoutBtn').onclick = function() {
+                    localStorage.removeItem("ecoUser");
+                    window.location.reload();
+                    return false;
+                };
+            } else {
+                nav.innerHTML = `
+                    <a href="signup.html" class="btn btn-ghost">Sign Up</a>
+                    <a href="signup.html" class="btn btn-primary">Get Started</a>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

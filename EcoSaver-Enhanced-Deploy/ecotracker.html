@@ -1,0 +1,439 @@
+<!-- Verification Modal -->
+        <div id="verifyModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-lg shadow-lg p-6 max-w-xs w-full text-center">
+                <h3 class="text-lg font-bold mb-3 text-green-700">Task Verification</h3>
+                <p class="mb-4">Are you sure you have completed this task honestly?</p>
+                <div class="flex justify-center gap-4">
+                    <button id="verifyYes" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Yes, I did it</button>
+                    <button id="verifyNo" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+                </div>
+            </div>
+        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Tasks Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html, body { font-family: 'Arial', sans-serif; overflow-x: hidden; max-width: 100vw; }
+        .task-card { transition: transform 0.3s; }
+        .task-card:hover { transform: scale(1.05); }
+        .progress-bar { transition: width 0.5s; }
+        .container, .mx-auto, .main, .task-section, .task-grid { max-width: 100vw !important; }
+        @media (max-width: 768px) {
+            .task-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="bg-green-100 min-h-screen">
+
+    <!-- EcoSaver Navbar/Header from login.html -->
+    <nav class="w-full bg-[#f6fcf4] nav-shadow sticky top-0 z-40">
+        <div class="container mx-auto flex items-center justify-between px-8 py-3">
+            <div class="flex items-center gap-3">
+                <img src="LOGO.jpg" alt="EcoSaver Logo" class="w-12 h-12 rounded-lg object-contain bg-[#20c4b6] p-1" />
+                <span class="font-bold text-lg text-gray-900">EcoSaver</span>
+            </div>
+            <div class="hidden md:flex gap-10 text-base font-medium text-gray-600">
+                <a href="login.html#challenges" class="hover:text-[#20c4b6]">Challenges</a>
+                <a href="login.html#learn" class="hover:text-[#20c4b6]">Learn</a>
+                <a href="login.html#community" class="hover:text-[#20c4b6]">Community</a>
+                <a href="login.html#impact" class="hover:text-[#20c4b6]">Impact</a>
+                <a href="login.html#habits" class="hover:text-[#20c4b6]">Habits</a>
+                <a href="ecotracker.html" class="hover:text-[#fd7e25] font-semibold">Eco Tracker</a>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 px-2 py-1 rounded-xl bg-[#e1f7ef] border border-[#20c4b6] font-semibold text-[#20c4b6]" id="ecoPointsDisplay">
+                    <span>♻️</span>
+                    <span id="ecoPointsNum">120</span> pts
+                </div>
+                <a href="login.html" class="text-[#20c4b6] font-semibold px-4 py-2 rounded hover:bg-[#e1f7ef] transition">Home</a>
+                <a href="signup.html" class="bg-[#41d9af] text-white font-semibold px-4 py-2 rounded-lg hover:bg-[#20c4b6] transition">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+    <!-- End EcoSaver Navbar/Header -->
+
+        <header class="bg-green-600 text-white py-6">
+                <div class="container mx-auto text-center">
+                        <h1 class="text-4xl font-bold">Eco-Tasks Tracker</h1>
+                        <p class="mt-2">Complete daily and weekly tasks to contribute to a greener planet!</p>
+                </div>
+        </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-center">Your Progress</h2>
+            <div class="bg-white rounded-lg shadow p-4">
+                <div class="mb-2">Points: <span id="total-points" class="font-bold">0</span></div>
+                <div class="w-full bg-gray-200 rounded-full h-4">
+                    <div id="progress-bar" class="bg-green-600 h-4 rounded-full progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs flex justify-center mb-8">
+            <button id="daily-tab" class="px-6 py-2 bg-green-600 text-white rounded-l">Daily Eco-Tasks</button>
+            <button id="weekly-tab" class="px-6 py-2 bg-gray-200 text-green-600 rounded-r">Weekly Eco-Tasks</button>
+        </div>
+
+        <div id="daily-tasks" class="task-section">
+            <div class="grid task-grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Daily Tasks -->
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a88703fa-3645-4ee2-b860-14be8c2d1a74.png" alt="Illustrated recycling bin filled with plastic bottles, green background with arrows pointing downward to symbolize waste sorting" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Recycle Plastic Bottles</h3>
+                    <p class="text-sm text-gray-600 mb-4">Sort and recycle your used plastic bottles.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="5" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7d24cf7f-6c95-490d-8682-fd8eae8d1ada.png" alt="Cartoon light switch being turned off, dimming room illustration with energy savings symbols like dollar signs" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Switch Off Lights for 1 Hour</h3>
+                    <p class="text-sm text-gray-600 mb-4">Turn off unused lights to save electricity.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="3" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ed1fa1f5-ea0f-4d68-b6cd-361cf79804f0.png" alt="Person taking a quick shower under water droplets, green leaves around depicting freshness and water conservation" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Take a Short Shower</h3>
+                    <p class="text-sm text-gray-600 mb-4">Limit showers to 5 minutes to conserve water.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="4">
+                            Mark as Done
+                        </label>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5ccc3168-4cc7-47fb-9df3-5747b97e285e.png" alt="Tote bag and reusable water bottle on a table, colorful fruits and veggies next to them" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Use Reusable Bags and Bottles</h3>
+                    <p class="text-sm text-gray-600 mb-4">Avoid single-use plastics for your daily needs.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="5" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/317b08cb-eb54-4ee9-8b9b-db656df72302.png" alt="Young tree seedling planted in soil with watering can nearby, sunny sky and earth silhouette" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Plant a Seed or Water Plants</h3>
+                    <p class="text-sm text-gray-600 mb-4">Nurture plant life in your home or garden.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="6" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="weekly-tasks" class="task-section hidden">
+            <div class="grid task-grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Weekly Tasks -->
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0719557b-53c3-477b-9134-32faff09cc3d.png" alt="Compost bin with vegetable scraps and worms, lush green compost mound" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Start Composting Organic Waste</h3>
+                    <p class="text-sm text-gray-600 mb-4">Set up a compost bin for food scraps.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="10" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/93376b83-2446-4429-bc6e-5995ecc1f02c.png" alt="Veggie stir-fry in a bowl, colorful vegetables and grains, no meat visible" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Go Meatless for a Day</h3>
+                    <p class="text-sm text-gray-600 mb-4">Choose plant-based meals to reduce carbon footprint.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="10" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a885af41-33b4-40a5-b9a4-2231e5cc2f2e.png" alt="Person fixing a bicycle chain with tools, bike parts scattered around" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Repair or Reuse Broken Items</h3>
+                    <p class="text-sm text-gray-600 mb-4">Fix things instead of throwing them away.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="8" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/962aa78d-3d1f-4181-bf3a-b6fd30bd8c6a.png" alt="Group of people picking up litter in a park, smiling faces and gloves on" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Join a Local Cleanup</h3>
+                    <p class="text-sm text-gray-600 mb-4">Participate in community litter removal.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="15" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4 task-card">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fbb66f85-a003-4ed8-b2a9-e19a4237e821.png" alt="Home floor plan with energy meters and light bulbs, calculator for efficiency" class="w-full h-32 object-cover rounded mb-4">
+                    <h3 class="font-semibold mb-2">Conduct an Energy Audit at Home</h3>
+                    <p class="text-sm text-gray-600 mb-4">Check for areas to improve energy efficiency.</p>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="task-checkbox mr-2" data-points="12" disabled>
+                            Mark as Done
+                        </label>
+                        <input type="file" accept="image/*" class="task-image-upload mb-1" style="font-size:0.95em;">
+                        <img class="task-image-preview hidden mt-1 rounded border" style="max-width:100px; max-height:70px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <button id="reset-btn" class="px-6 py-2 bg-red-600 text-white rounded">Reset for New Period</button>
+        </div>
+    </main>
+
+    <footer class="bg-green-600 text-white py-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>Tip: Small actions add up! Every task helps the planet.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dailyTab = document.getElementById('daily-tab');
+            const weeklyTab = document.getElementById('weekly-tab');
+            const dailySection = document.getElementById('daily-tasks');
+            const weeklySection = document.getElementById('weekly-tasks');
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const imageInputs = document.querySelectorAll('.task-image-upload');
+            const imagePreviews = document.querySelectorAll('.task-image-preview');
+            // Enable checkbox only if image is uploaded
+                        imageInputs.forEach((input, idx) => {
+                                input.addEventListener('change', async function() {
+                                        const file = this.files[0];
+                                        if (file) {
+                                                const reader = new FileReader();
+                                                reader.onload = function(e) {
+                                                        imagePreviews[idx].src = e.target.result;
+                                                        imagePreviews[idx].classList.remove('hidden');
+                                                };
+                                                reader.readAsDataURL(file);
+                                                // AI Verification
+                                                const formData = new FormData();
+                                                formData.append('image', file);
+                                                // Map idx to task type (customize as needed)
+                                                const taskTypes = ['recycle', 'lights', 'shower', 'reuse', 'plant', 'compost', 'meatless', 'repair', 'cleanup', 'audit'];
+                                                formData.append('task', taskTypes[idx] || 'other');
+                                                checkboxes[idx].disabled = true;
+                                                checkboxes[idx].checked = false;
+                                                // Show loading
+                                                let msg = document.getElementById('ai-verify-msg-' + idx);
+                                                if (!msg) {
+                                                    msg = document.createElement('div');
+                                                    msg.id = 'ai-verify-msg-' + idx;
+                                                    msg.className = 'text-xs text-blue-600 mt-1';
+                                                    input.parentNode.appendChild(msg);
+                                                }
+                                                msg.textContent = 'Verifying image...';
+                                                try {
+                                                    const res = await fetch('http://localhost:3001/verify-image', { method: 'POST', body: formData });
+                                                    const data = await res.json();
+                                                    if (data.verified) {
+                                                        checkboxes[idx].disabled = false;
+                                                        msg.textContent = '✅ Verified: ' + data.reason;
+                                                    } else {
+                                                        checkboxes[idx].disabled = true;
+                                                        msg.textContent = '❌ Not verified: ' + data.reason;
+                                                    }
+                                                } catch (err) {
+                                                    checkboxes[idx].disabled = true;
+                                                    msg.textContent = '❌ Verification failed. Try again.';
+                                                }
+                                        } else {
+                                                imagePreviews[idx].src = '';
+                                                imagePreviews[idx].classList.add('hidden');
+                                                checkboxes[idx].checked = false;
+                                                checkboxes[idx].disabled = true;
+                                                let msg = document.getElementById('ai-verify-msg-' + idx);
+                                                if (msg) msg.textContent = '';
+                                        }
+                                });
+                        });
+            const totalPointsEl = document.getElementById('total-points');
+            const progressBar = document.getElementById('progress-bar');
+            const resetBtn = document.getElementById('reset-btn');
+
+            let totalTasks = checkboxes.length;
+            let totalPoints = 0;
+            let completedTasks = 0;
+
+            // Tab switching
+            dailyTab.addEventListener('click', () => {
+                dailyTab.classList.add('bg-green-600', 'text-white');
+                dailyTab.classList.remove('bg-gray-200', 'text-green-600');
+                weeklyTab.classList.add('bg-gray-200', 'text-green-600');
+                weeklyTab.classList.remove('bg-green-600', 'text-white');
+                dailySection.classList.remove('hidden');
+                weeklySection.classList.add('hidden');
+            });
+
+            weeklyTab.addEventListener('click', () => {
+                weeklyTab.classList.add('bg-green-600', 'text-white');
+                weeklyTab.classList.remove('bg-gray-200', 'text-green-600');
+                dailyTab.classList.add('bg-gray-200', 'text-green-600');
+                dailyTab.classList.remove('bg-green-600', 'text-white');
+                weeklySection.classList.remove('hidden');
+                dailySection.classList.add('hidden');
+            });
+
+            // Load saved data
+            loadProgress();
+
+
+            function updateProgress() {
+                totalPointsEl.textContent = totalPoints;
+                progressBar.style.width = `${(completedTasks / totalTasks) * 100}%`;
+                // Update ecoPoints in localStorage and header
+                localStorage.setItem('ecoPoints', totalPoints);
+                document.querySelectorAll('#ecoPointsNum').forEach(el => el.textContent = totalPoints);
+                if (completedTasks === totalTasks) {
+                    alert('Congratulations! You completed all tasks!');
+                }
+                saveProgress();
+            }
+
+            // Sync ecoPoints header if changed in another tab
+            function updateEcoPointsHeader() {
+                const points = localStorage.getItem('ecoPoints') || 0;
+                document.querySelectorAll('#ecoPointsNum').forEach(el => el.textContent = points);
+            }
+            window.addEventListener('storage', updateEcoPointsHeader);
+            document.addEventListener('DOMContentLoaded', updateEcoPointsHeader);
+
+            let pendingCheckIdx = null;
+            checkboxes.forEach((chk, idx) => {
+                chk.addEventListener('change', function(e) {
+                    // Index 2 is 'Take a Short Shower' (3rd task, 0-based)
+                    if (this.checked) {
+                        if (idx === 2) {
+                            // No image or verification for 'Take a Short Shower'
+                            const points = parseInt(this.dataset.points);
+                            totalPoints += points;
+                            completedTasks++;
+                            this.disabled = true;
+                            updateProgress();
+                            return;
+                        }
+                        if (!imageInputs[idx].files[0]) {
+                            alert('Please upload an image as proof before marking as done.');
+                            this.checked = false;
+                            return;
+                        }
+                        // Show verification modal for all other tasks
+                        e.preventDefault();
+                        this.checked = false;
+                        pendingCheckIdx = idx;
+                        document.getElementById('verifyModal').classList.remove('hidden');
+                        return;
+                    } else {
+                        const points = parseInt(this.dataset.points);
+                        totalPoints -= points;
+                        completedTasks--;
+                        if (idx !== 2) imageInputs[idx].disabled = false;
+                        updateProgress();
+                    }
+                });
+            });
+
+            // Modal button handlers
+            document.getElementById('verifyYes').onclick = function() {
+                if (pendingCheckIdx !== null) {
+                    const chk = checkboxes[pendingCheckIdx];
+                    const points = parseInt(chk.dataset.points);
+                    chk.checked = true;
+                    totalPoints += points;
+                    completedTasks++;
+                    chk.disabled = true;
+                    imageInputs[pendingCheckIdx].disabled = true;
+                    updateProgress();
+                    pendingCheckIdx = null;
+                }
+                document.getElementById('verifyModal').classList.add('hidden');
+            };
+            document.getElementById('verifyNo').onclick = function() {
+                pendingCheckIdx = null;
+                document.getElementById('verifyModal').classList.add('hidden');
+            };
+
+            resetBtn.addEventListener('click', () => {
+                if (confirm('Reset progress for new period?')) {
+                    checkboxes.forEach((chk, idx) => {
+                        chk.checked = false;
+                        chk.disabled = true;
+                        imageInputs[idx].disabled = false;
+                        imageInputs[idx].value = '';
+                        imagePreviews[idx].src = '';
+                        imagePreviews[idx].classList.add('hidden');
+                    });
+                    totalPoints = 0;
+                    completedTasks = 0;
+                    updateProgress();
+                }
+            });
+
+            function saveProgress() {
+                const state = Array.from(checkboxes).map(chk => ({ checked: chk.checked, disabled: chk.disabled }));
+                localStorage.setItem('ecoTasks', JSON.stringify({ totalPoints, completedTasks, state }));
+            }
+
+            function loadProgress() {
+                const saved = localStorage.getItem('ecoTasks');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    totalPoints = data.totalPoints || 0;
+                    completedTasks = data.completedTasks || 0;
+                    data.state.forEach((item, index) => {
+                        if (item.checked) checkboxes[index].checked = true;
+                        if (item.disabled) checkboxes[index].disabled = true;
+                    });
+                }
+                updateProgress();
+            }
+        });
+    </script>
+</body>
+</html>
+</content>
+</create_file>

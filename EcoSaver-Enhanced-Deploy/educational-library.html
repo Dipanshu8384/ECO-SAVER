@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Educational Library</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-[#f6fcf4] flex flex-col items-center justify-center p-8">
+  <!-- EcoSaver Navigation Bar -->
+  <nav class="w-full bg-[#f6fcf4] nav-shadow sticky top-0 z-40">
+    <div class="container mx-auto flex items-center justify-between px-8 py-3">
+      <div class="flex items-center gap-3">
+        <img src="LOGO.jpg" alt="EcoSaver Logo" class="w-12 h-12 rounded-lg object-contain bg-[#20c4b6] p-1" />
+        <span class="font-bold text-lg text-gray-900">EcoSaver</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 px-2 py-1 rounded-xl bg-[#e1f7ef] border border-[#20c4b6] font-semibold text-[#20c4b6]" id="ecoPointsDisplay">
+          <span>♻</span>
+          <span id="ecoPointsNum">120</span> pts
+        </div>
+        <button onclick="logEcoAction && logEcoAction()" class="bg-[#20c4b6] text-white px-3 py-1 rounded-lg font-bold shadow hover:bg-teal-500 transition">Log Eco-Action</button>
+        <div class="relative flex items-center gap-3" id="profileDropdownArea">
+          <img src="avtar1.png" alt="Profile" id="profileAvatar" class="w-10 h-10 rounded-full border-2 border-[#20c4b6] cursor-pointer" />
+          <div id="profileDropdown" class="absolute right-0 top-12 bg-white rounded-xl shadow-xl w-64 py-4 px-5 z-50 hidden" style="min-width:210px">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="avtar1.png" class="w-11 h-11 rounded-full border-2 border-[#41d9af]" />
+              <div>
+                <div class="font-bold text-lg text-[#20c4b6]" id="profileName">Aman Sharma</div>
+                <div class="text-sm text-gray-500" id="profileEmail">aman@email.com</div>
+              </div>
+            </div>
+            <hr class="mb-3"/>
+            <div>
+              <div class="font-semibold mb-2">Level: <span id="profileLevel">Eco-Warrior</span></div>
+              <div class="flex gap-2 flex-wrap text-sm">
+                <span class="bg-[#e1f7ef] text-[#20c4b6] rounded-lg px-2 py-1">Green Beginner</span>
+                <span class="bg-[#fff2e5] text-[#fd7e25] rounded-lg px-2 py-1">Eco-Warrior</span>
+              </div>
+            </div>
+            <hr class="my-3"/>
+            <div><span class="font-bold">Eco-Points:</span> <span id="profilePoints">120</span></div>
+          </div>
+        </div>
+        <button id="darkModeToggle"
+          class="ml-3 flex items-center justify-center w-12 h-12 rounded-full bg-[#e1f7ef] shadow-lg transition duration-300 hover:bg-[#41d9af] group focus:outline-none"
+          aria-label="Toggle dark mode">
+          <span id="darkModeIcon">
+            <svg class="block group-hover:scale-110 transition-transform duration-200" id="iconSun" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="#fd7e25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            <svg class="hidden group-hover:scale-110 transition-transform duration-200" id="iconMoon" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="#41d9af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+            </svg>
+          </span>
+        </button>
+        <div id="toast" class="toast"></div>
+        <button id="menuButton" class="relative flex items-center justify-center w-12 h-12 rounded-full bg-[#41d9af] shadow-lg hover:bg-[#fd7e25] transition duration-200 group focus:outline-none">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-7 h-7 text-white group-hover:text-[#fffbe8] transition duration-200"
+               fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"
+               xmlns="http://www.w3.org/2000/svg">
+            <line x1="5" y1="7" x2="19" y2="7" stroke-linecap="round"/>
+            <line x1="5" y1="12" x2="19" y2="12" stroke-linecap="round"/>
+            <line x1="5" y1="17" x2="19" y2="17" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="max-w-2xl w-full bg-white rounded-2xl shadow p-8">
+    <h1 class="text-3xl font-bold text-[#20c4b6] mb-4">Educational Library</h1>
+    <p class="mb-6 text-gray-700">Access curated content about Indian environmental contexts. Explore interactive modules, real-world case studies, and deepen your knowledge for a sustainable future.</p>
+    <a href="login.html" class="inline-block px-4 py-2 bg-gray-200 text-[#20c4b6] rounded hover:bg-[#e1f7ef] font-semibold">&larr; Back to Dashboard</a>
+
+    <!-- Section Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
+      <button onclick="openModal('videoModal')" class="bg-[#f6fcf4] rounded-xl shadow p-6 flex flex-col items-center hover:bg-[#e1f7ef] transition">
+        <span class="text-4xl mb-2">🎥</span>
+        <span class="font-bold text-lg text-[#fd7e25]">Videos</span>
+      </button>
+      <button onclick="openModal('articleModal')" class="bg-[#f6fcf4] rounded-xl shadow p-6 flex flex-col items-center hover:bg-[#e1f7ef] transition">
+        <span class="text-4xl mb-2">📰</span>
+        <span class="font-bold text-lg text-[#20c4b6]">Articles</span>
+      </button>
+      <button onclick="openModal('pointsModal')" class="bg-[#f6fcf4] rounded-xl shadow p-6 flex flex-col items-center hover:bg-[#e1f7ef] transition">
+        <span class="text-4xl mb-2">🏆</span>
+        <span class="font-bold text-lg text-[#fd7e25]">Points System</span>
+      </button>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+      <div class="bg-white rounded-2xl shadow-lg max-w-md w-full mx-2 p-4 relative animate-fadeIn">
+        <button onclick="closeModal('videoModal')" class="absolute top-2 right-2 text-gray-400 hover:text-[#fd7e25] text-2xl">&times;</button>
+        <h2 class="text-xl font-bold text-[#fd7e25] mb-3">🎥 Video Section</h2>
+        <div class="space-y-4">
+          <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow">
+            <iframe src="https://www.youtube.com/embed/1VqoxOcEqpk" title="What is Climate Change?" frameborder="0" allowfullscreen class="w-full h-48"></iframe>
+          </div>
+          <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow">
+            <iframe src="https://www.youtube.com/embed/EtW2rrLHs08" title="Why is Biodiversity Important?" frameborder="0" allowfullscreen class="w-full h-48"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article Modal -->
+    <div id="articleModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+      <div class="bg-white rounded-2xl shadow-lg max-w-md w-full mx-2 p-4 relative animate-fadeIn">
+        <button onclick="closeModal('articleModal')" class="absolute top-2 right-2 text-gray-400 hover:text-[#20c4b6] text-2xl">&times;</button>
+        <h2 class="text-xl font-bold text-[#20c4b6] mb-3">📰 Article Section</h2>
+        <div class="space-y-4">
+          <article class="bg-[#f6fcf4] rounded-xl p-4 shadow">
+            <h3 class="font-bold text-lg mb-1">How to Reduce Your Carbon Footprint</h3>
+            <p class="text-gray-700">Learn practical steps to lower your carbon emissions at home, school, and in your community. <a href="#" class="text-[#fd7e25] underline">Read more</a></p>
+          </article>
+          <article class="bg-[#f6fcf4] rounded-xl p-4 shadow">
+            <h3 class="font-bold text-lg mb-1">Water Conservation in India</h3>
+            <p class="text-gray-700">Discover why water conservation is crucial and how you can make a difference. <a href="#" class="text-[#fd7e25] underline">Read more</a></p>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- Points System Modal -->
+    <div id="pointsModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+      <div class="bg-white rounded-2xl shadow-lg max-w-md w-full mx-2 p-4 relative animate-fadeIn">
+        <button onclick="closeModal('pointsModal')" class="absolute top-2 right-2 text-gray-400 hover:text-[#fd7e25] text-2xl">&times;</button>
+        <h2 class="text-xl font-bold text-[#fd7e25] mb-3">🏆 Points System</h2>
+        <ul class="list-disc pl-6 text-gray-700 space-y-2">
+          <li>Complete interactive challenges: <span class="font-semibold text-[#20c4b6]">+20 points</span></li>
+          <li>Log eco-friendly actions (e.g., recycling, saving water): <span class="font-semibold text-[#20c4b6]">+10 points</span></li>
+          <li>Participate in community events: <span class="font-semibold text-[#20c4b6]">+30 points</span></li>
+          <li>Score high in quizzes: <span class="font-semibold text-[#20c4b6]">+15 points</span></li>
+          <li>Share educational content: <span class="font-semibold text-[#20c4b6]">+5 points</span></li>
+          <li>Refer a friend: <span class="font-semibold text-[#20c4b6]">+25 points</span></li>
+        </ul>
+        <p class="mt-2 text-sm text-gray-500">Points help you unlock badges and climb the leaderboard!</p>
+      </div>
+    </div>
+  </div>
+  <nav class="flex flex-wrap gap-2 md:gap-4 container mx-auto px-4 mt-2">
+        <a href="login.html#challenges" class="text-white hover:text-green-200 font-semibold">Challenges</a>
+        <a href="login.html#learn" class="text-white hover:text-green-200 font-semibold">Learn</a>
+        <a href="login.html#community" class="text-white hover:text-green-200 font-semibold">Community</a>
+        <a href="login.html#impact" class="text-white hover:text-green-200 font-semibold">Impact</a>
+        <a href="login.html#habits" class="text-white hover:text-green-200 font-semibold">Habits</a>
+        <a href="login.html#eco-tips" class="text-white hover:text-green-200 font-semibold">Eco Tips</a>
+        <a href="login.html#leaderboard" class="text-white hover:text-green-200 font-semibold">Leaderboard</a>
+      </nav>
+      <div class="fixed bottom-4 right-4">
+  <button id="darkModeToggle" class="p-2 rounded-full bg-[#20c4b6] text-white shadow-md hover:bg-[#1da09a] focus:outline-none">
+    <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width={2} d="M12 2v4m0 12v4m8-10h4m-12 0H2m16.364-7.636l-2.828 2.828M7.636 17.364l-2.828 2.828M17.364 17.364l2.828 2.828M7.636 7.636L4.808 4.808" />
+    </svg>
+    <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width={2} d="M12 3v1m0 16v1m8.485-10.485l-.707.707M4.515 6.343l-.707.707M18.364 17.657l-.707.707M5.636 18.364l-.707.707M21 12h-1M4 12H3m16.243-7.757l-.707.707M4.757 4.757l-.707.707M17.657 18.364l-.707.707M6.343 5.636l-.707.707" />
+    </svg>
+  </button>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const iconSun = document.getElementById('iconSun');
+  const iconMoon = document.getElementById('iconMoon');
+  // On page load, check localStorage
+  if (localStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark');
+    if (iconSun && iconMoon) {
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+  }
+  if (darkModeToggle && iconSun && iconMoon) {
+    darkModeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      if (isDark) {
+        localStorage.setItem('darkMode', 'enabled');
+        iconSun.classList.add('hidden');
+        iconMoon.classList.remove('hidden');
+      } else {
+        localStorage.setItem('darkMode', 'disabled');
+        iconSun.classList.remove('hidden');
+        iconMoon.classList.add('hidden');
+      }
+    });
+  }
+});
+
+// Modal logic
+function openModal(id) {
+  document.getElementById(id).classList.remove('hidden');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.add('hidden');
+}
+</script>
+<script>
+// Eco-Points Sync Across Pages
+function updateEcoPointsHeader() {
+  const points = localStorage.getItem('ecoPoints') || 120;
+  document.querySelectorAll('#ecoPointsNum').forEach(el => el.textContent = points);
+}
+window.addEventListener('storage', updateEcoPointsHeader);
+document.addEventListener('DOMContentLoaded', updateEcoPointsHeader);
+</script>
+</body>
+</html>

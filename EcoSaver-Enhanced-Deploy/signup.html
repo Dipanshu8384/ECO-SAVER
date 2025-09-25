@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EcoSaver - Join Our Green Community</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Join EcoSaver - Transform your daily routine into powerful environmental action">
+  <style>
+    /* EcoSaver Theme Variables - Matching Project Style */
+    :root {
+      --forest-deep: #0a2818;
+      --forest-green: #1a4a37;
+      --leaf-green: #2d5a47;
+      --earth-brown: #8b4513;
+      --nature-teal: #4a9b8e;
+      --sunlight-yellow: #f4d03f;
+      --ocean-blue: #2980b9;
+      --sky-blue: #85c1e9;
+      --grass-green: #58d68d;
+      --tree-bark: #6b4423;
+      --glassmorphism-bg: rgba(45, 90, 71, 0.25);
+      --glassmorphism-border: rgba(244, 208, 63, 0.3);
+    }
+
+    html, body {
+      height: 100%; margin: 0; padding: 0; overflow: hidden;
+    }
+    body {
+      background: radial-gradient(ellipse at center, var(--forest-green) 0%, var(--leaf-green) 35%, var(--forest-deep) 100%);
+      width: 100vw; height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+
+    /* Environmental stars/particles background */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: 
+        radial-gradient(2px 2px at 20px 30px, var(--sunlight-yellow), transparent),
+        radial-gradient(2px 2px at 40px 70px, var(--nature-teal), transparent),
+        radial-gradient(1px 1px at 90px 40px, var(--grass-green), transparent),
+        radial-gradient(1px 1px at 130px 80px, var(--sunlight-yellow), transparent),
+        radial-gradient(2px 2px at 160px 30px, var(--sky-blue), transparent);
+      background-repeat: repeat;
+      background-size: 200px 100px;
+      animation: nature-twinkle 4s ease-in-out infinite alternate;
+      opacity: 0.7;
+      z-index: 1;
+    }
+
+    /* Floating environmental particles */
+    body::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: 
+        radial-gradient(1px 1px at 25px 25px, rgba(88, 214, 141, 0.4), transparent),
+        radial-gradient(1px 1px at 75px 75px, rgba(244, 208, 63, 0.3), transparent),
+        radial-gradient(1px 1px at 125px 125px, rgba(74, 155, 142, 0.4), transparent);
+      background-repeat: repeat;
+      background-size: 150px 150px;
+      animation: leaf-float 8s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    #grid-bg { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2; pointer-events: none;}
+    #branch-svg {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 370px;
+      height: 65px;
+      z-index: 10;
+      pointer-events: none;
+    }
+    #rope-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 18;
+      pointer-events: none;
+    }
+    .signup-container {
+      position: absolute;
+      left: 50%; top: 46%;
+      transform: translate(-50%, -50%);
+      width: 420px;
+      padding: 30px;
+      border-radius: 24px;
+      background: var(--glassmorphism-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glassmorphism-border);
+      box-shadow: 
+        0 8px 32px 0 rgba(31,38,135,.27), 
+        0 0 20px 2px rgba(88, 214, 141, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 20;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      animation: eco-glow 3s ease-in-out infinite alternate;
+    }
+
+    /* EcoSaver Branding Styles */
+    .ecosaver-brand {
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(244, 208, 63, 0.2);
+      width: 100%;
+    }
+    
+    .eco-logo {
+      margin-bottom: 15px;
+      animation: eco-pulse 2s ease-in-out infinite;
+    }
+    
+    .ecosaver-brand h1 {
+      color: var(--sunlight-yellow);
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 8px 0 5px 0;
+      text-shadow: 0 0 20px rgba(244, 208, 63, 0.4);
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    
+    .ecosaver-brand p {
+      color: var(--grass-green);
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    @keyframes eco-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    @keyframes eco-glow {
+      0%   { 
+        box-shadow: 
+          0 8px 32px 0 rgba(31,38,135,.27), 
+          0 0 20px 2px rgba(88, 214, 141, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+      100% { 
+        box-shadow: 
+          0 8px 32px 0 rgba(31,38,135,.27), 
+          0 0 30px 6px rgba(74, 155, 142, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+    }
+    form {
+      width: 380px;
+      background: transparent;
+      border-radius: 20px;
+      padding: 0 28px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    h2 {
+      color: var(--sunlight-yellow); 
+      margin-bottom: 25px; 
+      text-align: center;
+      font-weight: 600; 
+      font-size: 1.3rem;
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+      text-shadow: 0 0 15px rgba(244, 208, 63, 0.3);
+      opacity: 0.95;
+    }
+    .signup-options {
+      display: flex; justify-content: center; margin-bottom: 22px; gap: 12px;
+    }
+    .option-btn {
+      background: rgba(45, 90, 71, 0.7); color: #dadada;
+      border: 1.5px solid rgba(88, 214, 141, 0.3); border-radius: 8px 8px 0 0;
+      padding: 8px 18px; font-size: 15px;
+      cursor: pointer; outline: none;
+      transition: all .3s ease;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    .option-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(244, 208, 63, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    .option-btn:hover::before {
+      left: 100%;
+    }
+    .option-btn.active {
+      background: linear-gradient(135deg, var(--grass-green), var(--nature-teal));
+      color: #fff;
+      border-bottom: 2.5px solid var(--sunlight-yellow);
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(88, 214, 141, 0.4);
+      transform: translateY(-2px);
+    }
+    .input-group {
+      margin-bottom: 22px; display: flex; flex-direction: column;
+      opacity: 1; transition: all 0.4s ease;
+    }
+    .input-group.hide {
+      opacity: 0;
+      pointer-events: none;
+      height: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+    .input-group label { 
+      color: var(--nature-teal); font-size: 14px; margin-bottom: 6px; font-weight: 500;
+      text-shadow: 0 0 5px rgba(74, 155, 142, 0.3);
+    }
+    .input-group input {
+      padding: 11px 14px; border-radius: 8px;
+      border: 1px solid rgba(88, 214, 141, 0.3); 
+      background: rgba(10, 40, 24, 0.8); color: #fff;
+      font-size: 16px; outline: none; 
+      transition: all .3s ease;
+      backdrop-filter: blur(10px);
+    }
+    .input-group input:focus {
+      border: 1.5px solid var(--sunlight-yellow);
+      box-shadow: 0 5px 15px rgba(244, 208, 63, 0.3);
+      transform: scale(1.02);
+      background: rgba(10, 40, 24, 0.9);
+    }
+    .input-group input.valid {
+      border: 1.8px solid var(--grass-green) !important;
+      background: rgba(88, 214, 141, 0.1);
+      box-shadow: 0 0 15px rgba(88, 214, 141, 0.4);
+      animation: valid-pulse 1s ease-in-out;
+    }
+    .input-group input.invalid {
+      border: 1.8px solid var(--earth-brown) !important;
+      background: rgba(139, 69, 19, 0.1);
+      animation: earth-shake 0.5s ease-in-out;
+    }
+    @keyframes valid-pulse {
+      0% { box-shadow: 0 0 15px rgba(88, 214, 141, 0.4); }
+      50% { box-shadow: 0 0 25px rgba(88, 214, 141, 0.6); }
+      100% { box-shadow: 0 0 15px rgba(88, 214, 141, 0.4); }
+    }
+    @keyframes earth-shake {
+      0% { transform: translateX(0);}
+      25% { transform: translateX(-8px);}
+      75% { transform: translateX(8px);}
+      100% { transform: translateX(0);}
+    }
+    .password-wrapper {
+      position: relative; display: flex; align-items: center;
+    }
+    .toggle-password {
+      position: absolute; right: 11px; top: 9px;
+      cursor: pointer;
+      background: none;
+      color: var(--sunlight-yellow);
+      font-size: 1.05em;
+      border: none;
+      z-index: 2;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 5px rgba(244, 208, 63, 0.5);
+    }
+    .toggle-password:hover { 
+      color: var(--grass-green); 
+      transform: scale(1.2);
+    }
+    .strength-meter {
+      width: 100%; height: 6px; border-radius: 4px;
+      margin-top: 5px;
+      background: rgba(10, 40, 24, 0.8);
+      overflow: hidden;
+      box-shadow: inset 0 0 5px rgba(74, 155, 142, 0.3);
+      backdrop-filter: blur(5px);
+    }
+    .strength-bar {
+      height: 100%; transition: width 0.5s ease;
+      background: linear-gradient(90deg, var(--earth-brown), var(--sunlight-yellow), var(--grass-green), var(--nature-teal));
+      box-shadow: 0 0 10px currentColor;
+    }
+    .strength-text {
+      font-size: 13px; margin-top: 2px; color: var(--nature-teal); font-weight: 500;
+      text-shadow: 0 0 5px rgba(74, 155, 142, 0.3);
+    }
+    .signup-btn {
+      width: 100%; padding: 13px 0; border: none; border-radius: 8px;
+      font-weight: bold; font-size: 17px;
+      background: linear-gradient(135deg, var(--grass-green) 0%, var(--nature-teal) 50%, var(--sunlight-yellow) 100%);
+      color: #000; cursor: pointer; 
+      transition: all .3s ease;
+      box-shadow: 0 5px 15px rgba(88, 214, 141, 0.4);
+      position: relative;
+      overflow: hidden;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    .signup-btn::after {
+      content: '';
+      position: absolute; top: 0; left: -100%; height: 100%; width: 250%;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.3) 12%, transparent 85%);
+      opacity: 0.8; pointer-events: none;
+      transition: left 0.5s ease;
+    }
+    .signup-btn:active {
+      transform: scale(0.98);
+      animation: points-bounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    /* EcoSaver Navigation Links */
+    .eco-nav-links {
+      text-align: center;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(244, 208, 63, 0.2);
+      width: 100%;
+    }
+    
+    .nav-text {
+      color: var(--grass-green);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      opacity: 0.8;
+    }
+    
+    .nav-link {
+      display: inline-block;
+      color: var(--sunlight-yellow);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      margin: 4px 8px;
+      border-radius: 8px;
+      background: rgba(244, 208, 63, 0.1);
+      border: 1px solid rgba(244, 208, 63, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      background: rgba(244, 208, 63, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(244, 208, 63, 0.3);
+    }
+    
+    .nav-link.secondary {
+      color: var(--sky-blue);
+      background: rgba(133, 193, 233, 0.1);
+      border: 1px solid rgba(133, 193, 233, 0.3);
+    }
+    
+    .nav-link.secondary:hover {
+      background: rgba(133, 193, 233, 0.2);
+      box-shadow: 0 4px 12px rgba(133, 193, 233, 0.3);
+    }
+    .signup-btn:hover { 
+      box-shadow: 0 10px 25px rgba(0, 188, 212, 0.6);
+      transform: translateY(-2px);
+    }
+    .signup-btn:hover::after {
+      left: 0;
+    }
+    .popup { 
+      display: none; position: fixed; z-index: 40; left: 0; top: 0; 
+      width: 100vw; height: 100vh; 
+      background: rgba(10, 15, 26, 0.8); 
+      align-items: center; justify-content: center; 
+      animation: fade-in 0.4s ease; 
+      backdrop-filter: blur(10px);
+    }
+    .popup.show {
+      display: flex; animation: fade-in 0.3s ease;
+    }
+    @keyframes fade-in { 
+      from { opacity: 0; transform: scale(0.9); } 
+      to { opacity: 1; transform: scale(1); } 
+    }
+    .popup-content {
+      background: linear-gradient(135deg, var(--cosmic-deep) 0%, var(--cosmic-purple) 100%);
+      color: #fff;
+      border-radius: 20px; padding: 32px 20px 18px 20px;
+      text-align: center; min-width: 240px;
+      box-shadow: 
+        0 20px 40px rgba(0,0,0,0.6),
+        0 0 20px rgba(233, 30, 99, 0.3);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      backdrop-filter: blur(15px);
+      animation: slide-enter 0.5s ease-out;
+    }
+    #popup-ok-btn {
+      margin-top: 16px; padding: 8px 22px; border-radius: 10px; border: none;
+      background: linear-gradient(135deg, var(--nebula-pink), var(--galaxy-teal));
+      color: #fff;
+      font-weight: bold; font-size: 15px;
+      cursor: pointer; transition: all .3s ease;
+      box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+    }
+    #popup-ok-btn:hover { 
+      background: linear-gradient(135deg, var(--galaxy-teal), var(--star-gold));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 188, 212, 0.5);
+    }
+
+    /* Dashboard-style animations with environmental theme */
+    @keyframes eco-pulse {
+      0%, 100% { transform: scale(1); text-shadow: 0 0 10px rgba(244, 208, 63, 0.5); }
+      50% { transform: scale(1.05); text-shadow: 0 0 20px rgba(244, 208, 63, 0.8); }
+    }
+
+    @keyframes slide-enter {
+      0% { opacity: 0; transform: translateY(30px) scale(0.9); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes points-bounce {
+      0% { transform: scale(0.98); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes nature-twinkle {
+      0%, 100% {
+        opacity: 0.7;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    @keyframes leaf-float {
+      0% {
+        transform: translateX(0) translateY(0);
+      }
+      33% {
+        transform: translateX(-10px) translateY(-5px);
+      }
+      66% {
+        transform: translateX(5px) translateY(8px);
+      }
+      100% {
+        transform: translateX(0) translateY(0);
+      }
+    }
+
+    @media (max-width: 450px) {
+      .signup-container, form { width: 98vw !important; padding: 14vw 2vw !important;}
+    }
+    /* Remove circular cursor effects - using magnetic field instead */
+    .cursor-cosmic-field {
+      display: none; /* Disabled for magnetic effect */
+    }
+
+    .cosmic-overlay {
+      display: none; /* Disabled for magnetic effect */
+    }
+
+    .cosmic-distortion {
+      display: none; /* Disabled for magnetic effect */
+    }
+
+  </style>
+</head>
+<body>
+  <canvas id="grid-bg"></canvas>
+  <!-- Branch SVG at the top -->
+  <svg id="branch-svg" viewBox="0 0 370 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15 28 Q90 12, 185 25 Q270 38, 355 18" stroke="#36210c" stroke-width="16" stroke-linecap="round"/>
+    <ellipse cx="355" cy="20" rx="12" ry="7" fill="#36210c"/>
+    <ellipse cx="15" cy="29" rx="12" ry="9" fill="#36210c"/>
+    <ellipse cx="82" cy="14" rx="8" ry="5.3" fill="#443b19"/>
+    <ellipse cx="255" cy="33" rx="15" ry="7" fill="#443b19"/>
+    <ellipse cx="110" cy="18" rx="10" ry="4.8" fill="#5bf179" transform="rotate(-2 110 18)"/>
+    <ellipse cx="335" cy="13" rx="12" ry="6.5" fill="#a6e773" transform="rotate(8 335 13)"/>
+  </svg>
+  <!-- Wavy ropes and grommets -->
+  <canvas id="rope-canvas"></canvas>
+  <div class="signup-container" id="signup-container">
+    <!-- EcoSaver Logo and Branding -->
+    <div class="ecosaver-brand">
+      <div class="eco-logo">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" fill="var(--sunlight-yellow)"/>
+        </svg>
+      </div>
+      <h1>EcoSaver</h1>
+      <p>Join Our Green Community</p>
+    </div>
+    
+    <form id="signup-form" autocomplete="off">
+      <h2>Transform Your Daily Routine Into Environmental Action</h2>
+      <div class="signup-options">
+        <button type="button" class="option-btn active" id="email-opt">Email</button>
+        <button type="button" class="option-btn" id="mobile-opt"> Mobile Number</button>
+      </div>
+      <div class="input-group" id="name-group">
+        <label for="name">Enter Name</label>
+        <input type="text" id="name" required autocomplete="off" />
+      </div>
+      <div class="input-group" id="email-group">
+        <label for="email">Enter Email</label>
+        <input type="email" id="email" autocomplete="off" />
+      </div>
+      <div class="input-group hide" id="mobile-group">
+        <label for="mobile">Enter Mobile Number</label>
+        <input type="text" id="mobile" maxlength="10" autocomplete="off" />
+      </div>
+      <div class="input-group" id="password-group">
+        <label for="password">Create Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" required autocomplete="off" />
+          <button type="button" class="toggle-password" tabindex="-1" title="Show/Hide password">👁</button>
+        </div>
+        <div class="strength-meter" id="strength-meter"><div class="strength-bar" id="strength-bar" style="width:0%"></div></div>
+        <div class="strength-text" id="strength-text"></div>
+      </div>
+      <button type="submit" class="signup-btn">🌱 Join EcoSaver Community</button>
+    </form>
+    
+    <!-- EcoSaver Navigation Links -->
+    <div class="eco-nav-links">
+      <p class="nav-text">Already part of our community?</p>
+      <a href="login.html" class="nav-link">Sign In to Dashboard</a>
+      <a href="index.html" class="nav-link secondary">← Back to Home</a>
+    </div>
+  </div>
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <span id="popup-message"></span>
+      <br>
+      <button id="popup-ok-btn">OK</button>
+    </div>
+  </div>
+  <!-- === ANIMATED GRID & ROPES JS, FULLY RESTORED === -->
+  <script>
+    // Cosmic Grid Background with enhanced animation
+    const canvas = document.getElementById("grid-bg");
+    const ctx = canvas.getContext("2d");
+    let width = window.innerWidth, height = window.innerHeight;
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    let offsetY = 0;
+    let time = 0;
+    const gridSize = 25;
+    function drawCosmicGrid() {
+      // This function is replaced by drawInteractiveCosmicGrid for cursor interaction
+      // Original cosmic grid code kept for reference
+    }
+    drawCosmicGrid(); // Initial call, will be replaced by interactive version
+    // Animated ropes & grommets
+    function drawRopes() {
+      const ropeCanvas = document.getElementById("rope-canvas");
+      const ropeCtx = ropeCanvas.getContext("2d");
+      ropeCanvas.width = window.innerWidth;
+      ropeCanvas.height = window.innerHeight;
+      const branchSVG = document.getElementById("branch-svg");
+      const box = document.getElementById("signup-container");
+      // Branch anchor: 80px from left and right of branch bbox, at branch bottom
+      const branchRect = branchSVG.getBoundingClientRect();
+      const boxRect = box.getBoundingClientRect();
+      const bY = branchRect.top + branchRect.height - 6;
+      // Box grommet location: a bit inward/outward from box edge, at box top
+      const left_branchX = branchRect.left + 80;
+      const right_branchX = branchRect.right - 80;
+      const left_boxX = boxRect.left + 26;
+      const right_boxX = boxRect.right - 26;
+      const boxY = boxRect.top + 8;
+      function wavyRope(x0, y0, x1, y1, segments = 14, amp = 12) {
+        ropeCtx.save();
+        // Enhanced cosmic rope with gradient and glow
+        const gradient = ropeCtx.createLinearGradient(x0, y0, x1, y1);
+        gradient.addColorStop(0, "#ffd700");
+        gradient.addColorStop(0.5, "#00bcd4");
+        gradient.addColorStop(1, "#e91e63");
+        
+        ropeCtx.strokeStyle = gradient;
+        ropeCtx.lineWidth = 5;
+        ropeCtx.shadowColor = "#00bcd4";
+        ropeCtx.shadowBlur = 15;
+        ropeCtx.lineCap = "round";
+        
+        ropeCtx.beginPath();
+        ropeCtx.moveTo(x0, y0);
+        for (let i = 1; i <= segments; i++) {
+          let t = i / segments;
+          let xt = x0 + (x1 - x0) * t;
+          let yt = y0 + (y1 - y0) * t + Math.sin((t + Date.now()/1200)*Math.PI * 2) * amp * Math.sin(Math.PI * t);
+          ropeCtx.lineTo(xt, yt);
+        }
+        ropeCtx.stroke();
+        ropeCtx.restore();
+      }
+      ropeCtx.clearRect(0,0,ropeCanvas.width, ropeCanvas.height);
+      // Draw left and right ropes
+      wavyRope(left_branchX, bY, left_boxX, boxY);
+      wavyRope(right_branchX, bY, right_boxX, boxY);
+      // Draw cosmic grommets with enhanced glow
+      function drawGrommet(cx, cy) {
+        ropeCtx.save();
+        
+        // Outer cosmic glow
+        ropeCtx.beginPath();
+        ropeCtx.arc(cx, cy, 16, 0, 2 * Math.PI);
+        const outerGradient = ropeCtx.createRadialGradient(cx, cy, 0, cx, cy, 16);
+        outerGradient.addColorStop(0, "rgba(233, 30, 99, 0.6)");
+        outerGradient.addColorStop(1, "rgba(26, 13, 46, 0.8)");
+        ropeCtx.fillStyle = outerGradient;
+        ropeCtx.fill();
+        
+        // Inner cosmic center
+        ropeCtx.beginPath();
+        ropeCtx.arc(cx, cy, 8, 0, 2 * Math.PI);
+        const innerGradient = ropeCtx.createRadialGradient(cx, cy, 0, cx, cy, 8);
+        innerGradient.addColorStop(0, "#ffd700");
+        innerGradient.addColorStop(1, "#00bcd4");
+        ropeCtx.strokeStyle = innerGradient;
+        ropeCtx.lineWidth = 4;
+        ropeCtx.shadowColor = "#ffd700";
+        ropeCtx.shadowBlur = 12;
+        ropeCtx.stroke();
+        
+        ropeCtx.restore();
+      }
+      drawGrommet(left_boxX, boxY);
+      drawGrommet(right_boxX, boxY);
+      // Draw cosmic branch knots
+      function drawBranchKnot(cx, cy) {
+        ropeCtx.save();
+        ropeCtx.beginPath();
+        ropeCtx.arc(cx, cy, 9, 0, 2 * Math.PI);
+        const knotGradient = ropeCtx.createRadialGradient(cx, cy, 0, cx, cy, 9);
+        knotGradient.addColorStop(0, "#ffd700");
+        knotGradient.addColorStop(0.7, "#00bcd4");
+        knotGradient.addColorStop(1, "#e91e63");
+        ropeCtx.fillStyle = knotGradient;
+        ropeCtx.shadowColor = "#ffd700";
+        ropeCtx.shadowBlur = 8;
+        ropeCtx.fill();
+        ropeCtx.restore();
+      }
+      drawBranchKnot(left_branchX, bY);
+      drawBranchKnot(right_branchX, bY);
+    }
+    function animateRopeRings() {
+      drawRopes();
+      requestAnimationFrame(animateRopeRings);
+    }
+    animateRopeRings();
+    window.addEventListener("resize", drawRopes);
+  </script>
+  <script>
+    // Option switch (with fade effect), password toggle, all UI logic
+    const emailOpt = document.getElementById('email-opt');
+    const mobileOpt = document.getElementById('mobile-opt');
+    const emailGroup = document.getElementById('email-group');
+    const mobileGroup = document.getElementById('mobile-group');
+    const signupForm = document.getElementById('signup-form');
+    let signupMode = 'email';
+    const pwdInput = document.getElementById('password');
+    const pwdToggle = document.querySelector('.toggle-password');
+    pwdToggle.addEventListener('click', function() {
+      if (pwdInput.type === "password") {
+        pwdInput.type = "text";
+        this.textContent = "🙈";
+      } else {
+        pwdInput.type = "password";
+        this.textContent = "👁";
+      }
+    });
+    signupForm.addEventListener('reset', () => {
+      pwdInput.type = "password";
+      pwdToggle.textContent = "👁";
+    });
+    emailOpt.onclick = () => {
+      signupMode = 'email';
+      emailOpt.classList.add('active');
+      mobileOpt.classList.remove('active');
+      emailGroup.classList.remove("hide");
+      mobileGroup.classList.add("hide");
+      document.getElementById('email').required = true;
+      document.getElementById('mobile').required = false;
+      pwdInput.type = "password";
+      pwdToggle.textContent = "👁";
+    };
+    mobileOpt.onclick = () => {
+      signupMode = 'mobile';
+      mobileOpt.classList.add('active');
+      emailOpt.classList.remove('active');
+      emailGroup.classList.add("hide");
+      mobileGroup.classList.remove("hide");
+      document.getElementById('email').required = false;
+      document.getElementById('mobile').required = true;
+      pwdInput.type = "password";
+      pwdToggle.textContent = "👁";
+    };
+    const password = document.getElementById('password');
+    const strengthBar = document.getElementById('strength-bar');
+    const strengthText = document.getElementById('strength-text');
+    password.addEventListener('input', function() {
+      const val = password.value;
+      const score = getPasswordScore(val);
+      let perc = [0,25,50,75,100][score];
+      strengthBar.style.width = perc + "%";
+      let txt = ["", "Weak","Fair","Medium","Strong"];
+      strengthText.textContent = txt[score] || '';
+      strengthBar.style.background = [
+        "#232323",
+        "linear-gradient(90deg,#ff4d79,#efab35)",
+        "linear-gradient(90deg,#efab35,#becb28 95%)",
+        "linear-gradient(90deg,#becb28,#43e85c 100%)",
+        "linear-gradient(90deg,#43e85c,#30d3ea 100%)"
+      ][score];
+      if(val.length===0) {
+        password.classList.remove("valid","invalid");
+      } else if(score > 2&&val.length>=6) {
+        password.classList.add("valid"); password.classList.remove("invalid");
+      } else {
+        password.classList.add("invalid"); password.classList.remove("valid");
+      }
+    });
+    function getPasswordScore(val) {
+      let score = 0;
+      if (!val) return 0;
+      if (val.length>=6) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+      return Math.min(score, 4);
+    }
+    function validateEmail(email) {
+      return /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+    }
+    function validateMobile(mob) {
+      return /^[6-9]\d{9}$/.test(mob);
+    }
+    document.getElementById('name').addEventListener('input', function(){
+      if(this.value.trim().length>1) {
+        this.classList.add('valid'); this.classList.remove('invalid');
+      } else {
+        this.classList.remove('valid'); this.classList.remove('invalid');
+      }
+    });
+    document.getElementById('email').addEventListener('input', function(){
+      if(validateEmail(this.value)) {
+        this.classList.add('valid'); this.classList.remove('invalid');
+      } else {
+        this.classList.remove('valid'); this.classList.remove('invalid');
+      }
+    });
+    document.getElementById('mobile').addEventListener('input', function(){
+      if(validateMobile(this.value)) {
+        this.classList.add('valid'); this.classList.remove('invalid');
+      } else {
+        this.classList.remove('valid'); this.classList.remove('invalid');
+      }
+    });
+  signupForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const mobile = document.getElementById('mobile').value.trim();
+  const passwordVal = document.getElementById('password').value;
+
+  // Validation
+  if (!name) {
+    showPopup("Please enter your name.");
+    document.getElementById('name').classList.add('invalid');
+    return;
+  }
+  if (signupMode === 'email') {
+    if (!validateEmail(email)) {
+      showPopup("Please enter a valid email.");
+      document.getElementById('email').classList.add('invalid');
+      return;
+    }
+    if (!passwordVal || passwordVal.length < 6) {
+      showPopup("Password should be at least 6 characters.");
+      document.getElementById('password').classList.add('invalid');
+      return;
+    }
+  } else {
+    if (!validateMobile(mobile)) {
+      showPopup("Enter a valid 10-digit mobile number starting with 6-9.");
+      document.getElementById('mobile').classList.add('invalid');
+      return;
+    }
+    if (!passwordVal || passwordVal.length < 6) {
+      showPopup("Password should be at least 6 characters.");
+      document.getElementById('password').classList.add('invalid');
+      return;
+    }
+  }
+
+  // Construct and save the unified profile
+  const ecoUser = {
+    name: name,
+    avatar: "https://api.dicebear.com/7.x/thumbs/svg?seed=" + encodeURIComponent(name),
+    level: "Green Beginner",
+    points: 0,
+    contact: signupMode === 'email' ? email : mobile,
+    mode: signupMode
+  };
+localStorage.setItem("ecoUser", JSON.stringify(ecoUser));
+
+
+  // Redirect after success
+  showPopup("Signup Successful!", true);
+  signupForm.reset();
+  document.querySelectorAll('.valid').forEach(e=>e.classList.remove('valid'));
+  document.getElementById('strength-bar').style.width = "0%";
+  document.getElementById('strength-text').textContent = "";
+});
+
+
+function showPopup(message, redirect = false) {
+  const popup = document.getElementById('popup');
+  const popupMessage = document.getElementById('popup-message');
+  popupMessage.textContent = message;
+  popup.classList.add('show');
+  document.getElementById('popup-ok-btn').onclick = () => {
+    popup.classList.remove('show');
+    if (redirect) {
+      window.location.href = "dashboard.html";
+    }
+  };
+}
+
+    
+    
+    // Magnetic Grid Deviation Effect
+    let mouseX = 0;
+    let mouseY = 0;
+    let magneticStrength = 50; // How strong the magnetic pull is
+    let magneticRadius = 150; // Radius of magnetic influence
+
+    document.addEventListener('mousemove', function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    // Enhanced grid interaction with magnetic field effect
+    let gridCanvas = document.getElementById("grid-bg");
+    let gridCtx = gridCanvas.getContext("2d");
+
+    function drawMagneticCosmicGrid() {
+      gridCtx.clearRect(0, 0, width, height);
+      
+      // Base environmental grid with magnetic deviation
+      gridCtx.strokeStyle = `rgba(74, 155, 142, ${0.25 + Math.sin(time * 0.02) * 0.05})`;
+      gridCtx.lineWidth = 1;
+      gridCtx.shadowColor = '#4a9b8e';
+      gridCtx.shadowBlur = 2;
+      
+      // Vertical lines with magnetic deviation
+      for (let x = 0; x < width; x += gridSize) {
+        gridCtx.beginPath();
+        let prevY = 0;
+        
+        for (let y = 0; y <= height; y += 5) { // Smaller segments for smoother curves
+          // Calculate distance to cursor
+          const distanceToMouse = Math.sqrt(Math.pow(x - mouseX, 2) + Math.pow(y - mouseY, 2));
+          
+          // Calculate magnetic influence (inverse distance)
+          let magneticInfluence = 0;
+          if (distanceToMouse < magneticRadius) {
+            magneticInfluence = (magneticRadius - distanceToMouse) / magneticRadius;
+            magneticInfluence = Math.pow(magneticInfluence, 2); // Exponential falloff
+          }
+          
+          // Calculate magnetic deviation towards cursor
+          const angleToMouse = Math.atan2(mouseY - y, mouseX - x);
+          const deviationX = Math.cos(angleToMouse) * magneticInfluence * magneticStrength;
+          const deviationY = Math.sin(angleToMouse) * magneticInfluence * magneticStrength * 0.3; // Less Y deviation for vertical lines
+          
+          // Apply base wave animation + magnetic deviation
+          const finalX = x + Math.sin(time * 0.01 + x * 0.01) * 2 + deviationX;
+          const finalY = y + deviationY;
+          
+          // Enhanced glow near cursor with environmental colors
+          if (magneticInfluence > 0) {
+            gridCtx.strokeStyle = `rgba(244, 208, 63, ${0.4 + magneticInfluence * 0.6})`;
+            gridCtx.lineWidth = 1 + magneticInfluence * 3;
+            gridCtx.shadowBlur = 5 + magneticInfluence * 15;
+            gridCtx.shadowColor = '#f4d03f';
+          } else {
+            gridCtx.strokeStyle = `rgba(74, 155, 142, ${0.25 + Math.sin(time * 0.02) * 0.05})`;
+            gridCtx.lineWidth = 1;
+            gridCtx.shadowBlur = 2;
+            gridCtx.shadowColor = '#4a9b8e';
+          }
+          
+          if (y === 0) {
+            gridCtx.moveTo(finalX, finalY);
+          } else {
+            gridCtx.lineTo(finalX, finalY);
+          }
+        }
+        gridCtx.stroke();
+      }
+      
+      // Horizontal lines with magnetic deviation
+      for (let y = (offsetY % gridSize); y < height; y += gridSize) {
+        gridCtx.beginPath();
+        
+        for (let x = 0; x <= width; x += 5) { // Smaller segments for smoother curves
+          // Calculate distance to cursor
+          const distanceToMouse = Math.sqrt(Math.pow(x - mouseX, 2) + Math.pow(y - mouseY, 2));
+          
+          // Calculate magnetic influence
+          let magneticInfluence = 0;
+          if (distanceToMouse < magneticRadius) {
+            magneticInfluence = (magneticRadius - distanceToMouse) / magneticRadius;
+            magneticInfluence = Math.pow(magneticInfluence, 2);
+          }
+          
+          // Calculate magnetic deviation towards cursor
+          const angleToMouse = Math.atan2(mouseY - y, mouseX - x);
+          const deviationX = Math.cos(angleToMouse) * magneticInfluence * magneticStrength * 0.3; // Less X deviation for horizontal lines
+          const deviationY = Math.sin(angleToMouse) * magneticInfluence * magneticStrength;
+          
+          // Apply base wave animation + magnetic deviation
+          const finalX = x + deviationX;
+          const finalY = y + Math.sin(time * 0.015 + y * 0.008) * 1.5 + deviationY;
+          
+          // Enhanced glow near cursor with environmental colors
+          if (magneticInfluence > 0) {
+            gridCtx.strokeStyle = `rgba(244, 208, 63, ${0.4 + magneticInfluence * 0.6})`;
+            gridCtx.lineWidth = 1 + magneticInfluence * 3;
+            gridCtx.shadowBlur = 5 + magneticInfluence * 15;
+            gridCtx.shadowColor = '#f4d03f';
+          } else {
+            gridCtx.strokeStyle = `rgba(74, 155, 142, ${0.25 + Math.sin(time * 0.02) * 0.05})`;
+            gridCtx.lineWidth = 1;
+            gridCtx.shadowBlur = 2;
+            gridCtx.shadowColor = '#4a9b8e';
+          }
+          
+          if (x === 0) {
+            gridCtx.moveTo(finalX, finalY);
+          } else {
+            gridCtx.lineTo(finalX, finalY);
+          }
+        }
+        gridCtx.stroke();
+      }
+      
+      // Enhanced environmental intersection points with magnetic attraction
+      gridCtx.fillStyle = `rgba(88, 214, 141, ${0.5 + Math.sin(time * 0.03) * 0.2})`;
+      gridCtx.shadowColor = '#58d68d';
+      gridCtx.shadowBlur = 5;
+      
+      for (let x = 0; x < width; x += gridSize * 3) {
+        for (let y = 0; y < height; y += gridSize * 3) {
+          const distanceToMouse = Math.sqrt(Math.pow(x - mouseX, 2) + Math.pow(y - mouseY, 2));
+          
+          let magneticInfluence = 0;
+          if (distanceToMouse < magneticRadius) {
+            magneticInfluence = (magneticRadius - distanceToMouse) / magneticRadius;
+          }
+          
+          // Magnetic attraction towards cursor
+          const angleToMouse = Math.atan2(mouseY - y, mouseX - x);
+          const attractionX = Math.cos(angleToMouse) * magneticInfluence * magneticStrength * 0.5;
+          const attractionY = Math.sin(angleToMouse) * magneticInfluence * magneticStrength * 0.5;
+          
+          const finalX = x + Math.sin(time * 0.02 + x * 0.01) * 3 + attractionX;
+          const finalY = y + Math.sin(time * 0.025 + y * 0.01) * 3 + attractionY;
+          const nodeSize = 1.5 + Math.sin(time * 0.04) * 0.5 + magneticInfluence * 2;
+          
+          if (magneticInfluence > 0) {
+            gridCtx.fillStyle = `rgba(244, 208, 63, ${0.7 + magneticInfluence * 0.3})`;
+            gridCtx.shadowBlur = 8 + magneticInfluence * 12;
+          } else {
+            gridCtx.fillStyle = `rgba(88, 214, 141, ${0.5 + Math.sin(time * 0.03) * 0.2})`;
+            gridCtx.shadowBlur = 5;
+          }
+          
+          gridCtx.beginPath();
+          gridCtx.arc(finalX, finalY, nodeSize, 0, Math.PI * 2);
+          gridCtx.fill();
+        }
+      }
+      
+      offsetY -= 0.3;
+      time += 1;
+      if (offsetY <= -gridSize) offsetY = 0;
+      requestAnimationFrame(drawMagneticCosmicGrid);
+    }
+    drawMagneticCosmicGrid();
+  </script>
+  
+  <!-- EcoSaver Unified System Integration -->
+  <script>
+    // Simple EcoSaver integration
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add EcoSaver theme class to body
+      document.body.classList.add('ecosaver-theme');
+      
+      // Track signup page visit
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('ecosaver-last-page', 'signup');
+        console.log('🌱 EcoSaver Signup Page Loaded');
+      }
+    });
+  </script>
+</body>
+</html>

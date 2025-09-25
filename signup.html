@@ -1,35 +1,1314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - EcoSaver</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>EcoSaver - Join Our Community</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --background-dark: hsl(222, 47%, 11%);
+      --text-light: hsl(210, 40%, 98%);
+      --text-muted: hsl(215, 20%, 65%);
+      --primary-green: hsl(142, 71%, 41%);
+      --primary-green-light: hsl(142, 80%, 98%);
+      --primary-green-darker: hsl(142, 76%, 36%);
+      --accent-yellow: hsl(45, 93%, 62%);
+    }
+
+    html, body {
+      height: 100%; margin: 0; padding: 0; overflow: hidden;
+    }
+    
+    body {
+      background-color: var(--background-dark);
+      width: 100vw; height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Multiple layered background images for depth - exact copy from landing.html */
+    .hero-bg-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+    }
+    
+    .hero-bg-layer-1 {
+      animation: windSwayIntense 6s ease-in-out infinite;
+      transform-origin: bottom center;
+      z-index: 1;
+    }
+    
+    .hero-bg-layer-2 {
+      animation: windSwayGentle 8s ease-in-out infinite reverse;
+      transform-origin: bottom left;
+      opacity: 0.15;
+      z-index: 2;
+    }
+    
+    .hero-bg-layer-3 {
+      animation: windSwayMedium 7s ease-in-out infinite alternate;
+      transform-origin: bottom right;
+      opacity: 0.2;
+      z-index: 3;
+    }
+    
+    /* Gentle wind animations - exact copy from landing.html */
+    @keyframes windSwayIntense {
+      0% { 
+        transform: translateX(0) rotate(0deg) scale(1); 
+      }
+      25% { 
+        transform: translateX(-2px) rotate(-0.3deg) scale(1.002); 
+      }
+      50% { 
+        transform: translateX(3px) rotate(0.4deg) scale(1.003); 
+      }
+      75% { 
+        transform: translateX(-1px) rotate(-0.2deg) scale(1.001); 
+      }
+      100% { 
+        transform: translateX(1px) rotate(0.1deg) scale(1.001); 
+      }
+    }
+    
+    @keyframes windSwayGentle {
+      0%, 100% { 
+        transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+      }
+      50% { 
+        transform: translateX(2px) translateY(-1px) rotate(0.2deg) scale(1.001);
+      }
+    }
+    
+    @keyframes windSwayMedium {
+      0% { 
+        transform: translateX(0) rotate(0deg) scale(1);
+      }
+      33% { 
+        transform: translateX(-1.5px) rotate(-0.25deg) scale(1.001);
+      }
+      66% { 
+        transform: translateX(2.5px) rotate(0.35deg) scale(1.002);
+      }
+      100% { 
+        transform: translateX(-0.5px) rotate(-0.1deg) scale(1.0005);
+      }
+    }
+
+    /* Hero-style overlay - keeping signup's unique gradient */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, hsl(195, 45%, 25%), hsl(270, 35%, 15%));
+      opacity: 0.8;
+      z-index: 4;
+    }
+
+    /* Advanced wind particles system - exact copy from landing.html */
+    .wind-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+    
+    .wind-particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: advancedFloat var(--duration) var(--timing) infinite;
+    }
+    
+    /* Different particle types */
+    .wind-particle.leaf {
+      width: 8px;
+      height: 6px;
+      background: linear-gradient(45deg, #4ade80, #22c55e);
+      border-radius: 0 100% 0 100%;
+      transform-origin: center;
+    }
+    
+    .wind-particle.dust {
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+    }
+    
+    .wind-particle.pollen {
+      width: 5px;
+      height: 5px;
+      background: radial-gradient(circle, #fbbf24, #f59e0b);
+      border-radius: 50%;
+    }
+    
+    /* Particle positioning and timing - gentler */
+    .wind-particle:nth-child(1) { 
+      top: 15%; left: -20px; --duration: 12s; --timing: ease-out;
+      animation-delay: 0s;
+    }
+    .wind-particle:nth-child(2) { 
+      top: 25%; left: -20px; --duration: 15s; --timing: ease-in-out;
+      animation-delay: 3s;
+    }
+    .wind-particle:nth-child(3) { 
+      top: 45%; left: -20px; --duration: 14s; --timing: ease-out;
+      animation-delay: 6s;
+    }
+    .wind-particle:nth-child(4) { 
+      top: 65%; left: -20px; --duration: 18s; --timing: ease-in-out;
+      animation-delay: 9s;
+    }
+    .wind-particle:nth-child(5) { 
+      top: 85%; left: -20px; --duration: 16s; --timing: ease-out;
+      animation-delay: 4s;
+    }
+    .wind-particle:nth-child(6) { 
+      top: 35%; left: -20px; --duration: 20s; --timing: ease-in-out;
+      animation-delay: 12s;
+    }
+    .wind-particle:nth-child(7) { 
+      top: 55%; left: -20px; --duration: 17s; --timing: ease-out;
+      animation-delay: 15s;
+    }
+    .wind-particle:nth-child(8) { 
+      top: 75%; left: -20px; --duration: 22s; --timing: ease-in-out;
+      animation-delay: 2s;
+    }
+    
+    @keyframes advancedFloat {
+      0% {
+        transform: translateX(0) translateY(0) rotate(0deg) scale(0);
+        opacity: 0;
+      }
+      10% {
+        transform: translateX(30px) translateY(-5px) rotate(90deg) scale(1);
+        opacity: 0.6;
+      }
+      30% {
+        transform: translateX(120px) translateY(-10px) rotate(180deg) scale(1.1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateX(250px) translateY(5px) rotate(270deg) scale(0.9);
+        opacity: 1;
+      }
+      70% {
+        transform: translateX(380px) translateY(-8px) rotate(360deg) scale(1.05);
+        opacity: 0.8;
+      }
+      90% {
+        transform: translateX(500px) translateY(3px) rotate(450deg) scale(0.8);
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateX(calc(100vw + 30px)) translateY(-10px) rotate(540deg) scale(0);
+        opacity: 0;
+      }
+    }
+    
+    #grid-bg { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 100vw; 
+      height: 100vh; 
+      z-index: 0; 
+      pointer-events: none;
+    }
+    #branch-svg {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 370px;
+      height: 65px;
+      z-index: 10;
+      pointer-events: none;
+    }
+    #rope-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 18;
+      pointer-events: none;
+    }
+    .signup-container {
+      position: absolute;
+      left: 50%; top: 46%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      padding: 40px 30px;
+      border-radius: 25px;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
+    }
+    
+    form {
+      width: 100%;
+      background: transparent;
+      border-radius: 20px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    form h2 {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 28px;
+      margin-bottom: 25px;
+      text-align: center;
+      font-weight: 300;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .signup-options {
+      display: flex; 
+      justify-content: center; 
+      margin-bottom: 22px; 
+      gap: 12px;
+      width: 100%;
+    }
+    .option-btn {
+      background: #181818; color: #dadada;
+      border: 1.5px solid #222; border-radius: 8px 8px 0 0;
+      padding: 8px 18px; font-size: 15px;
+      cursor: pointer; outline: none;
+      transition: background .2s, color .2s, box-shadow .3s;
+      box-shadow: none;
+    }
+    .option-btn.active {
+      background: #4ade80;
+      color: #111;
+      border-bottom: 2.5px solid #4ade80;
+      font-weight: bold;
+      box-shadow: 0 2px 12px #22d3ee44;
+    }
+    .input-group {
+      margin-bottom: 22px; display: flex; flex-direction: column;
+      opacity: 1; transition: opacity 0.32s;
+    }
+    .input-group.hide {
+      opacity: 0;
+      pointer-events: none;
+      height: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+    .input-group label { 
+      color: rgba(255, 255, 255, 0.8); 
+      font-size: 14px; 
+      margin-bottom: 6px; 
+      font-weight: 400;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    .input-group input {
+      padding: 12px 16px; 
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15); 
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px; 
+      outline: none; 
+      width: 100%;
+    }
+    .input-group input:focus {
+      border: 1px solid rgba(76, 222, 128, 0.5);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 20px rgba(76, 222, 128, 0.2);
+    }
+    .input-group input.valid {
+      border: 1px solid rgba(76, 222, 128, 0.6) !important;
+      background: rgba(76, 222, 128, 0.1);
+      box-shadow: 0 0 15px rgba(76, 222, 128, 0.3);
+    }
+    .input-group input.invalid {
+      border: 1px solid rgba(255, 68, 84, 0.6) !important;
+      background: rgba(255, 68, 84, 0.1);
+    }
+    }
+    
+    .password-wrapper {
+      position: relative; display: flex; align-items: center;
+    }
+    .toggle-password {
+      position: absolute; right: 11px; top: 9px;
+      cursor: pointer;
+      background: none;
+      color: #70f5d3;
+      font-size: 1.05em;
+      border: none;
+      z-index: 2;
+      transition: color 0.20s;
+    }
+    .toggle-password:hover { color: #d4ba4d; }
+    .strength-meter {
+      width: 100%; height: 6px; border-radius: 4px;
+      margin-top: 5px;
+      background: #232323;
+      overflow: hidden;
+      box-shadow: 0 0 5px #129fa2;
+    }
+    .strength-bar {
+      height: 100%; transition: width 0.35s;
+      background: linear-gradient(90deg,#ff4d79,#efab35,#becb28,#43e85c,#30d3ea);
+    }
+    .strength-text {
+      font-size: 13px; margin-top: 2px; color: #8de4c7; font-weight: 500;
+    }
+    .signup-btn {
+      width: 100%; 
+      padding: 15px 0; 
+      border: 1px solid rgba(76, 222, 128, 0.3); 
+      border-radius: 12px;
+      font-weight: 600; 
+      font-size: 16px;
+      background: rgba(76, 222, 128, 0.15);
+      backdrop-filter: blur(10px);
+      color: rgba(255, 255, 255, 0.9); 
+      cursor: pointer; 
+      box-shadow: 0 4px 20px rgba(76, 222, 128, 0.2);
+      position: relative;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .signup-btn::after {
+      content: '';
+      position: absolute; 
+      top: 0; 
+      left: -100%; 
+      height: 100%; 
+      width: 100%;
+      background: rgba(76, 222, 128, 0.1);
+    }
+    .signup-btn:hover { 
+      background: rgba(76, 222, 128, 0.25);
+      box-shadow: 0 6px 30px rgba(76, 222, 128, 0.4);
+      border-color: rgba(76, 222, 128, 0.5);
+    }
+    .signup-btn:hover::after {
+      left: 0;
+    }
+    .popup { display: none; position: fixed; z-index: 30; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.33); align-items: center; justify-content: center; animation: fade-in 0.33s; }
+    .popup.show {
+      display: flex; animation: fade-in 0.2s;
+    }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+    .popup-content {
+      background: #181818; color: #fff;
+      border-radius: 14px; padding: 32px 20px 18px 20px;
+      text-align: center; min-width: 240px;
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,.37);
+    }
+    
+    /* OTP Verification Popup */
+    .otp-popup {
+      display: none;
+      position: fixed;
+      z-index: 40;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      align-items: center;
+      justify-content: center;
+    }
+    .otp-popup.show {
+      display: flex;
+      animation: fade-in 0.3s;
+    }
+    .otp-content {
+      background: rgba(24, 24, 24, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      min-width: 380px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      color: #fff;
+    }
+    .otp-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .otp-subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 30px;
+    }
+    .otp-input-container {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .otp-digit {
+      width: 50px;
+      height: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+      outline: none;
+    }
+    .otp-digit:focus {
+      border-color: rgba(76, 222, 128, 0.5);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px rgba(76, 222, 128, 0.3);
+    }
+    .otp-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    .otp-btn {
+      padding: 12px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .otp-btn.primary {
+      background: rgba(76, 222, 128, 0.2);
+      border-color: rgba(76, 222, 128, 0.3);
+    }
+    .otp-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .otp-btn.primary:hover {
+      background: rgba(76, 222, 128, 0.3);
+    }
+    .otp-timer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .resend-otp {
+      color: rgba(76, 222, 128, 0.8);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .resend-otp:hover {
+      color: rgba(76, 222, 128, 1);
+    }
+    #popup-ok-btn {
+      margin-top: 16px; padding: 8px 22px; border-radius: 7px; border: none;
+      background: #4ade80; color: #000;
+      font-weight: bold; font-size: 15px;
+      cursor: pointer; transition: background .2s;
+    }
+    #popup-ok-btn:hover { background: #22d3ee; }
+    @media (max-width: 450px) {
+      .signup-container, form { width: 98vw !important; padding: 14vw 2vw !important;}
+    }
+
+  </style>
+  <!-- EcoSaver Production Backend Integration - Load First -->
+  <script src="ecosaver-frontend-production.js"></script>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-blue-100 p-4">
-    <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
-        <h2 class="text-2xl font-bold text-center text-[#20c4b6] mb-6">Create Your Account</h2>
-        <form>
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" id="email" class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring" placeholder="Enter your email" required>
-            </div>
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" id="password" class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring" placeholder="Create a password" required>
-            </div>
-            <div class="mb-4">
-                <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-                <input type="password" id="confirmPassword" class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring" placeholder="Confirm your password" required>
-            </div>
-            <button type="submit" class="w-full py-2 px-4 bg-[#20c4b6] text-white rounded-lg font-semibold hover:bg-[#158a8e] transition">Sign Up</button>
-        </form>
-        <div class="mt-6 text-center text-sm text-gray-600">
-            Already have an account? <a href="login.html" class="text-[#20c4b6] hover:underline">Login</a>
+<body>
+  <!-- Multiple layered forest images for realistic depth - same as landing.html -->
+  <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=1974&auto=format&fit=crop"
+       alt="Lush green forest" class="hero-bg-image hero-bg-layer-1">
+  <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=1974&auto=format&fit=crop"
+       alt="Forest layer 2" class="hero-bg-image hero-bg-layer-2">
+  <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=1974&auto=format&fit=crop"
+       alt="Forest layer 3" class="hero-bg-image hero-bg-layer-3">
+  
+  <!-- Hero overlay with signup's unique gradient -->
+  <div class="hero-overlay"></div>
+  
+  <!-- Advanced wind particle system - same as landing.html -->
+  <div class="wind-particles">
+    <div class="wind-particle leaf"></div>
+    <div class="wind-particle dust"></div>
+    <div class="wind-particle pollen"></div>
+    <div class="wind-particle leaf"></div>
+    <div class="wind-particle dust"></div>
+    <div class="wind-particle pollen"></div>
+    <div class="wind-particle leaf"></div>
+    <div class="wind-particle dust"></div>
+  </div>
+
+  <canvas id="grid-bg"></canvas>
+  <!-- Branch SVG at the top -->
+  <svg id="branch-svg" viewBox="0 0 370 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15 28 Q90 12, 185 25 Q270 38, 355 18" stroke="#36210c" stroke-width="16" stroke-linecap="round"/>
+    <ellipse cx="355" cy="20" rx="12" ry="7" fill="#36210c"/>
+    <ellipse cx="15" cy="29" rx="12" ry="9" fill="#36210c"/>
+    <ellipse cx="82" cy="14" rx="8" ry="5.3" fill="#443b19"/>
+    <ellipse cx="255" cy="33" rx="15" ry="7" fill="#443b19"/>
+    <ellipse cx="110" cy="18" rx="10" ry="4.8" fill="#5bf179" transform="rotate(-2 110 18)"/>
+    <ellipse cx="335" cy="13" rx="12" ry="6.5" fill="#a6e773" transform="rotate(8 335 13)"/>
+  </svg>
+  <!-- Wavy ropes and grommets -->
+  <canvas id="rope-canvas"></canvas>
+  <div class="signup-container" id="signup-container">
+    <form id="signup-form" autocomplete="off">
+      <h2>Sign up</h2>
+      <div class="signup-options">
+        <button type="button" class="option-btn active" id="email-opt">Email</button>
+        <button type="button" class="option-btn" id="mobile-opt"> Mobile Number</button>
+      </div>
+      <div class="input-group" id="name-group">
+        <label for="name">Enter Name</label>
+        <input type="text" id="name" required autocomplete="off" />
+      </div>
+      <div class="input-group" id="email-group">
+        <label for="email">Enter Email</label>
+        <input type="email" id="email" autocomplete="off" />
+      </div>
+      <div class="input-group hide" id="mobile-group">
+        <label for="mobile">Enter Mobile Number</label>
+        <input type="text" id="mobile" maxlength="10" autocomplete="off" />
+      </div>
+      <div class="input-group" id="password-group">
+        <label for="password">Create Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" required autocomplete="off" />
+          <button type="button" class="toggle-password" tabindex="-1" title="Show/Hide password">👁</button>
         </div>
-        <div class="mt-4 text-center">
-            <a href="login.html" class="inline-block px-4 py-2 bg-gray-200 text-[#20c4b6] rounded hover:bg-[#e1f7ef] font-semibold">&larr; Back to Dashboard</a>
-        </div>
+        <div class="strength-meter" id="strength-meter"><div class="strength-bar" id="strength-bar" style="width:0%"></div></div>
+        <div class="strength-text" id="strength-text"></div>
+      </div>
+      <button type="submit" class="signup-btn">Sign Up</button>
+    </form>
+  </div>
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <span id="popup-message"></span>
+      <br>
+      <button id="popup-ok-btn">OK</button>
     </div>
+  </div>
+
+  <!-- OTP Verification Popup -->
+  <div class="otp-popup" id="otp-popup">
+    <div class="otp-content">
+      <div class="otp-title">Email Verification</div>
+      <div class="otp-subtitle" id="otp-subtitle">Enter the 6-digit code sent to your email</div>
+      
+      <div class="otp-input-container">
+        <input type="text" class="otp-digit" maxlength="1" id="otp1" />
+        <input type="text" class="otp-digit" maxlength="1" id="otp2" />
+        <input type="text" class="otp-digit" maxlength="1" id="otp3" />
+        <input type="text" class="otp-digit" maxlength="1" id="otp4" />
+        <input type="text" class="otp-digit" maxlength="1" id="otp5" />
+        <input type="text" class="otp-digit" maxlength="1" id="otp6" />
+      </div>
+      
+      <div class="otp-buttons">
+        <button class="otp-btn" onclick="closeOtpPopup()">Cancel</button>
+        <button class="otp-btn primary" onclick="verifyOtp()">Verify</button>
+      </div>
+      
+      <div class="otp-timer" id="otp-timer">
+        Resend code in: <span id="timer-countdown">60</span>s
+        <br>
+        <span class="resend-otp" id="resend-otp" onclick="resendOtp()" style="display: none;">Resend Code</span>
+      </div>
+    </div>
+  </div>
+  <!-- === ANIMATED GRID & ROPES JS, FULLY RESTORED === -->
+  <script>
+    // OTP Verification System
+    let currentOtp = '';
+    let otpTimer = null;
+    let otpCountdown = 60;
+    let verificationTarget = ''; // email or mobile
+    let targetValue = '';
+
+    // Email validation
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    // Mobile validation  
+    function isValidMobile(mobile) {
+      const mobileRegex = /^[6-9]\d{9}$/;
+      return mobileRegex.test(mobile);
+    }
+
+    // Generate random 6-digit OTP
+    function generateOtp() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    // Show OTP popup
+    async function showOtpPopup(type, value) {
+      verificationTarget = type;
+      targetValue = value;
+      
+      try {
+        // Use production backend to generate and send OTP
+        const response = await window.EcoAPI.auth.generateOtp({
+          type: type,
+          value: value
+        });
+        
+        if (response.success) {
+          currentOtp = response.otp; // In production, this won't be returned for security
+          
+          const otpPopup = document.getElementById('otp-popup');
+          const subtitle = document.getElementById('otp-subtitle');
+          const title = document.querySelector('.otp-title');
+          
+          if (type === 'email') {
+            title.textContent = 'Email Verification';
+            subtitle.innerHTML = `Enter the 6-digit code sent to ${value}`;
+          } else {
+            title.textContent = 'Mobile Verification';
+            subtitle.innerHTML = `Enter the 6-digit code sent to +91-${value}`;
+          }
+          
+          // Clear OTP inputs
+          for (let i = 1; i <= 6; i++) {
+            document.getElementById(`otp${i}`).value = '';
+          }
+          
+          otpPopup.classList.add('show');
+          document.getElementById('otp1').focus();
+          
+          startOtpTimer();
+          
+          showPopup(`OTP sent to ${type === 'email' ? value : '+91-' + value}`);
+        } else {
+          showPopup(response.message || 'Failed to send OTP. Please try again.');
+        }
+      } catch (error) {
+        console.error('OTP generation error:', error);
+        showPopup('Network error. Please check your connection and try again.');
+        
+        // Fallback to demo mode for testing
+        console.log('Falling back to demo OTP system');
+        currentOtp = generateOtp();
+        console.log(`Demo OTP: ${currentOtp}`);
+        
+        const otpPopup = document.getElementById('otp-popup');
+        const subtitle = document.getElementById('otp-subtitle');
+        const title = document.querySelector('.otp-title');
+        
+        if (type === 'email') {
+          title.textContent = 'Email Verification (Demo Mode)';
+          subtitle.innerHTML = `Enter the 6-digit code sent to ${value}<br><small style="color: #4ade80; font-weight: bold; font-size: 12px; margin-top: 8px; display: block;">Demo OTP: ${currentOtp}</small>`;
+        } else {
+          title.textContent = 'Mobile Verification (Demo Mode)';
+          subtitle.innerHTML = `Enter the 6-digit code sent to +91-${value}<br><small style="color: #4ade80; font-weight: bold; font-size: 12px; margin-top: 8px; display: block;">Demo OTP: ${currentOtp}</small>`;
+        }
+        
+        // Clear OTP inputs
+        for (let i = 1; i <= 6; i++) {
+          document.getElementById(`otp${i}`).value = '';
+        }
+        
+        otpPopup.classList.add('show');
+        document.getElementById('otp1').focus();
+        
+        startOtpTimer();
+        
+        showPopup(`Demo OTP generated: ${currentOtp}`);
+      }
+    }
+      
+      // Clear OTP inputs
+      for (let i = 1; i <= 6; i++) {
+        document.getElementById(`otp${i}`).value = '';
+      }
+      
+      otpPopup.classList.add('show');
+      document.getElementById('otp1').focus();
+      
+      startOtpTimer();
+      
+      // Simulate sending OTP (in real app, make API call here)
+      if (type === 'email') {
+        console.log(`Sending OTP ${currentOtp} to email: ${value}`);
+      } else {
+        console.log(`Sending OTP ${currentOtp} to mobile: ${value}`);
+      }
+    }
+
+    // Close OTP popup
+    function closeOtpPopup() {
+      document.getElementById('otp-popup').classList.remove('show');
+      clearInterval(otpTimer);
+    }
+
+    // Start OTP timer
+    function startOtpTimer() {
+      otpCountdown = 60;
+      const timerElement = document.getElementById('timer-countdown');
+      const resendElement = document.getElementById('resend-otp');
+      
+      resendElement.style.display = 'none';
+      
+      otpTimer = setInterval(() => {
+        timerElement.textContent = otpCountdown;
+        otpCountdown--;
+        
+        if (otpCountdown < 0) {
+          clearInterval(otpTimer);
+          resendElement.style.display = 'inline';
+          timerElement.parentElement.innerHTML = 'Didn\'t receive the code?<br><span class="resend-otp" onclick="resendOtp()">Resend Code</span>';
+        }
+      }, 1000);
+    }
+
+    // Resend OTP
+    async function resendOtp() {
+      try {
+        // Use production backend to resend OTP
+        const response = await window.EcoAPI.auth.generateOtp({
+          type: verificationTarget,
+          value: targetValue
+        });
+        
+        if (response.success) {
+          currentOtp = response.otp; // In production, this won't be returned
+          startOtpTimer();
+          showPopup('New OTP sent successfully!');
+        } else {
+          showPopup(response.message || 'Failed to resend OTP. Please try again.');
+        }
+      } catch (error) {
+        console.error('OTP resend error:', error);
+        
+        // Fallback to demo mode
+        currentOtp = generateOtp();
+        console.log(`Resent OTP: ${currentOtp}`);
+        
+        // Update the displayed OTP in subtitle for demo mode
+        const subtitle = document.getElementById('otp-subtitle');
+        const currentText = subtitle.innerHTML.split('<br>')[0];
+        subtitle.innerHTML = `${currentText}<br><small style="color: #4ade80; font-weight: bold; font-size: 12px; margin-top: 8px; display: block;">Demo OTP: ${currentOtp}</small>`;
+        
+        startOtpTimer();
+        showPopup('New OTP generated successfully!');
+      }
+    }
+
+    // Verify OTP
+    async function verifyOtp() {
+      let enteredOtp = '';
+      for (let i = 1; i <= 6; i++) {
+        enteredOtp += document.getElementById(`otp${i}`).value;
+      }
+      
+      if (enteredOtp.length !== 6) {
+        showPopup('Please enter complete 6-digit OTP');
+        return;
+      }
+      
+      try {
+        // Use production backend to verify OTP
+        const response = await window.EcoAPI.auth.verifyOtp({
+          type: verificationTarget,
+          value: targetValue,
+          otp: enteredOtp
+        });
+        
+        if (response.success) {
+          closeOtpPopup();
+          showPopup(`${verificationTarget === 'email' ? 'Email' : 'Mobile'} verified successfully!`);
+          
+          // Complete the signup process after successful OTP verification
+          setTimeout(() => {
+            completeSignup();
+          }, 1000);
+        } else {
+          showPopup(response.message || 'Invalid OTP. Please try again.');
+          
+          // Clear OTP inputs
+          for (let i = 1; i <= 6; i++) {
+            document.getElementById(`otp${i}`).value = '';
+          }
+          document.getElementById('otp1').focus();
+        }
+      } catch (error) {
+        console.error('OTP verification error:', error);
+        
+        // Fallback to demo verification for testing
+        if (enteredOtp === currentOtp) {
+          closeOtpPopup();
+          showPopup(`${verificationTarget === 'email' ? 'Email' : 'Mobile'} verified successfully!`);
+          
+          setTimeout(() => {
+            completeSignup();
+          }, 1000);
+        } else {
+          showPopup('Invalid OTP. Please try again.');
+          
+          // Clear OTP inputs
+          for (let i = 1; i <= 6; i++) {
+            document.getElementById(`otp${i}`).value = '';
+          }
+          document.getElementById('otp1').focus();
+        }
+      }
+    }
+
+    // Complete signup after OTP verification
+    async function completeSignup() {
+      const formData = window.signupFormData;
+      
+      if (!formData) {
+        showPopup('Signup data not found. Please try again.');
+        return;
+      }
+      
+      try {
+        // Show loading state
+        showPopup('Creating your account...');
+        
+        // Use production backend API through EcoAPI
+        const response = await window.EcoAPI.auth.register({
+          name: formData.name,
+          email: formData.email,
+          mobile: formData.mobile,
+          password: formData.password,
+          signupMode: formData.signupMode
+        });
+        
+        if (response.success) {
+          // Store authentication data
+          window.AuthManager.setAuthData(response.data);
+          
+          // Show success message and redirect to dashboard
+          showPopup('Account created successfully! Welcome to EcoSaver! 🌱\n\nRedirecting to your dashboard...', true);
+          
+          // Reset form
+          const signupForm = document.getElementById('signup-form');
+          if (signupForm) {
+            signupForm.reset();
+            document.querySelectorAll('.valid').forEach(e=>e.classList.remove('valid'));
+            const strengthBar = document.getElementById('strength-bar');
+            const strengthText = document.getElementById('strength-text');
+            if (strengthBar) strengthBar.style.width = "0%";
+            if (strengthText) strengthText.textContent = "";
+          }
+        } else {
+          showPopup(response.message || 'Registration failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        showPopup('Network error. Please check your connection and try again.');
+      }
+    }
+
+    // OTP input handling
+    document.addEventListener('DOMContentLoaded', function() {
+      // Auto-focus next OTP input
+      for (let i = 1; i <= 6; i++) {
+        const input = document.getElementById(`otp${i}`);
+        input.addEventListener('input', function(e) {
+          if (e.target.value.length === 1 && i < 6) {
+            document.getElementById(`otp${i + 1}`).focus();
+          }
+        });
+        
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && e.target.value === '' && i > 1) {
+            document.getElementById(`otp${i - 1}`).focus();
+          }
+        });
+      }
+      
+      // Intercept form submission for OTP verification
+      const signupForm = document.getElementById('signup-form');
+      if (signupForm) {
+        signupForm.addEventListener('submit', function(e) {
+          e.preventDefault(); // Prevent default form submission
+          
+          const nameInput = document.getElementById('name');
+          const emailInput = document.getElementById('email');
+          const mobileInput = document.getElementById('mobile');
+          const passwordInput = document.getElementById('password');
+          
+          // Validate all required fields
+          const name = nameInput ? nameInput.value.trim() : '';
+          const email = emailInput ? emailInput.value.trim() : '';
+          const mobile = mobileInput ? mobileInput.value.trim() : '';
+          const password = passwordInput ? passwordInput.value : '';
+          
+          // Check name
+          if (!name) {
+            showPopup('Please enter your name');
+            return;
+          }
+          
+          // Check password
+          if (!password || password.length < 6) {
+            showPopup('Password should be at least 6 characters');
+            return;
+          }
+          
+          // Determine verification method based on current signup mode
+          let verificationType = '';
+          let verificationValue = '';
+          
+          if (signupMode === 'email') {
+            if (!email || !isValidEmail(email)) {
+              showPopup('Please enter a valid email address');
+              return;
+            }
+            verificationType = 'email';
+            verificationValue = email;
+          } else {
+            if (!mobile || !isValidMobile(mobile)) {
+              showPopup('Please enter a valid 10-digit mobile number');
+              return;
+            }
+            verificationType = 'mobile';
+            verificationValue = mobile;
+          }
+          
+          // Store form data for later submission after OTP verification
+          window.signupFormData = {
+            name: name,
+            email: email,
+            mobile: mobile,
+            password: password,
+            signupMode: signupMode
+          };
+          
+          // Show OTP popup
+          showOtpPopup(verificationType, verificationValue);
+        });
+      }
+    });
+
+    // Animated Grid Background
+    const canvas = document.getElementById("grid-bg");
+    const ctx = canvas.getContext("2d");
+    let width = window.innerWidth, height = window.innerHeight;
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    let offsetY = 0;
+    const gridSize = 18;
+    function drawGrid() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+      ctx.lineWidth = 0.8;
+      for (let x = 0; x < width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x + 0.5, 0);
+        ctx.lineTo(x + 0.5, height);
+        ctx.stroke();
+      }
+      for (let y = (offsetY % gridSize); y < height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y + 0.5);
+        ctx.lineTo(width, y + 0.5);
+        ctx.stroke();
+      }
+      offsetY -= 0.21;
+      if (offsetY <= -gridSize) offsetY = 0;
+      requestAnimationFrame(drawGrid);
+    }
+    drawGrid();
+    // Animated ropes & grommets
+    function drawRopes() {
+      const ropeCanvas = document.getElementById("rope-canvas");
+      const ropeCtx = ropeCanvas.getContext("2d");
+      ropeCanvas.width = window.innerWidth;
+      ropeCanvas.height = window.innerHeight;
+      const branchSVG = document.getElementById("branch-svg");
+      const box = document.getElementById("signup-container");
+      // Branch anchor: 80px from left and right of branch bbox, at branch bottom
+      const branchRect = branchSVG.getBoundingClientRect();
+      const boxRect = box.getBoundingClientRect();
+      const bY = branchRect.top + branchRect.height - 6;
+      // Box grommet location: a bit inward/outward from box edge, at box top
+      const left_branchX = branchRect.left + 80;
+      const right_branchX = branchRect.right - 80;
+      const left_boxX = boxRect.left + 26;
+      const right_boxX = boxRect.right - 26;
+      const boxY = boxRect.top + 8;
+      function wavyRope(x0, y0, x1, y1, segments = 14, amp = 10) {
+        ropeCtx.save();
+        ropeCtx.strokeStyle = "#89fd90";
+        ropeCtx.lineWidth = 4.2;
+        ropeCtx.shadowColor = "#59dd75";
+        ropeCtx.shadowBlur = 10;
+        ropeCtx.beginPath();
+        ropeCtx.moveTo(x0, y0);
+        for (let i = 1; i <= segments; i++) {
+          let t = i / segments;
+          let xt = x0 + (x1 - x0) * t;
+          let yt = y0 + (y1 - y0) * t + Math.sin((t + Date.now()/850)*Math.PI * 2) * amp * Math.sin(Math.PI * t);
+          ropeCtx.lineTo(xt, yt);
+        }
+        ropeCtx.stroke();
+        ropeCtx.restore();
+      }
+      ropeCtx.clearRect(0,0,ropeCanvas.width, ropeCanvas.height);
+      // Draw left and right ropes
+      wavyRope(left_branchX, bY, left_boxX, boxY);
+      wavyRope(right_branchX, bY, right_boxX, boxY);
+      // Draw grommets: outer dark, then lighter center
+      function drawGrommet(cx, cy) {
+        ropeCtx.save();
+        ropeCtx.beginPath();
+        ropeCtx.arc(cx, cy, 13, 0, 2 * Math.PI);
+        ropeCtx.fillStyle = "#2d2d2d";
+        ropeCtx.globalAlpha = 0.88;
+        ropeCtx.fill();
+        ropeCtx.globalAlpha = 1;
+        ropeCtx.beginPath();
+        ropeCtx.arc(cx, cy, 7.2, 0, 2 * Math.PI);
+        ropeCtx.strokeStyle = "#88e3b0";
+        ropeCtx.lineWidth = 3.2;
+        ropeCtx.stroke();
+        ropeCtx.restore();
+      }
+      drawGrommet(left_boxX, boxY);
+      drawGrommet(right_boxX, boxY);
+      // Draw branch knots
+      function drawBranchKnot(cx, cy) {
+        ropeCtx.save();
+        ropeCtx.beginPath();
+        ropeCtx.arc(cx, cy, 7, 0, 2 * Math.PI);
+        ropeCtx.fillStyle = "#a6e773";
+        ropeCtx.globalAlpha = 0.62;
+        ropeCtx.fill();
+        ropeCtx.restore();
+      }
+      drawBranchKnot(left_branchX, bY);
+      drawBranchKnot(right_branchX, bY);
+    }
+    function animateRopeRings() {
+      drawRopes();
+      requestAnimationFrame(animateRopeRings);
+    }
+    animateRopeRings();
+    window.addEventListener("resize", drawRopes);
+  </script>
+  <script>
+    // Option switch (with fade effect), password toggle, all UI logic
+    const emailOpt = document.getElementById('email-opt');
+    const mobileOpt = document.getElementById('mobile-opt');
+    const emailGroup = document.getElementById('email-group');
+    const mobileGroup = document.getElementById('mobile-group');
+    const signupForm = document.getElementById('signup-form');
+    let signupMode = 'email';
+    const pwdInput = document.getElementById('password');
+    const pwdToggle = document.querySelector('.toggle-password');
+    pwdToggle.addEventListener('click', function() {
+      if (pwdInput.type === "password") {
+        pwdInput.type = "text";
+        this.textContent = "🙈";
+      } else {
+        pwdInput.type = "password";
+        this.textContent = "👁";
+      }
+    });
+    signupForm.addEventListener('reset', () => {
+      pwdInput.type = "password";
+      pwdToggle.textContent = "👁";
+    });
+    emailOpt.onclick = () => {
+      signupMode = 'email';
+      emailOpt.classList.add('active');
+      mobileOpt.classList.remove('active');
+      emailGroup.classList.remove("hide");
+      mobileGroup.classList.add("hide");
+      document.getElementById('email').required = true;
+      document.getElementById('mobile').required = false;
+      pwdInput.type = "password";
+      pwdToggle.textContent = "👁";
+    };
+    mobileOpt.onclick = () => {222222
+      signupMode = 'mobile';
+      mobileOpt.classList.add('active');
+      emailOpt.classList.remove('active');
+      emailGroup.classList.add("hide");
+      mobileGroup.classList.remove("hide");
+      document.getElementById('email').required = false;
+      document.getElementById('mobile').required = true;
+      pwdInput.type = "password";
+      pwdToggle.textContent = "👁";
+    };
+    const password = document.getElementById('password');
+    const strengthBar = document.getElementById('strength-bar');
+    const strengthText = document.getElementById('strength-text');
+    password.addEventListener('input', function() {
+      const val = password.value;
+      const score = getPasswordScore(val);
+      let perc = [0,25,50,75,100][score];
+      strengthBar.style.width = perc + "%";
+      let txt = ["", "Weak","Fair","Medium","Strong"];
+      strengthText.textContent = txt[score] || '';
+      strengthBar.style.background = [
+        "#232323",
+        "linear-gradient(90deg,#ff4d79,#efab35)",
+        "linear-gradient(90deg,#efab35,#becb28 95%)",
+        "linear-gradient(90deg,#becb28,#43e85c 100%)",
+        "linear-gradient(90deg,#43e85c,#30d3ea 100%)"
+      ][score];
+      if(val.length===0) {
+        password.classList.remove("valid","invalid");
+      } else if(score > 2&&val.length>=6) {
+        password.classList.add("valid"); password.classList.remove("invalid");
+      } else {
+        password.classList.add("invalid"); password.classList.remove("valid");
+      }
+    });
+    function getPasswordScore(val) {
+      let score = 0;
+      if (!val) return 0;
+      if (val.length>=6) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+      return Math.min(score, 4);
+    }
+    function validateEmail(email) {
+      return /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+    }
+    function validateMobile(mob) {
+      return /^[6-9]\d{9}$/.test(mob);
+    }
+    document.getElementById('name').addEventListener('input', function(){
+      if(this.value.trim().length>1) {
+        this.classList.add('valid'); this.classList.remove('invalid');
+      } else {
+        this.classList.remove('valid'); this.classList.remove('invalid');
+      }
+    });
+    document.getElementById('email').addEventListener('input', function(){
+      if(validateEmail(this.value)) {
+        this.classList.add('valid'); this.classList.remove('invalid');
+      } else {
+        this.classList.remove('valid'); this.classList.remove('invalid');
+      }
+    });
+    document.getElementById('mobile').addEventListener('input', function(){
+      if(validateMobile(this.value)) {
+        this.classList.add('valid'); this.classList.remove('invalid');
+      } else {
+        this.classList.remove('valid'); this.classList.remove('invalid');
+      }
+    });
+  
+  /*
+  // ORIGINAL FORM HANDLER - COMMENTED OUT FOR OTP INTEGRATION
+  signupForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const mobile = document.getElementById('mobile').value.trim();
+  const passwordVal = document.getElementById('password').value;
+
+  // Validation
+  if (!name) {
+    showPopup("Please enter your name.");
+    document.getElementById('name').classList.add('invalid');
+    return;
+  }
+  if (signupMode === 'email') {
+    if (!validateEmail(email)) {
+      showPopup("Please enter a valid email.");
+      document.getElementById('email').classList.add('invalid');
+      return;
+    }
+    if (!passwordVal || passwordVal.length < 6) {
+      showPopup("Password should be at least 6 characters.");
+      document.getElementById('password').classList.add('invalid');
+      return;
+    }
+  } else {
+    if (!validateMobile(mobile)) {
+      showPopup("Enter a valid 10-digit mobile number starting with 6-9.");
+      document.getElementById('mobile').classList.add('invalid');
+      return;
+    }
+    if (!passwordVal || passwordVal.length < 6) {
+      showPopup("Password should be at least 6 characters.");
+      document.getElementById('password').classList.add('invalid');
+      return;
+    }
+  }
+
+  // Construct and save the unified profile
+  const ecoUser = {
+    name: name,
+    avatar: "https://api.dicebear.com/7.x/thumbs/svg?seed=" + encodeURIComponent(name),
+    level: "Green Beginner",
+    points: 0,
+    contact: signupMode === 'email' ? email : mobile,
+    mode: signupMode
+  };
+localStorage.setItem("ecoUser", JSON.stringify(ecoUser));
+
+
+  // Redirect after success
+  showPopup("Signup Successful!", true);
+  signupForm.reset();
+  document.querySelectorAll('.valid').forEach(e=>e.classList.remove('valid'));
+  document.getElementById('strength-bar').style.width = "0%";
+  document.getElementById('strength-text').textContent = "";
+});
+*/
+
+
+function showPopup(message, redirect = false) {
+  const popup = document.getElementById('popup');
+  const popupMessage = document.getElementById('popup-message');
+  popupMessage.textContent = message;
+  popup.classList.add('show');
+  
+  document.getElementById('popup-ok-btn').onclick = () => {
+    popup.classList.remove('show');
+    if (redirect) {
+      window.location.href = "dashboard.html";
+    }
+  };
+  
+  // Auto redirect after 2 seconds for successful signup
+  if (redirect) {
+    setTimeout(() => {
+      popup.classList.remove('show');
+      window.location.href = "dashboard.html";
+    }, 2000);
+  }
+}
+
+
+  </script>
 </body>
 </html>

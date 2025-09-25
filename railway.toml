@@ -1,0 +1,16 @@
+# Railway Deployment Configuration for EcoSaver
+# Your beautiful frontend + powerful backend
+
+[build]
+  builder = "nixpacks"
+
+[deploy]
+  startCommand = "npm start"
+
+[environments.production]
+  MONGODB_URI = "${{MONGODB_URI}}"
+  JWT_SECRET = "${{JWT_SECRET}}"
+  EMAIL_USER = "${{EMAIL_USER}}"
+  EMAIL_PASS = "${{EMAIL_PASS}}"
+  OPENWEATHER_API_KEY = "${{OPENWEATHER_API_KEY}}"
+  NODE_ENV = "production"

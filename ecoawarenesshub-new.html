@@ -1,0 +1,1276 @@
+🏠 Landing Page - Professional entry point
+📊 Dashboard - Gamified user interface  
+🎮 Games Hub - 18 interactive games
+📈 Habit Tracker - Advanced task management
+👥 Community - Social features & challenges
+📚 Library - Educational resources
+🌡️ Carbon Tracker - Environmental calculations
+🌿 EcoAwareness Hub - Educational content
+🔐 Login/Signup - User authentication<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSaver - Awareness Hub | Sustainable Living & Green Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #10b981;
+            --secondary-green: #059669;
+            --light-green: #d1fae5;
+            --dark-green: #064e3b;
+            --accent-blue: #0ea5e9;
+            --accent-orange: #f59e0b;
+            --background: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-hero: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%);
+            --gradient-card: linear-gradient(145deg, #ffffff 0%, #f9fafb 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-medium);
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .eco-points {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--light-green);
+            color: var(--dark-green);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            animation: pointsPulse 2s ease-in-out infinite;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-large);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-hero);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(16,185,129,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green), var(--accent-blue));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: heroTextSlide 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            animation: heroTextSlide 1s ease-out 0.2s both;
+        }
+
+        .hero-cta {
+            animation: heroTextSlide 1s ease-out 0.4s both;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 20px;
+            background: var(--gradient-card);
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Card Layouts */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-large);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-category {
+            display: inline-block;
+            background: var(--light-green);
+            color: var(--dark-green);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-dark);
+        }
+
+        .card-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Interactive Elements */
+        .tips-container {
+            background: var(--gradient-card);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .tip-display {
+            background: var(--light-green);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            color: var(--dark-green);
+            border-left: 4px solid var(--primary-green);
+            transition: opacity 0.3s ease;
+        }
+
+        .quiz-container {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border);
+        }
+
+        .quiz-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .quiz-option {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: var(--light-green);
+            border-color: var(--primary-green);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            text-align: center; 
+            background: var(--gradient-hero); 
+            padding: 4rem 2rem; 
+            border-radius: 30px; 
+            margin: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex; 
+            gap: 1rem; 
+            justify-content: center; 
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            font-size: 1.1rem; 
+            padding: 1rem 2rem;
+        }
+
+        .cta-button.blue {
+            background: var(--accent-blue);
+        }
+
+        .cta-button.orange {
+            background: var(--accent-orange);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-dark); 
+            color: white; 
+            padding: 3rem 2rem; 
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px; 
+            margin: 0 auto; 
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 1rem; 
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex; 
+            justify-content: center; 
+            gap: 2rem; 
+            margin-bottom: 2rem; 
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #10b981; 
+            text-decoration: none; 
+            font-weight: 600;
+        }
+
+        .footer-copyright {
+            border-top: 1px solid #374151; 
+            padding-top: 2rem; 
+            color: #9ca3af;
+        }
+
+        /* Animations */
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes pointsPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+        }
+
+        @keyframes heroTextSlide {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .nav-container { padding: 1rem; }
+            .content-section { padding: 2rem 1rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .nav-actions { gap: 0.5rem; }
+            .eco-points { padding: 0.375rem 0.75rem; font-size: 0.875rem; }
+        }
+
+        /* 🌟 REVOLUTIONARY DARK MODE SYSTEM 🌟 */
+        .dark-mode-toggle {
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .dark-mode-toggle::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(from 0deg, transparent, rgba(16, 185, 129, 0.3), transparent);
+            border-radius: 50px;
+            animation: rotate 3s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover::before {
+            opacity: 1;
+        }
+
+        .dark-mode-toggle:hover {
+            background: var(--light-green);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-large);
+        }
+
+        /* 🌙 COMPLETE DARK MODE IMPLEMENTATION 🌙 */
+        body.dark-mode {
+            --background: #0a0f1c;
+            --card-bg: #1a1f2e;
+            --text-dark: #f1f5f9;
+            --text-light: #cbd5e1;
+            --border: #2d3748;
+            --gradient-hero: linear-gradient(135deg, #0a0f1c 0%, #1a1f2e 25%, #2d3748 50%, #4a5568 75%, #2d3748 100%);
+            --gradient-card: linear-gradient(145deg, #1a1f2e 0%, #2d3748 50%, #1a1f2e 100%);
+            --light-green: rgba(16, 185, 129, 0.15);
+            --shadow-light: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+            --shadow-medium: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+            --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+        }
+
+        body.dark-mode .navbar {
+            background: rgba(10, 15, 28, 0.95);
+            border-bottom: 1px solid #2d3748;
+            backdrop-filter: blur(25px);
+        }
+
+        body.dark-mode .navbar.scrolled {
+            background: rgba(10, 15, 28, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            background: #2d3748;
+            border-color: #4a5568;
+        }
+
+        body.dark-mode .dark-mode-toggle:hover {
+            background: #4a5568;
+            border-color: var(--primary-green);
+        }
+
+        body.dark-mode .eco-points {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--primary-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        body.dark-mode .article-card,
+        body.dark-mode .quiz-container,
+        body.dark-mode .tips-container,
+        body.dark-mode .stat-card {
+            background: var(--card-bg);
+            border-color: var(--border);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .article-card:hover,
+        body.dark-mode .stat-card:hover {
+            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        body.dark-mode .quiz-option {
+            background: #2d3748;
+            border-color: #4a5568;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .quiz-option:hover {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--primary-green);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+        }
+
+        body.dark-mode .tip-display {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--primary-green);
+            border-left-color: var(--primary-green);
+            box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.1);
+        }
+
+        body.dark-mode .cta-section {
+            background: var(--gradient-hero);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        body.dark-mode .stats-section {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+        }
+
+        body.dark-mode .footer {
+            background: #0a0f1c;
+            border-top: 2px solid #2d3748;
+        }
+
+        body.dark-mode .hero::before {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="darkgrid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(16,185,129,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23darkgrid)"/></svg>');
+            opacity: 0.4;
+        }
+
+        /* 🌟 DARK MODE TRANSITIONS 🌟 */
+        body, .navbar, .article-card, .quiz-container, .tips-container, .stat-card {
+            transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Enhanced Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">🌱</div>
+                <span class="logo-text">EcoSaver Hub</span>
+            </a>
+            
+            <div class="nav-actions">
+                <div class="eco-points">
+                    <span>🏆</span>
+                    <span id="ecoPointsNum">1,250</span>
+                    <span>pts</span>
+                </div>
+                <button class="btn-primary" onclick="logEcoAction()">
+                    <i data-lucide="plus-circle"></i>
+                    Log Action
+                </button>
+                <button class="dark-mode-toggle" id="darkModeToggle">
+                    <i data-lucide="sun" id="sunIcon"></i>
+                    <i data-lucide="moon" id="moonIcon" style="display: none;"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Enhanced Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Eco Awareness Hub</h1>
+            <p>Your gateway to sustainable living, environmental education, and green solutions for a better tomorrow. Join millions in creating positive environmental impact.</p>
+            <div class="hero-cta">
+                <a href="#awareness-content" class="btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    <i data-lucide="leaf"></i>
+                    Start Learning
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Environmental Impact Stats -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-card animate-fade-in-up">
+                <div class="stat-icon">
+                    <i data-lucide="users"></i>
+                </div>
+                <div class="stat-number" data-target="2500000">0</div>
+                <div class="stat-label">Global Eco Warriors</div>
+            </div>
+            
+            <div class="stat-card animate-fade-in-up">
+                <div class="stat-icon">
+                    <i data-lucide="tree-pine"></i>
+                </div>
+                <div class="stat-number" data-target="1500000">0</div>
+                <div class="stat-label">Trees Planted</div>
+            </div>
+            
+            <div class="stat-card animate-fade-in-up">
+                <div class="stat-icon">
+                    <i data-lucide="droplets"></i>
+                </div>
+                <div class="stat-number" data-target="850000">0</div>
+                <div class="stat-label">Liters Water Saved</div>
+            </div>
+            
+            <div class="stat-card animate-fade-in-up">
+                <div class="stat-icon">
+                    <i data-lucide="recycle"></i>
+                </div>
+                <div class="stat-number" data-target="95">0</div>
+                <div class="stat-label">% Waste Reduced</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Eco Tips Section -->
+    <section class="content-section" id="awareness-content">
+        <div class="section-header">
+            <h2 class="section-title">Daily Eco Tips</h2>
+            <p class="section-subtitle">Simple, actionable tips for sustainable living that make a real difference</p>
+        </div>
+        
+        <div class="tips-container">
+            <div class="tip-display" id="tipDisplay">
+                🌱 Start your eco journey by switching to LED bulbs - they use 75% less energy and last 25 times longer than traditional bulbs!
+            </div>
+            <button class="btn-primary" id="newTipBtn">
+                <i data-lucide="refresh-cw"></i>
+                Get New Tip
+            </button>
+        </div>
+    </section>
+
+    <!-- Environmental Articles Section -->
+    <section class="content-section">
+        <div class="section-header">
+            <h2 class="section-title">Featured Articles</h2>
+            <p class="section-subtitle">In-depth insights on environmental challenges and sustainable solutions</p>
+        </div>
+        
+        <div class="cards-grid">
+            <article class="article-card">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><defs><linearGradient id='a' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%234ade80'/><stop offset='100%' stop-color='%2306b6d4'/></linearGradient></defs><rect width='400' height='200' fill='url(%23a)'/><text x='200' y='100' text-anchor='middle' dy='0.3em' fill='white' font-family='Arial' font-size='24' font-weight='bold'>Rivers of Punjab</text></svg>" alt="Punjab Rivers" class="card-image">
+                <div class="card-content">
+                    <span class="card-category">Water Conservation</span>
+                    <h3 class="card-title">Protecting Punjab's Water Heritage</h3>
+                    <p class="card-description">Discover how Punjab's mighty rivers face challenges and learn about sustainable water management practices that can preserve our water resources for future generations.</p>
+                    <a href="#" class="btn-primary">
+                        <i data-lucide="arrow-right"></i>
+                        Read More
+                    </a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><defs><linearGradient id='b' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%2365a30d'/><stop offset='100%' stop-color='%2316a34a'/></linearGradient></defs><rect width='400' height='200' fill='url(%23b)'/><text x='200' y='100' text-anchor='middle' dy='0.3em' fill='white' font-family='Arial' font-size='24' font-weight='bold'>Organic Farming</text></svg>" alt="Organic Farming" class="card-image">
+                <div class="card-content">
+                    <span class="card-category">Sustainable Agriculture</span>
+                    <h3 class="card-title">Organic Revolution in Punjab</h3>
+                    <p class="card-description">Explore how Punjab farmers are transitioning from chemical-intensive farming to sustainable organic practices, improving soil health and farmer livelihoods.</p>
+                    <a href="#" class="btn-primary">
+                        <i data-lucide="arrow-right"></i>
+                        Read More
+                    </a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><defs><linearGradient id='c' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%23f59e0b'/><stop offset='100%' stop-color='%23dc2626'/></linearGradient></defs><rect width='400' height='200' fill='url(%23c)'/><text x='200' y='100' text-anchor='middle' dy='0.3em' fill='white' font-family='Arial' font-size='24' font-weight='bold'>Air Quality</text></svg>" alt="Air Quality" class="card-image">
+                <div class="card-content">
+                    <span class="card-category">Air Pollution</span>
+                    <h3 class="card-title">Combating Air Pollution</h3>
+                    <p class="card-description">Understanding the causes of air pollution in Punjab and innovative solutions being implemented to improve air quality and public health.</p>
+                    <a href="#" class="btn-primary">
+                        <i data-lucide="arrow-right"></i>
+                        Read More
+                    </a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><defs><linearGradient id='d' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%230ea5e9'/><stop offset='100%' stop-color='%238b5cf6'/></linearGradient></defs><rect width='400' height='200' fill='url(%23d)'/><text x='200' y='100' text-anchor='middle' dy='0.3em' fill='white' font-family='Arial' font-size='24' font-weight='bold'>Renewable Energy</text></svg>" alt="Renewable Energy" class="card-image">
+                <div class="card-content">
+                    <span class="card-category">Clean Energy</span>
+                    <h3 class="card-title">Solar Power Success Stories</h3>
+                    <p class="card-description">How Punjab is leading India's solar revolution with innovative solar projects and policies that are transforming the state's energy landscape.</p>
+                    <a href="#" class="btn-primary">
+                        <i data-lucide="arrow-right"></i>
+                        Read More
+                    </a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><defs><linearGradient id='e' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%2306b6d4'/><stop offset='100%' stop-color='%2310b981'/></linearGradient></defs><rect width='400' height='200' fill='url(%23e)'/><text x='200' y='100' text-anchor='middle' dy='0.3em' fill='white' font-family='Arial' font-size='24' font-weight='bold'>Youth Action</text></svg>" alt="Youth Environmental Action" class="card-image">
+                <div class="card-content">
+                    <span class="card-category">Community Action</span>
+                    <h3 class="card-title">Young Environmental Champions</h3>
+                    <p class="card-description">Meet inspiring young activists from Punjab who are leading environmental initiatives in their communities and schools.</p>
+                    <a href="#" class="btn-primary">
+                        <i data-lucide="arrow-right"></i>
+                        Read More
+                    </a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'><defs><linearGradient id='f' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%2316a34a'/><stop offset='100%' stop-color='%2365a30d'/></linearGradient></defs><rect width='400' height='200' fill='url(%23f)'/><text x='200' y='100' text-anchor='middle' dy='0.3em' fill='white' font-family='Arial' font-size='24' font-weight='bold'>Wildlife Protection</text></svg>" alt="Wildlife Protection" class="card-image">
+                <div class="card-content">
+                    <span class="card-category">Biodiversity</span>
+                    <h3 class="card-title">Preserving Punjab's Wildlife</h3>
+                    <p class="card-description">Conservation efforts to protect Punjab's diverse wildlife and their habitats, from wetland birds to endangered species.</p>
+                    <a href="#" class="btn-primary">
+                        <i data-lucide="arrow-right"></i>
+                        Read More
+                    </a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Interactive Quiz Section -->
+    <section class="content-section">
+        <div class="section-header">
+            <h2 class="section-title">Eco Knowledge Quiz</h2>
+            <p class="section-subtitle">Test your environmental awareness and learn interesting facts about sustainability</p>
+        </div>
+        
+        <div class="quiz-container">
+            <div class="quiz-question" id="questionText">
+                Which farming practice helps preserve soil health and reduces the need for chemical fertilizers?
+            </div>
+            
+            <div id="quizOptions">
+                <label class="quiz-option">
+                    <input type="radio" name="quiz" value="monoculture">
+                    <span>Monoculture farming</span>
+                </label>
+                <label class="quiz-option">
+                    <input type="radio" name="quiz" value="organic">
+                    <span>Organic crop rotation</span>
+                </label>
+                <label class="quiz-option">
+                    <input type="radio" name="quiz" value="intensive">
+                    <span>Intensive chemical farming</span>
+                </label>
+                <label class="quiz-option">
+                    <input type="radio" name="quiz" value="irrigation">
+                    <span>Flood irrigation</span>
+                </label>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                <button class="btn-primary" id="submitQuiz">
+                    <i data-lucide="check-circle"></i>
+                    Submit Answer
+                </button>
+                <button class="btn-primary cta-button blue" id="nextQuestion" style="display: none;">
+                    <i data-lucide="arrow-right"></i>
+                    Next Question
+                </button>
+            </div>
+            
+            <div id="quizResult" style="margin-top: 1rem; padding: 1rem; border-radius: 10px; display: none;"></div>
+            <div style="margin-top: 1rem; color: var(--text-light);">
+                Question <span id="questionNum">1</span> of 8 | Score: <span id="quizScore">0</span>/8
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="content-section cta-section">
+        <h2 class="section-title" style="margin-bottom: 1rem;">Ready to Make a Difference?</h2>
+        <p class="section-subtitle" style="margin-bottom: 2rem;">Join thousands of eco-warriors in Punjab working towards a sustainable future</p>
+        
+        <div class="cta-buttons">
+            <a href="#" class="btn-primary cta-button">
+                <i data-lucide="users"></i>
+                Join Community
+            </a>
+            <a href="#" class="btn-primary cta-button blue">
+                <i data-lucide="download"></i>
+                Download App
+            </a>
+            <a href="#" class="btn-primary cta-button orange">
+                <i data-lucide="heart"></i>
+                Support Cause
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="logo-icon">🌱</div>
+                <span style="font-size: 1.5rem; font-weight: 700;">EcoSaver Hub</span>
+            </div>
+            
+            <p style="margin-bottom: 2rem; color: #9ca3af;">
+                Empowering communities to create a sustainable future through education, action, and innovation.
+            </p>
+            
+            <div class="footer-links">
+                <a href="#" class="footer-link">About Us</a>
+                <a href="#" class="footer-link">Programs</a>
+                <a href="#" class="footer-link">Resources</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>&copy; 2024 EcoSaver Hub. All rights reserved. | Built with 💚 for our planet</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Counter animation for stats
+        const animateCounters = () => {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 200;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target.toLocaleString();
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current).toLocaleString();
+                    }
+                }, 10);
+            });
+        };
+
+        // Trigger counter animation on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) observer.observe(statsSection);
+
+        // Enhanced Eco Tips System
+        const ecoTips = [
+            "🌱 Switch to LED bulbs - they use 75% less energy and last 25 times longer!",
+            "💧 Fix leaky faucets - a single drip can waste over 3,000 gallons per year.",
+            "♻️ Start composting food scraps to reduce waste and create nutrient-rich soil.",
+            "🚲 Walk, bike, or use public transport to reduce your carbon footprint.",
+            "🌡️ Set your thermostat 2°C lower in winter and higher in summer to save energy.",
+            "📱 Unplug electronics when not in use - they consume 'phantom' energy.",
+            "🛍️ Bring reusable bags when shopping to reduce plastic waste.",
+            "🚿 Take shorter showers - reducing shower time by 2 minutes saves 10 gallons.",
+            "🌳 Plant native trees and plants - they require less water and support local wildlife.",
+            "🥬 Start a small herb garden - grow your own fresh, pesticide-free herbs.",
+            "☀️ Use natural light during the day instead of artificial lighting.",
+            "🧴 Choose refillable containers and buy products with minimal packaging.",
+            "🚰 Install drip irrigation systems for efficient garden watering.",
+            "🌾 Support local farmers by buying seasonal, organic produce.",
+            "🔋 Use rechargeable batteries to reduce electronic waste.",
+            "🏠 Improve home insulation to reduce heating and cooling costs."
+        ];
+
+        let currentTipIndex = 0;
+        const tipDisplay = document.getElementById('tipDisplay');
+        const newTipBtn = document.getElementById('newTipBtn');
+
+        if (newTipBtn) {
+            newTipBtn.addEventListener('click', () => {
+                currentTipIndex = (currentTipIndex + 1) % ecoTips.length;
+                if (tipDisplay) {
+                    tipDisplay.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        tipDisplay.textContent = ecoTips[currentTipIndex];
+                        tipDisplay.style.opacity = '1';
+                    }, 150);
+                }
+                
+                // Add eco points
+                addEcoPoints(5);
+            });
+        }
+
+        // Enhanced Quiz System
+        const quizData = [
+            {
+                question: "Which farming practice helps preserve soil health and reduces the need for chemical fertilizers?",
+                options: ["Monoculture farming", "Organic crop rotation", "Intensive chemical farming", "Flood irrigation"],
+                correct: 1,
+                explanation: "Organic crop rotation helps maintain soil health by varying nutrients and reducing pest buildup naturally."
+            },
+            {
+                question: "What percentage of water can drip irrigation save compared to flood irrigation?",
+                options: ["20-30%", "40-60%", "10-15%", "5-10%"],
+                correct: 1,
+                explanation: "Drip irrigation can save 40-60% water by delivering water directly to plant roots, minimizing evaporation."
+            },
+            {
+                question: "Which renewable energy source has the highest potential in Punjab?",
+                options: ["Wind energy", "Solar energy", "Hydroelectric", "Geothermal"],
+                correct: 1,
+                explanation: "Punjab receives abundant sunshine throughout the year, making solar energy the most viable renewable option."
+            },
+            {
+                question: "How long does it take for a plastic bottle to decompose naturally?",
+                options: ["50 years", "100 years", "450 years", "1000 years"],
+                correct: 2,
+                explanation: "Plastic bottles take approximately 450 years to decompose, highlighting the importance of recycling."
+            },
+            {
+                question: "What is the most effective way to reduce household energy consumption?",
+                options: ["Using LED lights", "Proper insulation", "Energy-efficient appliances", "All of the above"],
+                correct: 3,
+                explanation: "Combining LED lights, proper insulation, and efficient appliances provides maximum energy savings."
+            },
+            {
+                question: "Which practice helps reduce air pollution from agriculture?",
+                options: ["Crop burning", "Organic farming", "Heavy machinery use", "Chemical spraying"],
+                correct: 1,
+                explanation: "Organic farming reduces air pollution by avoiding chemical inputs and promoting sustainable practices."
+            },
+            {
+                question: "How much CO2 can one mature tree absorb annually?",
+                options: ["10 kg", "22 kg", "35 kg", "48 kg"],
+                correct: 3,
+                explanation: "A mature tree can absorb approximately 48 kg of CO2 per year, making tree planting crucial for climate action."
+            },
+            {
+                question: "What is the ideal temperature for air conditioning to balance comfort and efficiency?",
+                options: ["18°C", "24°C", "28°C", "22°C"],
+                correct: 1,
+                explanation: "Setting AC to 24°C provides comfort while optimizing energy efficiency and reducing electricity costs."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let quizScore = 0;
+
+        const questionText = document.getElementById('questionText');
+        const quizOptions = document.getElementById('quizOptions');
+        const submitQuiz = document.getElementById('submitQuiz');
+        const nextQuestion = document.getElementById('nextQuestion');
+        const quizResult = document.getElementById('quizResult');
+        const questionNum = document.getElementById('questionNum');
+        const quizScoreDisplay = document.getElementById('quizScore');
+
+        function loadQuestion() {
+            const question = quizData[currentQuestion];
+            if (questionText) questionText.textContent = question.question;
+            if (questionNum) questionNum.textContent = currentQuestion + 1;
+            
+            if (quizOptions) {
+                quizOptions.innerHTML = '';
+                question.options.forEach((option, index) => {
+                    const label = document.createElement('label');
+                    label.className = 'quiz-option';
+                    label.innerHTML = `
+                        <input type="radio" name="quiz" value="${index}">
+                        <span>${option}</span>
+                    `;
+                    quizOptions.appendChild(label);
+                });
+            }
+            
+            if (quizResult) quizResult.style.display = 'none';
+            if (nextQuestion) nextQuestion.style.display = 'none';
+            if (submitQuiz) submitQuiz.style.display = 'inline-flex';
+        }
+
+        if (submitQuiz) {
+            submitQuiz.addEventListener('click', () => {
+                const selected = document.querySelector('input[name="quiz"]:checked');
+                if (!selected) return;
+
+                const question = quizData[currentQuestion];
+                const isCorrect = parseInt(selected.value) === question.correct;
+                
+                if (isCorrect) {
+                    quizScore++;
+                    if (quizResult) {
+                        quizResult.style.background = 'var(--light-green)';
+                        quizResult.style.color = 'var(--dark-green)';
+                        quizResult.innerHTML = `<strong>✅ Correct!</strong><br>${question.explanation}`;
+                    }
+                    addEcoPoints(10);
+                } else {
+                    if (quizResult) {
+                        quizResult.style.background = '#fef2f2';
+                        quizResult.style.color = '#dc2626';
+                        quizResult.innerHTML = `<strong>❌ Incorrect.</strong><br>Correct answer: ${question.options[question.correct]}<br>${question.explanation}`;
+                    }
+                }
+                
+                if (quizScoreDisplay) quizScoreDisplay.textContent = quizScore;
+                if (quizResult) quizResult.style.display = 'block';
+                
+                if (currentQuestion < quizData.length - 1) {
+                    if (nextQuestion) nextQuestion.style.display = 'inline-flex';
+                } else {
+                    if (nextQuestion) {
+                        nextQuestion.textContent = 'Finish Quiz';
+                        nextQuestion.style.display = 'inline-flex';
+                    }
+                }
+                
+                if (submitQuiz) submitQuiz.style.display = 'none';
+            });
+        }
+
+        if (nextQuestion) {
+            nextQuestion.addEventListener('click', () => {
+                if (currentQuestion < quizData.length - 1) {
+                    currentQuestion++;
+                    loadQuestion();
+                } else {
+                    // Quiz completed
+                    const percentage = Math.round((quizScore / quizData.length) * 100);
+                    let message = '';
+                    
+                    if (percentage >= 80) {
+                        message = 'Outstanding! You\'re an eco-expert! 🌟';
+                    } else if (percentage >= 60) {
+                        message = 'Great job! You have solid eco-knowledge! 👍';
+                    } else if (percentage >= 40) {
+                        message = 'Good start! Keep learning about sustainability! 📚';
+                    } else {
+                        message = 'Every journey starts with a first step! Keep exploring! 🌱';
+                    }
+                    
+                    if (quizResult) {
+                        quizResult.innerHTML = `
+                            <strong>Quiz Complete!</strong><br>
+                            Final Score: ${quizScore}/${quizData.length} (${percentage}%)<br>
+                            ${message}
+                        `;
+                        quizResult.style.background = 'var(--gradient-primary)';
+                        quizResult.style.color = 'white';
+                    }
+                    
+                    if (nextQuestion) nextQuestion.style.display = 'none';
+                    
+                    addEcoPoints(quizScore * 5);
+                }
+            });
+        }
+
+        // Initialize quiz
+        loadQuestion();
+
+        // Eco Points System
+        let ecoPoints = 1250;
+
+        function addEcoPoints(points) {
+            ecoPoints += points;
+            const pointsDisplay = document.getElementById('ecoPointsNum');
+            if (pointsDisplay) pointsDisplay.textContent = ecoPoints.toLocaleString();
+            
+            // Show points notification
+            showNotification(`+${points} Eco Points! 🌱`, 'success');
+        }
+
+        function logEcoAction() {
+            const actions = [
+                { name: "Planted a tree", points: 50 },
+                { name: "Used public transport", points: 20 },
+                { name: "Recycled plastic bottles", points: 15 },
+                { name: "Saved water", points: 25 },
+                { name: "Used renewable energy", points: 30 },
+                { name: "Composted food waste", points: 20 }
+            ];
+            
+            const randomAction = actions[Math.floor(Math.random() * actions.length)];
+            addEcoPoints(randomAction.points);
+            showNotification(`Logged: ${randomAction.name}! +${randomAction.points} points 🎉`, 'success');
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--primary-green)' : 'var(--accent-blue)'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: var(--shadow-large);
+                z-index: 10000;
+                animation: slideInRight 0.3s ease-out;
+                max-width: 300px;
+                font-weight: 600;
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-in forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                
+                if (isDark) {
+                    if (sunIcon) sunIcon.style.display = 'none';
+                    if (moonIcon) moonIcon.style.display = 'block';
+                } else {
+                    if (sunIcon) sunIcon.style.display = 'block';
+                    if (moonIcon) moonIcon.style.display = 'none';
+                }
+            });
+        }
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        console.log('🌱 EcoSaver Hub loaded successfully!');
+    </script>
+</body>
+</html>

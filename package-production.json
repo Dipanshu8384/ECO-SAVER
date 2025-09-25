@@ -1,0 +1,51 @@
+{
+  "name": "ecosaver-production",
+  "version": "1.0.0",
+  "description": "EcoSaver - Production-ready environmental platform with beautiful UI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "echo 'Frontend already built - serving static files'",
+    "test": "echo 'Tests coming soon'",
+    "setup": "npm install && echo 'EcoSaver backend ready!'",
+    "deploy-heroku": "git push heroku main",
+    "deploy-railway": "railway deploy"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.5.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5",
+    "nodemailer": "^6.9.4",
+    "dotenv": "^16.3.1",
+    "axios": "^1.5.0",
+    "helmet": "^7.0.0",
+    "express-rate-limit": "^6.10.0",
+    "express-mongo-sanitize": "^2.2.0",
+    "xss-clean": "^0.1.4",
+    "hpp": "^0.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "environment",
+    "sustainability",
+    "gamification",
+    "eco-friendly",
+    "carbon-tracking",
+    "green-technology"
+  ],
+  "author": "EcoSaver Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dipanshu8384/ECO-SAVER.git"
+  }
+}
