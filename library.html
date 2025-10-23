@@ -1,790 +1,729 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ECO SAVER - Educational Library</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Document</title>
+
   <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    /* === GLOBAL RESET === */
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      min-height: 100%;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: transparent;
+      color: #effeff;
+      overflow-x: hidden;
+    }
 
-        :root {
-            /* Base Colors */
-            --background: hsl(60, 14%, 97%);
-            --foreground: hsl(0, 0%, 95%);
-            --card: hsl(0, 0%, 100%);
-            --card-foreground: hsl(0, 0%, 95%);
-            
-            /* Primary - Eco Green */
-            --primary: hsl(120, 61%, 18%);
-            --primary-foreground: hsl(0, 0%, 100%);
-            --primary-light: hsl(120, 50%, 35%);
-            --primary-glow: hsl(120, 70%, 45%);
-            
-            /* Secondary - Sky Blue */
-            --secondary: hsl(204, 97%, 41%);
-            --secondary-foreground: hsl(0, 0%, 100%);
-            --secondary-light: hsl(204, 80%, 60%);
-            
-            /* Accent - Purple */
-            --accent: hsl(260, 84%, 58%);
-            --accent-foreground: hsl(0, 0%, 100%);
-            
-            /* Muted Colors */
-            --muted: hsl(60, 10%, 90%);
-            --muted-foreground: hsl(0, 0%, 85%);
-            
-            /* Status Colors */
-            --success: hsl(120, 65%, 25%);
-            --success-foreground: hsl(0, 0%, 100%);
-            --warning: hsl(45, 95%, 50%);
-            --warning-foreground: hsl(0, 0%, 100%);
-            
-            /* Gradients */
-            --gradient-hero: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            --gradient-cosmic: radial-gradient(ellipse at 30% 30%, rgba(96, 165, 250, 0.15), transparent 70%), 
-                               radial-gradient(ellipse at 70% 70%, rgba(168, 85, 247, 0.1), transparent 70%);
-            
-            /* Shadows */
-            --shadow-glow: 0 8px 32px rgba(96, 165, 250, 0.2);
-            --shadow-cosmic: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            
-            /* Transitions */
-            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
+    /* === ANIMATED GRADIENT BACKGROUND === */
+    .animated-bg {
+      position: fixed;
+      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #2a2a3e;
-            color: var(--foreground);
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-        }
+    .animated-gradient {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 70% 30%, #31d47ba2 0, transparent 70%),
+        radial-gradient(ellipse at 20% 80%, #1e8ac6a3 0, transparent 70%),
+        radial-gradient(ellipse at 80% 75%, #feee4ba1 0, transparent 70%),
+        linear-gradient(135deg, #1e3b31 0%, #1c2230 100%);
+      background-blend-mode: lighten, lighten, screen, normal;
+      filter: blur(1.5px) saturate(.8);
+      animation: gradientMove 11s ease-in-out infinite alternate;
+      will-change: background-position, filter;
+    }
 
-        /* Galaxy Background */
-        .galaxy-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 30% 20%, rgba(96, 165, 250, 0.15), transparent 50%),
-                radial-gradient(ellipse at 70% 80%, rgba(168, 85, 247, 0.1), transparent 50%),
-                radial-gradient(ellipse at 20% 70%, rgba(34, 197, 94, 0.08), transparent 40%),
-                linear-gradient(135deg, #3a3a4e 0%, #36435e 25%, #2f3343 75%, #2a2a3e 100%);
-            z-index: -2;
-        }
+    @keyframes gradientMove {
+      0% {
+        background-position: 85% 20%, 18% 85%, 80% 80%, 0 0;
+      }
 
-        .star-field {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            animation: rotate 200s linear infinite;
-        }
+      60% {
+        background-position: 75% 45%, 30% 65%, 90% 67%, 100% 100%;
+      }
 
-        .star-field:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(2px 2px at 20% 30%, #ffffff, transparent),
-                radial-gradient(2px 2px at 40% 70%, rgba(96, 165, 250, 0.8), transparent),
-                radial-gradient(1px 1px at 90% 40%, rgba(168, 85, 247, 0.8), transparent),
-                radial-gradient(1px 1px at 30% 80%, #ffffff, transparent),
-                radial-gradient(2px 2px at 80% 10%, rgba(96, 165, 250, 0.6), transparent);
-            background-size: 400px 400px;
-            opacity: 0.8;
-        }
+      100% {
+        background-position: 75% 35%, 28% 60%, 78% 90%, 100% 0;
+      }
+    }
 
-        .spiral-arm {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            animation: rotate-reverse 300s linear infinite;
-            opacity: 0.4;
-        }
+    /* ANIMATED PARTICLES */
+    .bg-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
 
-        .spiral-arm:after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 80%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.3), transparent);
-            transform: translate(-50%, -50%) rotate(45deg);
-            border-radius: 10px;
-        }
+    .bg-particles span {
+      content: '';
+      position: absolute;
+      display: block;
+      border-radius: 50%;
+      opacity: .25;
+      filter: blur(2px);
+      background: linear-gradient(135deg, #afffd2 10%, #9fe5f5 70%, #ffe95b 90%);
+      animation: floatParts 17s linear infinite alternate;
+    }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+    .bg-particles span:nth-child(1) {
+      width: 110px;
+      height: 110px;
+      left: 8vw;
+      top: 18vh;
+      animation-delay: 2s;
+    }
 
-        @keyframes rotate-reverse {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
+    .bg-particles span:nth-child(2) {
+      width: 56px;
+      height: 56px;
+      left: 73vw;
+      top: 43vh;
+      background: linear-gradient(120deg, #31d47b 30%, #ffe95b 100%);
+      animation-delay: 5s;
+    }
 
-        /* Navigation */
-        .cosmic-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, rgba(58, 58, 78, 0.9), rgba(42, 42, 62, 0.8));
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(96, 165, 250, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
+    .bg-particles span:nth-child(3) {
+      width: 70px;
+      height: 70px;
+      left: 63vw;
+      top: 78vh;
+      background: linear-gradient(130deg, #ffe95b 50%, #31d47b 80%);
+      animation-delay: 11s;
+    }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+    .bg-particles span:nth-child(4) {
+      width: 40px;
+      height: 40px;
+      left: 26vw;
+      top: 75vh;
+      animation-delay: 7s;
+    }
 
-        .logo-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+    .bg-particles span:nth-child(5) {
+      width: 94px;
+      height: 94px;
+      left: 85vw;
+      top: 10vh;
+      background: linear-gradient(130deg, #1e8ac6 40%, #ffe95b 85%);
+      animation-delay: 3s;
+    }
 
-        .logo-group svg {
-            height: 2.5rem;
-            width: 2.5rem;
-            filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.5));
-        }
+    .bg-particles span:nth-child(6) {
+      width: 48px;
+      height: 48px;
+      left: 18vw;
+      top: 58vh;
+      background: linear-gradient(140deg, #31d47b 18%, #9fe5f5 70%, #ffe95b 99%);
+      animation-delay: 9s;
+    }
 
-        .brand {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary-glow), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(96, 165, 250, 0.3);
-        }
+    .bg-particles span:nth-child(7) {
+      width: 60px;
+      height: 60px;
+      left: 55vw;
+      top: 23vh;
+      background: linear-gradient(130deg, #1e8ac6 40%, #31d47b 65%);
+      animation-delay: 7s;
+    }
 
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            font-weight: 600;
-        }
+    .bg-particles span:nth-child(8) {
+      width: 35px;
+      height: 35px;
+      left: 43vw;
+      top: 60vh;
+      animation-delay: 12s;
+    }
 
-        .nav-menu a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.75rem;
-            transition: var(--transition-smooth);
-            position: relative;
-        }
+    @keyframes floatParts {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: .35;
+      }
 
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            color: #ffffff;
-            background: rgba(96, 165, 250, 0.1);
-            box-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
-        }
+      56% {
+        opacity: .3;
+      }
 
-        /* Main Content */
-        main {
-            padding: 6rem 2rem 4rem;
-            min-height: 100vh;
-        }
+      80% {
+        transform: translateY(-42px) scale(1.13);
+      }
 
-        .library-section {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: linear-gradient(145deg, rgba(58, 58, 78, 0.7), rgba(54, 67, 94, 0.6));
-            border-radius: 2rem;
-            padding: 3rem;
-            border: 1px solid rgba(96, 165, 250, 0.3);
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.2),
-                inset 0 1px 2px rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            position: relative;
-            overflow: hidden;
-        }
+      100% {
+        transform: translateY(-99px) scale(.89);
+        opacity: .17;
+      }
+    }
 
-        .library-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.6), transparent);
-        }
+    /* === HEADER/FOOTER Tweaked for Transparency & Glow === */
+    .eco-header,
+    .eco-footer {
+      background: rgba(23, 36, 48, 0.86);
+      box-shadow: 0 2px 30px rgba(40, 255, 157, 0.07), 0 1.5px 8px #e3f9ff16;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
 
-        .library-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 2rem;
-            background: linear-gradient(135deg, #ffffff, rgba(96, 165, 250, 0.8));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(96, 165, 250, 0.3);
-        }
+    .eco-header {
+      border-bottom: 1.5px solid #1e8ac6e0;
+    }
 
-        .library-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
+    .eco-footer {
+      border-top: 1.5px solid #31d47ba0;
+    }
 
-        .search-container {
-            position: relative;
-            max-width: 500px;
-            margin: 0 auto;
-            width: 100%;
-        }
+    .header-logo {
+      filter: drop-shadow(0 2px 10px #31d47bbb);
+      text-shadow: 0 1px 7px #182e23;
+      letter-spacing: 4px;
+    }
 
-        #library-search {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 1rem;
-            color: #ffffff;
-            font-size: 1rem;
-            transition: var(--transition-smooth);
-            backdrop-filter: blur(10px);
-        }
+    .nav-link.active,
+    .nav-link:hover {
+      color: #ffe95b;
+    }
 
-        #library-search:focus {
-            outline: none;
-            border-color: rgba(96, 165, 250, 0.6);
-            box-shadow: 0 0 20px rgba(96, 165, 250, 0.2);
-            background: rgba(255, 255, 255, 0.15);
-        }
+    .nav-link.active::before,
+    .nav-link:hover::before {
+      background: linear-gradient(90deg, #ffe95b, #31d47b 90%);
+    }
 
-        #library-search::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
+    /* === GLASS CARD UPGRADE & ANIMATION === */
+    .library-section {
+      background: rgba(29, 40, 52, 0.86);
+      box-shadow: 0 12px 56px -17px #1e8ac6b3, 0 2px 20px #31d47b23;
+      border-radius: 28px;
+      margin-top: 38px;
+      z-index: 6;
+      position: relative;
+    }
 
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1.25rem;
-            height: 1.25rem;
-            opacity: 0.6;
-            pointer-events: none;
-        }
+    .library-title {
+      background: linear-gradient(90deg, #31d47b, #ffe95b 85%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Segoe UI Semibold', Arial, sans-serif;
+      letter-spacing: .02em;
+      filter: drop-shadow(0px 2px 10px #1e8ac6b1);
+      text-shadow: 0 2px 8px #010e1c98;
+    }
 
-        .categories-bar {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            position: relative;
-        }
+    .library-card,
+    .video-card {
+      background: linear-gradient(120deg, rgba(31, 156, 155, 0.14) 5%, rgba(31, 31, 44, 0.82) 75%);
+      border: 1.5px solid rgba(135, 232, 227, 0.17);
+      box-shadow: 0 2px 16px #00ffdd22, 0 1px 8px #ffe95b0d;
+      transition:
+        box-shadow .25s cubic-bezier(.31, 2, .53, .91),
+        transform .19s cubic-bezier(.23, 1.53, .74, 1.01),
+        border .23s,
+        background .18s;
+    }
 
-        .category-btn {
-            padding: 0.75rem 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 0.75rem;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            backdrop-filter: blur(10px);
-        }
+    .library-card:hover,
+    .video-card:hover {
+      border: 1.9px solid #ffe95b86;
+      box-shadow: 0 7px 36px 0 #ffe95b66, 0 1px 16px #31d47ba2;
+      background: linear-gradient(100deg, #182b1f 30%, #ffe95b33 95%);
+    }
 
-        .category-btn:hover,
-        .category-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-color: rgba(96, 165, 250, 0.6);
-            box-shadow: 0 4px 16px rgba(96, 165, 250, 0.3);
-        }
+    .tag.animated {
+      background: linear-gradient(90deg, #ffe95b 5%, #31d47b 80%);
+      color: #273f2a;
+      filter: drop-shadow(0 2px 6px #ffe95baf);
+      text-shadow: 0 1px 4px #fff79940;
+    }
 
-        .library-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    /* === BUTTON, SEARCH, CATEGORIES ANIMATION === */
+    .category-btn.active,
+    .category-btn:focus {
+      background: linear-gradient(270deg, #ffe95b 42%, #31d47b 100%) !important;
+      color: #222;
+      filter: drop-shadow(0 1.5px 8px #ffe95b50);
+      font-weight: 700;
+    }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .category-btn {
+      box-shadow: 0 2px 8px #1e8ac631;
+    }
 
-        .library-card,
-        .video-card {
-            background: linear-gradient(145deg, rgba(58, 58, 78, 0.6), rgba(54, 67, 94, 0.5));
-            border-radius: 1.5rem;
-            padding: 2rem;
-            border: 1px solid rgba(96, 165, 250, 0.2);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.15),
-                inset 0 1px 2px rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            transition: var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
-            color: #ffffff;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            animation-delay: var(--card-delay, 0s);
-        }
+    .category-btn:hover {
+      background: linear-gradient(135deg, #31d47b25 10%, #e9f78c49 100%) !important;
+      color: #ffe95b;
+    }
 
-        .library-card:hover,
-        .video-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(96, 165, 250, 0.4);
-            box-shadow: 
-                0 12px 40px rgba(96, 165, 250, 0.2),
-                0 8px 32px rgba(0, 0, 0, 0.25),
-                inset 0 1px 2px rgba(255, 255, 255, 0.2);
-        }
+    .category-anim-indicator {
+      background: linear-gradient(90deg, #ffe95b 55%, #31d47b 100%);
+      filter: blur(2px);
+    }
 
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    #library-search {
+      box-shadow: 0 2px 12px #ffe95b22, 0 1px 5px #31d47b15;
+      background: rgba(39, 48, 66, .93);
+      border: 1.7px solid #31d47ba5;
+      color: #f4fff6;
+    }
 
-        .library-card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff, rgba(96, 165, 250, 0.9));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-        }
+    #library-search:focus {
+      border: 1.9px solid #ffe95b;
+      background: rgba(31, 36, 54, 0.95);
+      color: #222;
+    }
 
-        .library-card p {
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
+    /* === VIDEO: Drop-shadow and Pulse on Hover === */
+    .video-thumbnail-anim {
+      box-shadow: 0 9px 24px #ffe95b11, 0 1px 7px #31d47b18;
+      background: #182b1f7c;
+      transition: box-shadow .19s, filter .22s;
+    }
 
-        .library-card ul {
-            color: rgba(255, 255, 255, 0.85);
-            margin: 1rem 0 1rem 1.5rem;
-        }
+    .video-card:hover .video-thumbnail-anim {
+      box-shadow: 0 13px 34px #ffe95bdd, 0 3px 13px #31d47baa;
+      filter: brightness(1.05) saturate(1.21) drop-shadow(0 2px 24px #ffe95b88);
+    }
 
-        .library-card li {
-            margin-bottom: 0.5rem;
-        }
+    .video-thumbnail-anim iframe {
+      border-radius: 14px;
+      background: #182b1f;
+    }
 
-        .library-card a {
-            display: inline-block;
-            padding: 0.5rem 1.25rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            text-decoration: none;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-            margin-top: 1rem;
-        }
+    /* === RESPONSIVE TWEAKS === */
+    @media (max-width: 950px) {
+      .animated-bg {
+        display: none;
+      }
 
-        .library-card a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(96, 165, 250, 0.4);
-        }
+      .library-section {
+        margin: 0 1vw;
+        padding: 13px 0 37px 0;
+      }
+    }
 
-        .tag.animated {
-            display: inline-block;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(168, 85, 247, 0.2));
-            color: rgba(96, 165, 250, 0.9);
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-top: 1rem;
-            border: 1px solid rgba(96, 165, 250, 0.3);
-            animation: tagGlow 3s ease-in-out infinite alternate;
-        }
+    @media (max-width: 700px) {
+      .library-section {
+        border-radius: 15px;
+      }
 
-        @keyframes tagGlow {
-            from {
-                box-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
-            }
-            to {
-                box-shadow: 0 0 20px rgba(96, 165, 250, 0.6);
-            }
-        }
+      .library-title {
+        font-size: 1.45rem;
+      }
+    }
 
-        .video-card iframe {
-            width: 100%;
-            height: 200px;
-            border-radius: 1rem;
-            margin-bottom: 1rem;
-            border: none;
-        }
 
-        .no-results-message {
-            text-align: center;
-            padding: 3rem;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
+    :root {
+      --accent: #31d47b;
+      --background: #050f17;
+      --glass-bg: rgba(28, 39, 53, 0.82);
+      --glass-blur: 20px;
+      --text-main: #efffff;
+      --text-muted: #a0eccc;
+      --shadow-lg: 0 8px 48px rgba(37, 255, 157, 0.13);
+      --shadow-btn: 0 2px 10px rgba(0, 0, 0, 0.19);
+    }
 
-        .no-results-message.hidden {
-            display: none;
-        }
+    /* HEADER */
+    .eco-header {
+      background: linear-gradient(90deg, #073820 30%, #1c3144 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 26px 6vw 20px 6vw;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: 0 8px 24px rgba(18, 55, 43, 0.10);
+    }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .library-section {
-                padding: 2rem 1.5rem;
-                margin: 1rem;
-            }
+    .header-logo {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: 2px;
+    }
 
-            .library-title {
-                font-size: 2rem;
-            }
+    .header-nav {
+      display: flex;
+      gap: 32px;
+    }
 
-            .categories-bar {
-                gap: 0.5rem;
-            }
+    .nav-link {
+      color: var(--text-main);
+      font-size: 1.05rem;
+      font-weight: 700;
+      position: relative;
+      transition: color .15s;
+      padding: 2px 0;
+      text-decoration: none;
+    }
 
-            .category-btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.875rem;
-            }
+    .nav-link.active,
+    .nav-link:hover {
+      color: var(--accent);
+    }
 
-            .library-content {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-        }
+    .nav-link.active::before,
+    .nav-link:hover::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 3px;
+      border-radius: 5px;
+      background: var(--accent);
+    }
+
+    /* FOOTER */
+    .eco-footer {
+      background: linear-gradient(90deg, #073820 30%, #1c3144 100%);
+      color: #e0ffe6;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 6vw 18px 6vw;
+      margin-top: 60px;
+      border-top: 1.5px solid #184a35;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 22px;
+    }
+
+    .footer-link {
+      color: #b2f8c4;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-link:hover {
+      color: #f9ffb3;
+    }
+
+    /* MAIN LIBRARY SECTION */
+    .library-section {
+      margin: 40px auto 0 auto;
+      max-width: 1200px;
+      background: var(--glass-bg);
+      border-radius: 26px;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      padding: 48px 0 48px 0;
+    }
+
+    .library-title {
+      text-align: center;
+      color: var(--accent);
+      font-size: 2.5rem;
+      margin-bottom: 32px;
+      font-weight: 800;
+    }
+
+    .library-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin: 0 6vw 26px 6vw;
+    }
+
+    .search-animated {
+      position: relative;
+      width: 100%;
+    }
+
+    #library-search {
+      width: 100%;
+      padding: 16px 18px 16px 44px;
+      border-radius: 12px;
+      border: none;
+      font-size: 1.13rem;
+      background: rgba(30, 41, 54, 0.88);
+      color: #e9fff4;
+      box-shadow: 0 2px 15px rgba(40, 255, 157, 0.08);
+      transition: box-shadow .26s, background .2s;
+      outline: none;
+    }
+
+    #library-search:focus {
+      background: rgba(30, 41, 54, 0.95);
+      box-shadow: 0 2px 18px rgba(80, 237, 162, 0.19);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 23px;
+      height: 23px;
+      background: url('https://cdn-icons-png.flaticon.com/512/622/622669.png') no-repeat center center/contain;
+      opacity: 0.87;
+      pointer-events: none;
+      transition: filter 0.19s;
+    }
+
+    #library-search:focus+.search-icon {
+      filter: drop-shadow(0 1px 0 #4dffb8);
+    }
+
+    /* Categories Bar */
+    .categories-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .category-btn {
+      background: rgba(58, 187, 97, 0.07);
+      border: none;
+      padding: 11px 20px;
+      border-radius: 8px;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-right: 2px;
+      position: relative;
+      transition: background 0.18s, color 0.17s, box-shadow 0.22s;
+      box-shadow: var(--shadow-btn);
+      overflow: hidden;
+    }
+
+    .category-btn.active,
+    .category-btn:focus {
+      background: var(--accent);
+      color: #1c2832;
+      box-shadow: 0 1px 18px rgba(40, 255, 157, 0.11);
+    }
+
+    .category-btn:hover {
+      background: rgba(49, 212, 123, 0.10);
+      color: #f2ffda;
+    }
+
+    .category-anim-indicator {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3.5px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #57e6a9, #6bc6ff 90%);
+      width: 0;
+      transition: all 0.25s cubic-bezier(.65, 1.7, .72, .76);
+      z-index: 2;
+    }
+
+    /* Content Area */
+    .library-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 34px;
+      margin: 0 6vw 24px 6vw;
+      justify-content: flex-start;
+      animation: fadeinUp 0.6s cubic-bezier(.47, 1.64, .41, .8);
+    }
+
+    /* Cards (Glassmorphism, Animated) */
+    .library-card,
+    .video-card {
+      background: linear-gradient(135deg, rgba(40, 70, 52, 0.43), rgba(14, 23, 30, 0.82));
+      border-radius: 18px;
+      box-shadow: 0 4px 32px rgba(60, 255, 214, 0.13);
+      padding: 30px 24px 22px;
+      min-width: 260px;
+      max-width: 320px;
+      flex: 1 1 290px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      color: var(--text-main);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(32px) scale(0.97);
+      animation: cardPop 0.8s cubic-bezier(.33, 2, .36, 1.13) forwards;
+      animation-delay: var(--card-delay, 0s);
+      transition: box-shadow .24s, transform .24s;
+    }
+
+    .library-card:hover,
+    .video-card:hover {
+      box-shadow: 0 4px 36px 0 #3edff5b3, 0 0 0 5px #2ab57210;
+      transform: translateY(-8px) scale(1.025);
+    }
+
+    .library-card h3 {
+      color: var(--accent);
+      margin-bottom: 7px;
+    }
+
+    .library-card a {
+      margin-top: 6px;
+      color: #26ffd0;
+      font-weight: 650;
+      text-decoration: none;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      border-bottom: 1.5px solid #26ffd068;
+      transition: color .17s, border-bottom .18s;
+    }
+
+    .library-card a:hover {
+      color: #ffea37;
+      border-bottom: 1.5px solid #ffea37;
+    }
+
+    .tag.animated {
+      display: inline-block;
+      background: linear-gradient(90deg, #4dff8f, #8ec1fa 72%);
+      color: #182822;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 4px 14px 4px 10px;
+      margin: 0 8px;
+      animation: pulseTag 2.2s infinite alternate;
+      box-shadow: 0 2px 12px #00ffc030;
+    }
+
+    @keyframes pulseTag {
+      0% {
+        filter: brightness(1);
+      }
+
+      100% {
+        filter: brightness(1.12) drop-shadow(0 0 7px #65ffe4);
+      }
+    }
+
+    @keyframes fadeinUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes cardPop {
+      0% {
+        opacity: 0;
+        transform: translateY(32px) scale(0.92);
+      }
+
+      60% {
+        opacity: 1;
+        transform: translateY(0) scale(1.1);
+      }
+
+      80% {
+        transform: scale(0.98);
+      }
+
+      100% {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* VideoThumbnails Anim */
+    .video-thumbnail-anim {
+      width: 100%;
+      border-radius: 13px;
+      overflow: hidden;
+      box-shadow: 0 3px 22px #2ab57215;
+      transition: transform .27s cubic-bezier(.23, 1.86, .72, .83), box-shadow .23s;
+    }
+
+    .video-card:hover .video-thumbnail-anim {
+      transform: scale(1.04) rotate(-.7deg);
+      box-shadow: 0 8px 44px #54fff960;
+    }
+
+    .video-thumbnail-anim iframe {
+      width: 100%;
+      height: 180px;
+      min-height: 120px;
+      border-radius: 13px;
+      border: none;
+    }
+
+    /* No Results Message */
+    .no-results-message {
+      margin-top: 34px;
+      color: #eeff6e;
+      font-weight: 700;
+      font-size: 1.18rem;
+      text-align: center;
+      opacity: .91;
+      display: none;
+    }
+
+    .no-results-message.hidden {
+      display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 950px) {
+
+      .library-controls,
+      .library-content {
+        margin: 0 14px;
+      }
+
+      .library-section {
+        padding: 26px 0 46px 0;
+      }
+    }
+
+    @media (max-width: 700px) {
+
+      .eco-header,
+      .eco-footer {
+        flex-direction: column;
+        gap: 13px;
+      }
+
+      .library-content {
+        flex-direction: column;
+        gap: 22px;
+      }
+
+      .library-card,
+      .video-card {
+        max-width: none;
+      }
+
+      .categories-bar {
+        gap: 8px;
+      }
+    }
   </style>
+
+
 </head>
 
 <body>
-    <!-- Galaxy Background -->
-    <div class="galaxy-background">
-        <div class="star-field"></div>
-        <div class="spiral-arm"></div>
-    </div>
-
-    <!-- Navigation -->
-    <nav class="cosmic-nav">
-        <div class="nav-container">
-            <div class="logo-group">
-                <svg viewBox="0 0 24 24" fill="none">
-                    <path d="M12 2l3.09 6.26L22 9l-5 4.87L18.18 22 12 18.77 5.82 22 7 13.87 2 9l6.91-.74L12 2z" 
-                          fill="currentColor" 
-                          filter="drop-shadow(0 0 8px rgba(96, 165, 250, 0.7))"/>
-                </svg>
-                <div class="brand">ECO SAVER</div>
-            </div>
-            <div class="nav-menu">
-                <a href="landing.html">Home</a>
-                <a href="dashboard.html">Dashboard</a>
-                <a href="library.html" class="active">Library</a>
-                <a href="community-action.html">Community</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main>
-        <section class="library-section">
-            <h1 class="library-title">🌿 Educational Library</h1>
-            
-            <div class="library-controls">
-                <div class="search-container">
-                    <input type="text" id="library-search" placeholder="Search library...">
-                    <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" stroke="currentColor" 
-                              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                
-                <div class="categories-bar">
-                    <button class="category-btn active" onclick="showCategory('all')">All</button>
-                    <button class="category-btn" onclick="showCategory('books')">Books</button>
-                    <button class="category-btn" onclick="showCategory('articles')">Articles</button>
-                    <button class="category-btn" onclick="showCategory('videos')">Videos</button>
-                    <button class="category-btn" onclick="showCategory('research')">Research</button>
-                </div>
-            </div>
-
-            <div class="library-content" id="library-content">
-                <!-- Books -->
-                <div class="library-card" data-category="books" style="--card-delay: 0.1s;">
-                    <h3>📖 Silent Spring</h3>
-                    <p>Rachel Carson's groundbreaking work that sparked the modern environmental movement. This influential book exposed the harmful effects of pesticides on ecosystems and wildlife.</p>
-                    <ul>
-                        <li>Environmental impact of chemical pesticides</li>
-                        <li>The interconnectedness of natural ecosystems</li>
-                        <li>Call for responsible environmental stewardship</li>
-                    </ul>
-                    <div class="tag animated">📚 Classic</div>
-                    <a href="https://www.rachelcarson.org/SilentSpring.aspx" target="_blank">Learn More</a>
-                </div>
-
-                <div class="library-card" data-category="books" style="--card-delay: 0.2s;">
-                    <h3>🌍 The Sixth Extinction</h3>
-                    <p>Elizabeth Kolbert's Pulitzer Prize-winning book about the current mass extinction event caused by human activity. A compelling examination of our impact on biodiversity.</p>
-                    <ul>
-                        <li>Current biodiversity crisis</li>
-                        <li>Human impact on species survival</li>
-                        <li>Conservation challenges and solutions</li>
-                    </ul>
-                    <div class="tag animated">🏆 Award Winner</div>
-                    <a href="https://www.elizabethkolbert.com/the-sixth-extinction" target="_blank">Explore</a>
-                </div>
-
-                <div class="library-card" data-category="books" style="--card-delay: 0.3s;">
-                    <h3>♻️ Cradle to Cradle</h3>
-                    <p>McDonough and Braungart's revolutionary approach to sustainable design and manufacturing. Learn about circular economy principles and eco-effective design.</p>
-                    <ul>
-                        <li>Circular economy principles</li>
-                        <li>Sustainable product design</li>
-                        <li>Waste elimination strategies</li>
-                    </ul>
-                    <div class="tag animated">💡 Innovation</div>
-                    <a href="https://mcdonough.com/cradle-to-cradle/" target="_blank">Read More</a>
-                </div>
-
-                <!-- Articles -->
-                <div class="library-card" data-category="articles" style="--card-delay: 0.4s;">
-                    <h3>🌡️ Climate Change Basics</h3>
-                    <p>A comprehensive overview of climate science, greenhouse gases, and their effects on global weather patterns. Perfect for understanding the fundamentals of climate change.</p>
-                    <ul>
-                        <li>Greenhouse effect explanation</li>
-                        <li>Global temperature trends</li>
-                        <li>Climate feedback loops</li>
-                    </ul>
-                    <div class="tag animated">🔬 Science</div>
-                    <a href="https://climate.nasa.gov/evidence/" target="_blank">Read Article</a>
-                </div>
-
-                <div class="library-card" data-category="articles" style="--card-delay: 0.5s;">
-                    <h3>🌱 Sustainable Living Tips</h3>
-                    <p>Practical advice for reducing your environmental impact through daily choices. From energy conservation to sustainable consumption patterns.</p>
-                    <ul>
-                        <li>Energy-saving techniques</li>
-                        <li>Sustainable food choices</li>
-                        <li>Waste reduction strategies</li>
-                    </ul>
-                    <div class="tag animated">🏠 Lifestyle</div>
-                    <a href="#" target="_blank">Get Started</a>
-                </div>
-
-                <div class="library-card" data-category="articles" style="--card-delay: 0.6s;">
-                    <h3>🔋 Renewable Energy Guide</h3>
-                    <p>Explore different types of renewable energy sources, their benefits, and how they're transforming our energy landscape for a sustainable future.</p>
-                    <ul>
-                        <li>Solar and wind energy</li>
-                        <li>Hydroelectric power</li>
-                        <li>Energy storage solutions</li>
-                    </ul>
-                    <div class="tag animated">⚡ Energy</div>
-                    <a href="https://www.energy.gov/eere/renewable-energy" target="_blank">Learn More</a>
-                </div>
-
-                <!-- Videos -->
-                <div class="video-card" data-category="videos" style="--card-delay: 0.7s;">
-                    <h3>🎬 Our Planet Documentary</h3>
-                    <iframe src="https://www.youtube.com/embed/GfO-3Oir-qM" allowfullscreen></iframe>
-                    <p>Breathtaking footage showcasing the beauty of our natural world and the urgent need for conservation.</p>
-                    <div class="tag animated">🎥 Documentary</div>
-                </div>
-
-                <div class="video-card" data-category="videos" style="--card-delay: 0.8s;">
-                    <h3>🌊 Ocean Conservation</h3>
-                    <iframe src="https://www.youtube.com/embed/HQTUWK7CM-Y" allowfullscreen></iframe>
-                    <p>Learn about marine ecosystems, threats to ocean health, and conservation efforts to protect our seas.</p>
-                    <div class="tag animated">🌊 Marine</div>
-                </div>
-
-                <div class="video-card" data-category="videos" style="--card-delay: 0.9s;">
-                    <h3>🌳 Reforestation Projects</h3>
-                    <iframe src="https://www.youtube.com/embed/gqht2bIQXIY" allowfullscreen></iframe>
-                    <p>Inspiring stories of reforestation efforts around the world and their impact on climate and biodiversity.</p>
-                    <div class="tag animated">🌲 Conservation</div>
-                </div>
-
-                <!-- Research -->
-                <div class="library-card" data-category="research" style="--card-delay: 1.0s;">
-                    <h3>📊 IPCC Climate Reports</h3>
-                    <p>Access the latest scientific reports from the Intergovernmental Panel on Climate Change, providing authoritative assessments of climate science.</p>
-                    <ul>
-                        <li>Physical science basis</li>
-                        <li>Impacts and adaptation</li>
-                        <li>Mitigation strategies</li>
-                    </ul>
-                    <div class="tag animated">📈 Research</div>
-                    <a href="https://www.ipcc.ch/reports/" target="_blank">Access Reports</a>
-                </div>
-
-                <div class="library-card" data-category="research" style="--card-delay: 1.1s;">
-                    <h3>🔬 Nature Climate Change</h3>
-                    <p>Peer-reviewed research articles on all aspects of climate change, from physical and social sciences to policy and economics.</p>
-                    <ul>
-                        <li>Climate science research</li>
-                        <li>Policy analysis</li>
-                        <li>Economic implications</li>
-                    </ul>
-                    <div class="tag animated">📚 Journal</div>
-                    <a href="https://www.nature.com/nclimate/" target="_blank">Browse Articles</a>
-                </div>
-
-                <div class="library-card" data-category="research" style="--card-delay: 1.2s;">
-                    <h3>🌿 Biodiversity Studies</h3>
-                    <p>Cutting-edge research on biodiversity conservation, species protection, and ecosystem restoration from leading scientific institutions.</p>
-                    <ul>
-                        <li>Species conservation</li>
-                        <li>Ecosystem services</li>
-                        <li>Habitat restoration</li>
-                    </ul>
-                    <div class="tag animated">🔬 Biology</div>
-                    <a href="https://www.cbd.int/" target="_blank">Explore Research</a>
-                </div>
-            </div>
-
-            <div class="no-results-message hidden" id="no-results">
-                🔍 No resources found matching your search criteria.
-            </div>
-        </section>
-    </main>
-
-    <script>
-        // Search functionality
-        const searchInput = document.getElementById('library-search');
-        const libraryCards = document.querySelectorAll('.library-card, .video-card');
-        const noResultsMessage = document.getElementById('no-results');
-
-        searchInput.addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            let visibleCards = 0;
-
-            libraryCards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                const category = card.getAttribute('data-category');
-                const currentCategory = document.querySelector('.category-btn.active').textContent.toLowerCase();
-                
-                const matchesSearch = text.includes(searchTerm);
-                const matchesCategory = currentCategory === 'all' || category === currentCategory;
-                
-                if (matchesSearch && matchesCategory) {
-                    card.style.display = 'flex';
-                    visibleCards++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            // Show/hide no results message
-            if (visibleCards === 0) {
-                noResultsMessage.classList.remove('hidden');
-            } else {
-                noResultsMessage.classList.add('hidden');
-            }
-        });
-
-        // Category filtering
-        function showCategory(category) {
-            // Update active button
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // Filter cards
-            const searchTerm = searchInput.value.toLowerCase();
-            let visibleCards = 0;
-
-            libraryCards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                const cardCategory = card.getAttribute('data-category');
-                
-                const matchesSearch = searchTerm === '' || text.includes(searchTerm);
-                const matchesCategory = category === 'all' || cardCategory === category;
-                
-                if (matchesSearch && matchesCategory) {
-                    card.style.display = 'flex';
-                    visibleCards++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            // Show/hide no results message
-            if (visibleCards === 0) {
-                noResultsMessage.classList.remove('hidden');
-            } else {
-                noResultsMessage.classList.add('hidden');
-            }
-
-            // Clear search when changing categories
-            if (category !== 'all') {
-                searchInput.value = '';
-            }
-        }
-
-        // Initialize staggered animations
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.library-card, .video-card');
-            cards.forEach((card, index) => {
-                card.style.setProperty('--card-delay', `${index * 0.1}s`);
-            });
-        });
-
-        // Smooth scroll for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
   <!-- Animated Background Layers & Particles -->
   <div class="animated-bg">
     <div class="animated-gradient"></div>
@@ -1710,7 +1649,7 @@
   <footer class="eco-footer">
     <span>&copy; 2025 Eco Learn Punjab. All rights reserved.</span>
     <div class="footer-links">
-      <a href="index.html" class="footer-link">Home</a>
+      <a href="/" class="footer-link">Home</a>
       <a href="/privacy" class="footer-link">Privacy</a>
       <a href="/contact" class="footer-link">Contact</a>
     </div>

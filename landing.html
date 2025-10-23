@@ -116,186 +116,19 @@
             text-align: center;
             overflow: hidden;
         }
-        
-        /* Multiple layered background images for depth */
         .hero-bg-image {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.3;
-        }
-        
-        .hero-bg-layer-1 {
-            animation: windSwayIntense 6s ease-in-out infinite;
-            transform-origin: bottom center;
-            z-index: 1;
-        }
-        
-        .hero-bg-layer-2 {
-            animation: windSwayGentle 8s ease-in-out infinite reverse;
-            transform-origin: bottom left;
-            opacity: 0.15;
-            z-index: 2;
-        }
-        
-        .hero-bg-layer-3 {
-            animation: windSwayMedium 7s ease-in-out infinite alternate;
-            transform-origin: bottom right;
             opacity: 0.2;
-            z-index: 3;
-        }
-        
-        /* Gentle wind animations - eye-friendly */
-        @keyframes windSwayIntense {
-            0% { 
-                transform: translateX(0) rotate(0deg) scale(1); 
-            }
-            25% { 
-                transform: translateX(-2px) rotate(-0.3deg) scale(1.002); 
-            }
-            50% { 
-                transform: translateX(3px) rotate(0.4deg) scale(1.003); 
-            }
-            75% { 
-                transform: translateX(-1px) rotate(-0.2deg) scale(1.001); 
-            }
-            100% { 
-                transform: translateX(1px) rotate(0.1deg) scale(1.001); 
-            }
-        }
-        
-        @keyframes windSwayGentle {
-            0%, 100% { 
-                transform: translateX(0) translateY(0) rotate(0deg) scale(1);
-            }
-            50% { 
-                transform: translateX(2px) translateY(-1px) rotate(0.2deg) scale(1.001);
-            }
-        }
-        
-        @keyframes windSwayMedium {
-            0% { 
-                transform: translateX(0) rotate(0deg) scale(1);
-            }
-            33% { 
-                transform: translateX(-1.5px) rotate(-0.25deg) scale(1.001);
-            }
-            66% { 
-                transform: translateX(2.5px) rotate(0.35deg) scale(1.002);
-            }
-            100% { 
-                transform: translateX(-0.5px) rotate(-0.1deg) scale(1.0005);
-            }
         }
         .hero-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(180deg, hsl(150, 56%, 28%), hsl(222, 47%, 11%));
             opacity: 0.8;
-        }
-        
-        /* Advanced wind particles system */
-        .wind-particles {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 4;
-        }
-        
-        .wind-particle {
-            position: absolute;
-            border-radius: 50%;
-            animation: advancedFloat var(--duration) var(--timing) infinite;
-        }
-        
-        /* Different particle types */
-        .wind-particle.leaf {
-            width: 8px;
-            height: 6px;
-            background: linear-gradient(45deg, #4ade80, #22c55e);
-            border-radius: 0 100% 0 100%;
-            transform-origin: center;
-        }
-        
-        .wind-particle.dust {
-            width: 3px;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-        }
-        
-        .wind-particle.pollen {
-            width: 5px;
-            height: 5px;
-            background: radial-gradient(circle, #fbbf24, #f59e0b);
-            border-radius: 50%;
-        }
-        
-        /* Particle positioning and timing - gentler */
-        .wind-particle:nth-child(1) { 
-            top: 15%; left: -20px; --duration: 12s; --timing: ease-out;
-            animation-delay: 0s;
-        }
-        .wind-particle:nth-child(2) { 
-            top: 25%; left: -20px; --duration: 15s; --timing: ease-in-out;
-            animation-delay: 3s;
-        }
-        .wind-particle:nth-child(3) { 
-            top: 45%; left: -20px; --duration: 14s; --timing: ease-out;
-            animation-delay: 6s;
-        }
-        .wind-particle:nth-child(4) { 
-            top: 65%; left: -20px; --duration: 18s; --timing: ease-in-out;
-            animation-delay: 9s;
-        }
-        .wind-particle:nth-child(5) { 
-            top: 85%; left: -20px; --duration: 16s; --timing: ease-out;
-            animation-delay: 4s;
-        }
-        .wind-particle:nth-child(6) { 
-            top: 35%; left: -20px; --duration: 20s; --timing: ease-in-out;
-            animation-delay: 12s;
-        }
-        .wind-particle:nth-child(7) { 
-            top: 55%; left: -20px; --duration: 17s; --timing: ease-out;
-            animation-delay: 15s;
-        }
-        .wind-particle:nth-child(8) { 
-            top: 75%; left: -20px; --duration: 22s; --timing: ease-in-out;
-            animation-delay: 2s;
-        }
-        
-        @keyframes advancedFloat {
-            0% {
-                transform: translateX(0) translateY(0) rotate(0deg) scale(0);
-                opacity: 0;
-            }
-            10% {
-                transform: translateX(30px) translateY(-5px) rotate(90deg) scale(1);
-                opacity: 0.6;
-            }
-            30% {
-                transform: translateX(120px) translateY(-10px) rotate(180deg) scale(1.1);
-                opacity: 0.8;
-            }
-            50% {
-                transform: translateX(250px) translateY(5px) rotate(270deg) scale(0.9);
-                opacity: 1;
-            }
-            70% {
-                transform: translateX(380px) translateY(-8px) rotate(360deg) scale(1.05);
-                opacity: 0.8;
-            }
-            90% {
-                transform: translateX(500px) translateY(3px) rotate(450deg) scale(0.8);
-                opacity: 0.4;
-            }
-            100% {
-                transform: translateX(calc(100vw + 30px)) translateY(-10px) rotate(540deg) scale(0);
-                opacity: 0;
-            }
         }
         .hero-content {
             position: relative;
@@ -451,29 +284,11 @@
         </div>
     </header>
     <main>
-        <section class="hero">
-            <!-- Multiple layered forest images for realistic depth -->
-            <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=1974&auto=format&fit=crop"
-                alt="Lush green forest" class="hero-bg-image hero-bg-layer-1">
-            <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=1974&auto=format&fit=crop"
-                alt="Forest layer 2" class="hero-bg-image hero-bg-layer-2">
-            <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=1974&auto=format&fit=crop"
-                alt="Forest layer 3" class="hero-bg-image hero-bg-layer-3">
-            
+        <section class="hero"><img
+                src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=1974&auto=format&fit=crop"
+                alt="Lush green forest" class="hero-bg-image" id="heroLivePhotoImg">
+            <canvas id="heroLivePhotoCanvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;display:none;"></canvas>
             <div class="hero-overlay"></div>
-            
-            <!-- Advanced wind particle system -->
-            <div class="wind-particles">
-                <div class="wind-particle leaf"></div>
-                <div class="wind-particle dust"></div>
-                <div class="wind-particle pollen"></div>
-                <div class="wind-particle leaf"></div>
-                <div class="wind-particle dust"></div>
-                <div class="wind-particle pollen"></div>
-                <div class="wind-particle leaf"></div>
-                <div class="wind-particle dust"></div>
-            </div>
-            
             <div class="hero-content container">
                 <h1>Your Adventure to Save the Planet Starts Here.</h1>
                 <p>EcoSaver transforms learning about our environment into a captivating game. Join a global community
@@ -489,6 +304,121 @@
                 </a>
             </div>
         </section>
+            <script>
+            // --- Improved Live Photo Effect for Hero Background ---
+            window.addEventListener('DOMContentLoaded', function() {
+                const img = document.getElementById('heroLivePhotoImg');
+                const canvas = document.getElementById('heroLivePhotoCanvas');
+                if (!img || !canvas) return;
+                let gl;
+                function fallback() {
+                    // If WebGL fails, show the static image
+                    img.style.opacity = 1;
+                    canvas.style.display = 'none';
+                }
+                function resizeCanvas() {
+                    canvas.width = img.offsetWidth;
+                    canvas.height = img.offsetHeight;
+                    if (gl) gl.viewport(0, 0, canvas.width, canvas.height);
+                }
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+                // Try WebGL
+                gl = canvas.getContext('webgl');
+                if (!gl) return fallback();
+                // Vertex shader (gentle wave)
+                const vsSource = `
+                    attribute vec2 a_position;
+                    attribute vec2 a_texCoord;
+                    varying vec2 v_texCoord;
+                    uniform float u_time;
+                    void main() {
+                        float wave = sin(a_position.y * 8.0 + u_time * 1.1) * 0.006;
+                        float wave2 = cos(a_position.x * 12.0 + u_time * 1.3) * 0.004;
+                        vec2 pos = a_position + vec2(wave, wave2);
+                        gl_Position = vec4(pos, 0, 1);
+                        v_texCoord = a_texCoord;
+                    }
+                `;
+                // Fragment shader
+                const fsSource = `
+                    precision mediump float;
+                    varying vec2 v_texCoord;
+                    uniform sampler2D u_image;
+                    void main() {
+                        gl_FragColor = texture2D(u_image, v_texCoord);
+                    }
+                `;
+                function createShader(type, source) {
+                    const shader = gl.createShader(type);
+                    gl.shaderSource(shader, source);
+                    gl.compileShader(shader);
+                    return shader;
+                }
+                function createProgram(vs, fs) {
+                    const program = gl.createProgram();
+                    gl.attachShader(program, vs);
+                    gl.attachShader(program, fs);
+                    gl.linkProgram(program);
+                    return program;
+                }
+                const vs = createShader(gl.VERTEX_SHADER, vsSource);
+                const fs = createShader(gl.FRAGMENT_SHADER, fsSource);
+                const program = createProgram(vs, fs);
+                gl.useProgram(program);
+                // Buffers
+                const positionBuffer = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                    -1, -1, 1, -1, -1, 1, 1, 1
+                ]), gl.STATIC_DRAW);
+                const texCoordBuffer = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                    0, 0, 1, 0, 0, 1, 1, 1
+                ]), gl.STATIC_DRAW);
+                // Texture
+                const texture = gl.createTexture();
+                gl.bindTexture(gl.TEXTURE_2D, texture);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                // Load image to texture
+                function updateTexture() {
+                    gl.bindTexture(gl.TEXTURE_2D, texture);
+                    try {
+                        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+                    } catch (e) { fallback(); }
+                }
+                if (img.complete) updateTexture();
+                else img.onload = updateTexture;
+                // Attributes
+                const posLoc = gl.getAttribLocation(program, 'a_position');
+                gl.enableVertexAttribArray(posLoc);
+                gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+                gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+                const texLoc = gl.getAttribLocation(program, 'a_texCoord');
+                gl.enableVertexAttribArray(texLoc);
+                gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
+                gl.vertexAttribPointer(texLoc, 2, gl.FLOAT, false, 0, 0);
+                // Uniforms
+                const timeUniform = gl.getUniformLocation(program, 'u_time');
+                // Show canvas, hide static image
+                img.style.opacity = 0;
+                canvas.style.display = '';
+                // Animation loop
+                function render() {
+                    gl.clear(gl.COLOR_BUFFER_BIT);
+                    gl.useProgram(program);
+                    gl.uniform1f(timeUniform, performance.now() / 1000.0);
+                    updateTexture();
+                    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                    requestAnimationFrame(render);
+                }
+                render();
+            });
+            </script>
         <section class="section section-features fade-in-section">
             <div class="container">
                 <div class="features-grid">

@@ -1,66 +1,31 @@
 {
-  "name": "ecosaver-production",
-  "version": "2.0.0",
-  "description": "EcoSaver - Complete Environmental Action Platform with Production Backend",
-  "main": "server-production.js",
+  "name": "kunal-work---copy---copy",
+  "version": "1.0.0",
+  "description": "- ✅ `index.html` - Optimized landing page (NEW - your main website entry)\r - ✅ `login.html` - Dashboard/login page (FIXED broken links)\r - ✅ `landing.html` - Original landing page (backup)",
+  "main": "demo-server.js",
   "scripts": {
-    "start": "node server-production.js",
-    "dev": "nodemon server-production.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "setup": "npm install && echo 'EcoSaver backend setup complete!'",
-    "build": "echo 'Building production assets...'",
-    "deploy": "echo 'Deploying to production...'",
-    "db:migrate": "node scripts/migrate.js",
-    "db:seed": "node scripts/seed.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Dipanshu8384/ECO-SAVER.git"
   },
-  "keywords": [
-    "environment",
-    "sustainability",
-    "eco-habits",
-    "gamification",
-    "climate-action",
-    "carbon-tracker",
-    "green-living",
-    "environmental-education",
-    "nodejs",
-    "mongodb",
-    "express"
-  ],
-  "author": "EcoSaver Team",
-  "license": "MIT",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Dipanshu8384/ECO-SAVER/issues"
   },
   "homepage": "https://github.com/Dipanshu8384/ECO-SAVER#readme",
-  "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=7.0.0"
-  },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "express-rate-limit": "^7.1.5",
-    "helmet": "^7.1.0",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.3",
-    "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.7",
-    "twilio": "^4.20.0",
-    "axios": "^1.6.2",
-    "compression": "^1.7.4",
-    "express-validator": "^7.0.1",
-    "morgan": "^1.10.0",
-    "express-mongo-sanitize": "^2.2.0",
-    "xss-clean": "^0.1.4"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.2",
-    "concurrently": "^8.2.2"
+    "mongoose": "^8.18.1",
+    "multer": "^2.0.2",
+    "redis": "^5.8.2"
   }
 }

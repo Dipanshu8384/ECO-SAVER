@@ -2,225 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>EcoSaver - Join Our Community</title>
+  <title>Signup Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    :root {
-      --background-dark: hsl(222, 47%, 11%);
-      --text-light: hsl(210, 40%, 98%);
-      --text-muted: hsl(215, 20%, 65%);
-      --primary-green: hsl(142, 71%, 41%);
-      --primary-green-light: hsl(142, 80%, 98%);
-      --primary-green-darker: hsl(142, 76%, 36%);
-      --accent-yellow: hsl(45, 93%, 62%);
-    }
-
     html, body {
       height: 100%; margin: 0; padding: 0; overflow: hidden;
     }
-    
     body {
-      background-color: var(--background-dark);
+      background: rgba(18, 18, 18, 0.98);
       width: 100vw; height: 100vh;
       font-family: 'Segoe UI', Arial, sans-serif;
       display: flex; align-items: center; justify-content: center;
-      position: relative;
-      overflow: hidden;
     }
-
-    /* Multiple layered background images for depth - exact copy from landing.html */
-    .hero-bg-image {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.3;
-    }
-    
-    .hero-bg-layer-1 {
-      animation: windSwayIntense 6s ease-in-out infinite;
-      transform-origin: bottom center;
-      z-index: 1;
-    }
-    
-    .hero-bg-layer-2 {
-      animation: windSwayGentle 8s ease-in-out infinite reverse;
-      transform-origin: bottom left;
-      opacity: 0.15;
-      z-index: 2;
-    }
-    
-    .hero-bg-layer-3 {
-      animation: windSwayMedium 7s ease-in-out infinite alternate;
-      transform-origin: bottom right;
-      opacity: 0.2;
-      z-index: 3;
-    }
-    
-    /* Gentle wind animations - exact copy from landing.html */
-    @keyframes windSwayIntense {
-      0% { 
-        transform: translateX(0) rotate(0deg) scale(1); 
-      }
-      25% { 
-        transform: translateX(-2px) rotate(-0.3deg) scale(1.002); 
-      }
-      50% { 
-        transform: translateX(3px) rotate(0.4deg) scale(1.003); 
-      }
-      75% { 
-        transform: translateX(-1px) rotate(-0.2deg) scale(1.001); 
-      }
-      100% { 
-        transform: translateX(1px) rotate(0.1deg) scale(1.001); 
-      }
-    }
-    
-    @keyframes windSwayGentle {
-      0%, 100% { 
-        transform: translateX(0) translateY(0) rotate(0deg) scale(1);
-      }
-      50% { 
-        transform: translateX(2px) translateY(-1px) rotate(0.2deg) scale(1.001);
-      }
-    }
-    
-    @keyframes windSwayMedium {
-      0% { 
-        transform: translateX(0) rotate(0deg) scale(1);
-      }
-      33% { 
-        transform: translateX(-1.5px) rotate(-0.25deg) scale(1.001);
-      }
-      66% { 
-        transform: translateX(2.5px) rotate(0.35deg) scale(1.002);
-      }
-      100% { 
-        transform: translateX(-0.5px) rotate(-0.1deg) scale(1.0005);
-      }
-    }
-
-    /* Hero-style overlay - keeping signup's unique gradient */
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, hsl(195, 45%, 25%), hsl(270, 35%, 15%));
-      opacity: 0.8;
-      z-index: 4;
-    }
-
-    /* Advanced wind particles system - exact copy from landing.html */
-    .wind-particles {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 5;
-    }
-    
-    .wind-particle {
-      position: absolute;
-      border-radius: 50%;
-      animation: advancedFloat var(--duration) var(--timing) infinite;
-    }
-    
-    /* Different particle types */
-    .wind-particle.leaf {
-      width: 8px;
-      height: 6px;
-      background: linear-gradient(45deg, #4ade80, #22c55e);
-      border-radius: 0 100% 0 100%;
-      transform-origin: center;
-    }
-    
-    .wind-particle.dust {
-      width: 3px;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.4);
-      border-radius: 50%;
-    }
-    
-    .wind-particle.pollen {
-      width: 5px;
-      height: 5px;
-      background: radial-gradient(circle, #fbbf24, #f59e0b);
-      border-radius: 50%;
-    }
-    
-    /* Particle positioning and timing - gentler */
-    .wind-particle:nth-child(1) { 
-      top: 15%; left: -20px; --duration: 12s; --timing: ease-out;
-      animation-delay: 0s;
-    }
-    .wind-particle:nth-child(2) { 
-      top: 25%; left: -20px; --duration: 15s; --timing: ease-in-out;
-      animation-delay: 3s;
-    }
-    .wind-particle:nth-child(3) { 
-      top: 45%; left: -20px; --duration: 14s; --timing: ease-out;
-      animation-delay: 6s;
-    }
-    .wind-particle:nth-child(4) { 
-      top: 65%; left: -20px; --duration: 18s; --timing: ease-in-out;
-      animation-delay: 9s;
-    }
-    .wind-particle:nth-child(5) { 
-      top: 85%; left: -20px; --duration: 16s; --timing: ease-out;
-      animation-delay: 4s;
-    }
-    .wind-particle:nth-child(6) { 
-      top: 35%; left: -20px; --duration: 20s; --timing: ease-in-out;
-      animation-delay: 12s;
-    }
-    .wind-particle:nth-child(7) { 
-      top: 55%; left: -20px; --duration: 17s; --timing: ease-out;
-      animation-delay: 15s;
-    }
-    .wind-particle:nth-child(8) { 
-      top: 75%; left: -20px; --duration: 22s; --timing: ease-in-out;
-      animation-delay: 2s;
-    }
-    
-    @keyframes advancedFloat {
-      0% {
-        transform: translateX(0) translateY(0) rotate(0deg) scale(0);
-        opacity: 0;
-      }
-      10% {
-        transform: translateX(30px) translateY(-5px) rotate(90deg) scale(1);
-        opacity: 0.6;
-      }
-      30% {
-        transform: translateX(120px) translateY(-10px) rotate(180deg) scale(1.1);
-        opacity: 0.8;
-      }
-      50% {
-        transform: translateX(250px) translateY(5px) rotate(270deg) scale(0.9);
-        opacity: 1;
-      }
-      70% {
-        transform: translateX(380px) translateY(-8px) rotate(360deg) scale(1.05);
-        opacity: 0.8;
-      }
-      90% {
-        transform: translateX(500px) translateY(3px) rotate(450deg) scale(0.8);
-        opacity: 0.4;
-      }
-      100% {
-        transform: translateX(calc(100vw + 30px)) translateY(-10px) rotate(540deg) scale(0);
-        opacity: 0;
-      }
-    }
-    
-    #grid-bg { 
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      width: 100vw; 
-      height: 100vh; 
-      z-index: 0; 
-      pointer-events: none;
-    }
+    #grid-bg { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none;}
     #branch-svg {
       position: absolute;
       top: 0;
@@ -243,45 +37,38 @@
       left: 50%; top: 46%;
       transform: translate(-50%, -50%);
       width: 400px;
-      padding: 40px 30px;
-      border-radius: 25px;
-      background: rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 
-        0 8px 32px 0 rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      padding: 38px 28px;
+      border-radius: 20px;
+      background: rgba(24,24,24,0.87);
+      border: 2px solid transparent;
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,.27), 0 0 10px 2px #4ade80cc;
       display: flex;
       flex-direction: column;
       align-items: center;
-      z-index: 10;
+      z-index: 20;
+      border-top-left-radius: 17px;
+      border-top-right-radius: 17px;
+      animation: glowPulse 2.1s infinite alternate;
     }
-    
+    @keyframes glowPulse {
+      0%   { box-shadow: 0 8px 32px 0 rgba(31,38,135,.27), 0 0 5px 2px #4ade8066;}
+      100% { box-shadow: 0 8px 32px 0 rgba(31,38,135,.27), 0 0 20px 6px #22d3ee;}
+    }
     form {
-      width: 100%;
+      width: 380px;
       background: transparent;
       border-radius: 20px;
-      padding: 0;
+      padding: 0 28px;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      align-items: center;
     }
-    
-    form h2 {
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 28px;
-      margin-bottom: 25px;
-      text-align: center;
-      font-weight: 300;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    h2 {
+      color: #fff; margin-bottom: 28px; text-align: center;
+      font-weight: 600; letter-spacing: 1px;
     }
-    
     .signup-options {
-      display: flex; 
-      justify-content: center; 
-      margin-bottom: 22px; 
-      gap: 12px;
-      width: 100%;
+      display: flex; justify-content: center; margin-bottom: 22px; gap: 12px;
     }
     .option-btn {
       background: #181818; color: #dadada;
@@ -309,40 +96,33 @@
       margin: 0;
       overflow: hidden;
     }
-    .input-group label { 
-      color: rgba(255, 255, 255, 0.8); 
-      font-size: 14px; 
-      margin-bottom: 6px; 
-      font-weight: 400;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-    }
+    .input-group label { color: #dadada; font-size: 14px; margin-bottom: 6px; font-weight: 500; }
     .input-group input {
-      padding: 12px 16px; 
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.15); 
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 16px; 
-      outline: none; 
-      width: 100%;
+      padding: 11px 14px; border-radius: 8px;
+      border: 1px solid #272727; background: #141414; color: #fff;
+      font-size: 16px; outline: none; transition: border .2s, box-shadow .2s;
     }
     .input-group input:focus {
-      border: 1px solid rgba(76, 222, 128, 0.5);
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 4px 20px rgba(76, 222, 128, 0.2);
+      border: 1.5px solid #4ade80;
+      box-shadow: 0 2px 8px #22d3ee55;
+      transform: scale(1.04);
     }
     .input-group input.valid {
-      border: 1px solid rgba(76, 222, 128, 0.6) !important;
-      background: rgba(76, 222, 128, 0.1);
-      box-shadow: 0 0 15px rgba(76, 222, 128, 0.3);
+      border: 1.8px solid #4ade80 !important;
+      background: #172c1f;
+      box-shadow: 0 0 8px #4ade8069;
     }
     .input-group input.invalid {
-      border: 1px solid rgba(255, 68, 84, 0.6) !important;
-      background: rgba(255, 68, 84, 0.1);
+      border: 1.8px solid #ff4454 !important;
+      background: #2a151e;
+      animation: shake 0.25s linear;
     }
+    @keyframes shake {
+      0% { transform: translateX(0);}
+      30% { transform: translateX(-7px);}
+      60% { transform: translateX(6px);}
+      100% { transform: translateX(0);}
     }
-    
     .password-wrapper {
       position: relative; display: flex; align-items: center;
     }
@@ -372,35 +152,26 @@
       font-size: 13px; margin-top: 2px; color: #8de4c7; font-weight: 500;
     }
     .signup-btn {
-      width: 100%; 
-      padding: 15px 0; 
-      border: 1px solid rgba(76, 222, 128, 0.3); 
-      border-radius: 12px;
-      font-weight: 600; 
-      font-size: 16px;
-      background: rgba(76, 222, 128, 0.15);
-      backdrop-filter: blur(10px);
-      color: rgba(255, 255, 255, 0.9); 
-      cursor: pointer; 
-      box-shadow: 0 4px 20px rgba(76, 222, 128, 0.2);
+      width: 100%; padding: 13px 0; border: none; border-radius: 8px;
+      font-weight: bold; font-size: 17px;
+      background: linear-gradient(100deg, #4ade80 60%, #22d3ee 100%);
+      color: #000; cursor: pointer; transition: box-shadow .2s, filter .19s;
+      box-shadow: 0 2px 6px #22d3ee33;
+      filter: brightness(1);
       position: relative;
       overflow: hidden;
-      margin-top: 10px;
     }
     .signup-btn::after {
       content: '';
-      position: absolute; 
-      top: 0; 
-      left: -100%; 
-      height: 100%; 
-      width: 100%;
-      background: rgba(76, 222, 128, 0.1);
+      position: absolute; top: 0; left: -100%; height: 100%; width: 250%;
+      background: linear-gradient(120deg, #55fbef77 12%, #e8f95122 85%);
+      opacity: 0.15; pointer-events: none;
+      transition: left 0.33s;
     }
-    .signup-btn:hover { 
-      background: rgba(76, 222, 128, 0.25);
-      box-shadow: 0 6px 30px rgba(76, 222, 128, 0.4);
-      border-color: rgba(76, 222, 128, 0.5);
+    .signup-btn:active {
+      filter: brightness(0.98);
     }
+    .signup-btn:hover { box-shadow: 0 6px 24px #22d3ee77; }
     .signup-btn:hover::after {
       left: 0;
     }
@@ -415,109 +186,6 @@
       text-align: center; min-width: 240px;
       box-shadow: 0 8px 32px 0 rgba(31,38,135,.37);
     }
-    
-    /* OTP Verification Popup */
-    .otp-popup {
-      display: none;
-      position: fixed;
-      z-index: 40;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.7);
-      align-items: center;
-      justify-content: center;
-    }
-    .otp-popup.show {
-      display: flex;
-      animation: fade-in 0.3s;
-    }
-    .otp-content {
-      background: rgba(24, 24, 24, 0.95);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 40px 30px;
-      text-align: center;
-      min-width: 380px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      color: #fff;
-    }
-    .otp-title {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: rgba(255, 255, 255, 0.9);
-    }
-    .otp-subtitle {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.6);
-      margin-bottom: 30px;
-    }
-    .otp-input-container {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-bottom: 30px;
-    }
-    .otp-digit {
-      width: 50px;
-      height: 50px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 8px;
-      text-align: center;
-      font-size: 20px;
-      font-weight: 600;
-      color: #fff;
-      outline: none;
-    }
-    .otp-digit:focus {
-      border-color: rgba(76, 222, 128, 0.5);
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 15px rgba(76, 222, 128, 0.3);
-    }
-    .otp-buttons {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-    }
-    .otp-btn {
-      padding: 12px 24px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 8px;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-    .otp-btn.primary {
-      background: rgba(76, 222, 128, 0.2);
-      border-color: rgba(76, 222, 128, 0.3);
-    }
-    .otp-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .otp-btn.primary:hover {
-      background: rgba(76, 222, 128, 0.3);
-    }
-    .otp-timer {
-      margin-top: 20px;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.6);
-    }
-    .resend-otp {
-      color: rgba(76, 222, 128, 0.8);
-      cursor: pointer;
-      text-decoration: underline;
-    }
-    .resend-otp:hover {
-      color: rgba(76, 222, 128, 1);
-    }
     #popup-ok-btn {
       margin-top: 16px; padding: 8px 22px; border-radius: 7px; border: none;
       background: #4ade80; color: #000;
@@ -528,34 +196,31 @@
     @media (max-width: 450px) {
       .signup-container, form { width: 98vw !important; padding: 14vw 2vw !important;}
     }
+    /* Add to your CSS */
+.cursor-dot {
+  position: fixed;
+  pointer-events: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: linear-gradient(90deg,#4ade80,#22d3ee);
+  opacity: 0.50;
+  transform: scale(1);
+  z-index: 9999;
+  animation: dot-fade 0.7s forwards;
+}
+@keyframes dot-fade {
+  100% {
+    opacity: 0;
+    transform: scale(2.1);
+  }
+}
 
   </style>
-  <!-- EcoSaver Production Backend Integration - Load First -->
-  <script src="ecosaver-frontend-production.js"></script>
 </head>
 <body>
-  <!-- Multiple layered forest images for realistic depth - same as landing.html -->
-  <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=1974&auto=format&fit=crop"
-       alt="Lush green forest" class="hero-bg-image hero-bg-layer-1">
-  <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=1974&auto=format&fit=crop"
-       alt="Forest layer 2" class="hero-bg-image hero-bg-layer-2">
-  <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?q=80&w=1974&auto=format&fit=crop"
-       alt="Forest layer 3" class="hero-bg-image hero-bg-layer-3">
-  
-  <!-- Hero overlay with signup's unique gradient -->
-  <div class="hero-overlay"></div>
-  
-  <!-- Advanced wind particle system - same as landing.html -->
-  <div class="wind-particles">
-    <div class="wind-particle leaf"></div>
-    <div class="wind-particle dust"></div>
-    <div class="wind-particle pollen"></div>
-    <div class="wind-particle leaf"></div>
-    <div class="wind-particle dust"></div>
-    <div class="wind-particle pollen"></div>
-    <div class="wind-particle leaf"></div>
-    <div class="wind-particle dust"></div>
-  </div>
+  <!-- Add this inside your <body> -->
+<div id="cursor-trail-root"></div>
 
   <canvas id="grid-bg"></canvas>
   <!-- Branch SVG at the top -->
@@ -609,403 +274,8 @@
       <button id="popup-ok-btn">OK</button>
     </div>
   </div>
-
-  <!-- OTP Verification Popup -->
-  <div class="otp-popup" id="otp-popup">
-    <div class="otp-content">
-      <div class="otp-title">Email Verification</div>
-      <div class="otp-subtitle" id="otp-subtitle">Enter the 6-digit code sent to your email</div>
-      
-      <div class="otp-input-container">
-        <input type="text" class="otp-digit" maxlength="1" id="otp1" />
-        <input type="text" class="otp-digit" maxlength="1" id="otp2" />
-        <input type="text" class="otp-digit" maxlength="1" id="otp3" />
-        <input type="text" class="otp-digit" maxlength="1" id="otp4" />
-        <input type="text" class="otp-digit" maxlength="1" id="otp5" />
-        <input type="text" class="otp-digit" maxlength="1" id="otp6" />
-      </div>
-      
-      <div class="otp-buttons">
-        <button class="otp-btn" onclick="closeOtpPopup()">Cancel</button>
-        <button class="otp-btn primary" onclick="verifyOtp()">Verify</button>
-      </div>
-      
-      <div class="otp-timer" id="otp-timer">
-        Resend code in: <span id="timer-countdown">60</span>s
-        <br>
-        <span class="resend-otp" id="resend-otp" onclick="resendOtp()" style="display: none;">Resend Code</span>
-      </div>
-    </div>
-  </div>
   <!-- === ANIMATED GRID & ROPES JS, FULLY RESTORED === -->
   <script>
-    // OTP Verification System
-    let currentOtp = '';
-    let otpTimer = null;
-    let otpCountdown = 60;
-    let verificationTarget = ''; // email or mobile
-    let targetValue = '';
-
-    // Email validation
-    function isValidEmail(email) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(email);
-    }
-
-    // Mobile validation  
-    function isValidMobile(mobile) {
-      const mobileRegex = /^[6-9]\d{9}$/;
-      return mobileRegex.test(mobile);
-    }
-
-    // Generate random 6-digit OTP
-    function generateOtp() {
-      return Math.floor(100000 + Math.random() * 900000).toString();
-    }
-
-    // Show OTP popup
-    async function showOtpPopup(type, value) {
-      verificationTarget = type;
-      targetValue = value;
-      
-      try {
-        // Use production backend to generate and send OTP
-        const response = await window.EcoAPI.auth.generateOtp({
-          type: type,
-          value: value
-        });
-        
-        if (response.success) {
-          currentOtp = response.otp; // In production, this won't be returned for security
-          
-          const otpPopup = document.getElementById('otp-popup');
-          const subtitle = document.getElementById('otp-subtitle');
-          const title = document.querySelector('.otp-title');
-          
-          if (type === 'email') {
-            title.textContent = 'Email Verification';
-            subtitle.innerHTML = `Enter the 6-digit code sent to ${value}`;
-          } else {
-            title.textContent = 'Mobile Verification';
-            subtitle.innerHTML = `Enter the 6-digit code sent to +91-${value}`;
-          }
-          
-          // Clear OTP inputs
-          for (let i = 1; i <= 6; i++) {
-            document.getElementById(`otp${i}`).value = '';
-          }
-          
-          otpPopup.classList.add('show');
-          document.getElementById('otp1').focus();
-          
-          startOtpTimer();
-          
-          showPopup(`OTP sent to ${type === 'email' ? value : '+91-' + value}`);
-        } else {
-          showPopup(response.message || 'Failed to send OTP. Please try again.');
-        }
-      } catch (error) {
-        console.error('OTP generation error:', error);
-        showPopup('Network error. Please check your connection and try again.');
-        
-        // Fallback to demo mode for testing
-        console.log('Falling back to demo OTP system');
-        currentOtp = generateOtp();
-        console.log(`Demo OTP: ${currentOtp}`);
-        
-        const otpPopup = document.getElementById('otp-popup');
-        const subtitle = document.getElementById('otp-subtitle');
-        const title = document.querySelector('.otp-title');
-        
-        if (type === 'email') {
-          title.textContent = 'Email Verification (Demo Mode)';
-          subtitle.innerHTML = `Enter the 6-digit code sent to ${value}<br><small style="color: #4ade80; font-weight: bold; font-size: 12px; margin-top: 8px; display: block;">Demo OTP: ${currentOtp}</small>`;
-        } else {
-          title.textContent = 'Mobile Verification (Demo Mode)';
-          subtitle.innerHTML = `Enter the 6-digit code sent to +91-${value}<br><small style="color: #4ade80; font-weight: bold; font-size: 12px; margin-top: 8px; display: block;">Demo OTP: ${currentOtp}</small>`;
-        }
-        
-        // Clear OTP inputs
-        for (let i = 1; i <= 6; i++) {
-          document.getElementById(`otp${i}`).value = '';
-        }
-        
-        otpPopup.classList.add('show');
-        document.getElementById('otp1').focus();
-        
-        startOtpTimer();
-        
-        showPopup(`Demo OTP generated: ${currentOtp}`);
-      }
-    }
-      
-      // Clear OTP inputs
-      for (let i = 1; i <= 6; i++) {
-        document.getElementById(`otp${i}`).value = '';
-      }
-      
-      otpPopup.classList.add('show');
-      document.getElementById('otp1').focus();
-      
-      startOtpTimer();
-      
-      // Simulate sending OTP (in real app, make API call here)
-      if (type === 'email') {
-        console.log(`Sending OTP ${currentOtp} to email: ${value}`);
-      } else {
-        console.log(`Sending OTP ${currentOtp} to mobile: ${value}`);
-      }
-    }
-
-    // Close OTP popup
-    function closeOtpPopup() {
-      document.getElementById('otp-popup').classList.remove('show');
-      clearInterval(otpTimer);
-    }
-
-    // Start OTP timer
-    function startOtpTimer() {
-      otpCountdown = 60;
-      const timerElement = document.getElementById('timer-countdown');
-      const resendElement = document.getElementById('resend-otp');
-      
-      resendElement.style.display = 'none';
-      
-      otpTimer = setInterval(() => {
-        timerElement.textContent = otpCountdown;
-        otpCountdown--;
-        
-        if (otpCountdown < 0) {
-          clearInterval(otpTimer);
-          resendElement.style.display = 'inline';
-          timerElement.parentElement.innerHTML = 'Didn\'t receive the code?<br><span class="resend-otp" onclick="resendOtp()">Resend Code</span>';
-        }
-      }, 1000);
-    }
-
-    // Resend OTP
-    async function resendOtp() {
-      try {
-        // Use production backend to resend OTP
-        const response = await window.EcoAPI.auth.generateOtp({
-          type: verificationTarget,
-          value: targetValue
-        });
-        
-        if (response.success) {
-          currentOtp = response.otp; // In production, this won't be returned
-          startOtpTimer();
-          showPopup('New OTP sent successfully!');
-        } else {
-          showPopup(response.message || 'Failed to resend OTP. Please try again.');
-        }
-      } catch (error) {
-        console.error('OTP resend error:', error);
-        
-        // Fallback to demo mode
-        currentOtp = generateOtp();
-        console.log(`Resent OTP: ${currentOtp}`);
-        
-        // Update the displayed OTP in subtitle for demo mode
-        const subtitle = document.getElementById('otp-subtitle');
-        const currentText = subtitle.innerHTML.split('<br>')[0];
-        subtitle.innerHTML = `${currentText}<br><small style="color: #4ade80; font-weight: bold; font-size: 12px; margin-top: 8px; display: block;">Demo OTP: ${currentOtp}</small>`;
-        
-        startOtpTimer();
-        showPopup('New OTP generated successfully!');
-      }
-    }
-
-    // Verify OTP
-    async function verifyOtp() {
-      let enteredOtp = '';
-      for (let i = 1; i <= 6; i++) {
-        enteredOtp += document.getElementById(`otp${i}`).value;
-      }
-      
-      if (enteredOtp.length !== 6) {
-        showPopup('Please enter complete 6-digit OTP');
-        return;
-      }
-      
-      try {
-        // Use production backend to verify OTP
-        const response = await window.EcoAPI.auth.verifyOtp({
-          type: verificationTarget,
-          value: targetValue,
-          otp: enteredOtp
-        });
-        
-        if (response.success) {
-          closeOtpPopup();
-          showPopup(`${verificationTarget === 'email' ? 'Email' : 'Mobile'} verified successfully!`);
-          
-          // Complete the signup process after successful OTP verification
-          setTimeout(() => {
-            completeSignup();
-          }, 1000);
-        } else {
-          showPopup(response.message || 'Invalid OTP. Please try again.');
-          
-          // Clear OTP inputs
-          for (let i = 1; i <= 6; i++) {
-            document.getElementById(`otp${i}`).value = '';
-          }
-          document.getElementById('otp1').focus();
-        }
-      } catch (error) {
-        console.error('OTP verification error:', error);
-        
-        // Fallback to demo verification for testing
-        if (enteredOtp === currentOtp) {
-          closeOtpPopup();
-          showPopup(`${verificationTarget === 'email' ? 'Email' : 'Mobile'} verified successfully!`);
-          
-          setTimeout(() => {
-            completeSignup();
-          }, 1000);
-        } else {
-          showPopup('Invalid OTP. Please try again.');
-          
-          // Clear OTP inputs
-          for (let i = 1; i <= 6; i++) {
-            document.getElementById(`otp${i}`).value = '';
-          }
-          document.getElementById('otp1').focus();
-        }
-      }
-    }
-
-    // Complete signup after OTP verification
-    async function completeSignup() {
-      const formData = window.signupFormData;
-      
-      if (!formData) {
-        showPopup('Signup data not found. Please try again.');
-        return;
-      }
-      
-      try {
-        // Show loading state
-        showPopup('Creating your account...');
-        
-        // Use production backend API through EcoAPI
-        const response = await window.EcoAPI.auth.register({
-          name: formData.name,
-          email: formData.email,
-          mobile: formData.mobile,
-          password: formData.password,
-          signupMode: formData.signupMode
-        });
-        
-        if (response.success) {
-          // Store authentication data
-          window.AuthManager.setAuthData(response.data);
-          
-          // Show success message and redirect to dashboard
-          showPopup('Account created successfully! Welcome to EcoSaver! 🌱\n\nRedirecting to your dashboard...', true);
-          
-          // Reset form
-          const signupForm = document.getElementById('signup-form');
-          if (signupForm) {
-            signupForm.reset();
-            document.querySelectorAll('.valid').forEach(e=>e.classList.remove('valid'));
-            const strengthBar = document.getElementById('strength-bar');
-            const strengthText = document.getElementById('strength-text');
-            if (strengthBar) strengthBar.style.width = "0%";
-            if (strengthText) strengthText.textContent = "";
-          }
-        } else {
-          showPopup(response.message || 'Registration failed. Please try again.');
-        }
-      } catch (error) {
-        console.error('Registration error:', error);
-        showPopup('Network error. Please check your connection and try again.');
-      }
-    }
-
-    // OTP input handling
-    document.addEventListener('DOMContentLoaded', function() {
-      // Auto-focus next OTP input
-      for (let i = 1; i <= 6; i++) {
-        const input = document.getElementById(`otp${i}`);
-        input.addEventListener('input', function(e) {
-          if (e.target.value.length === 1 && i < 6) {
-            document.getElementById(`otp${i + 1}`).focus();
-          }
-        });
-        
-        input.addEventListener('keydown', function(e) {
-          if (e.key === 'Backspace' && e.target.value === '' && i > 1) {
-            document.getElementById(`otp${i - 1}`).focus();
-          }
-        });
-      }
-      
-      // Intercept form submission for OTP verification
-      const signupForm = document.getElementById('signup-form');
-      if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
-          e.preventDefault(); // Prevent default form submission
-          
-          const nameInput = document.getElementById('name');
-          const emailInput = document.getElementById('email');
-          const mobileInput = document.getElementById('mobile');
-          const passwordInput = document.getElementById('password');
-          
-          // Validate all required fields
-          const name = nameInput ? nameInput.value.trim() : '';
-          const email = emailInput ? emailInput.value.trim() : '';
-          const mobile = mobileInput ? mobileInput.value.trim() : '';
-          const password = passwordInput ? passwordInput.value : '';
-          
-          // Check name
-          if (!name) {
-            showPopup('Please enter your name');
-            return;
-          }
-          
-          // Check password
-          if (!password || password.length < 6) {
-            showPopup('Password should be at least 6 characters');
-            return;
-          }
-          
-          // Determine verification method based on current signup mode
-          let verificationType = '';
-          let verificationValue = '';
-          
-          if (signupMode === 'email') {
-            if (!email || !isValidEmail(email)) {
-              showPopup('Please enter a valid email address');
-              return;
-            }
-            verificationType = 'email';
-            verificationValue = email;
-          } else {
-            if (!mobile || !isValidMobile(mobile)) {
-              showPopup('Please enter a valid 10-digit mobile number');
-              return;
-            }
-            verificationType = 'mobile';
-            verificationValue = mobile;
-          }
-          
-          // Store form data for later submission after OTP verification
-          window.signupFormData = {
-            name: name,
-            email: email,
-            mobile: mobile,
-            password: password,
-            signupMode: signupMode
-          };
-          
-          // Show OTP popup
-          showOtpPopup(verificationType, verificationValue);
-        });
-      }
-    });
-
     // Animated Grid Background
     const canvas = document.getElementById("grid-bg");
     const ctx = canvas.getContext("2d");
@@ -1152,7 +422,7 @@
       pwdInput.type = "password";
       pwdToggle.textContent = "👁";
     };
-    mobileOpt.onclick = () => {222222
+    mobileOpt.onclick = () => {
       signupMode = 'mobile';
       mobileOpt.classList.add('active');
       emailOpt.classList.remove('active');
@@ -1224,9 +494,6 @@
         this.classList.remove('valid'); this.classList.remove('invalid');
       }
     });
-  
-  /*
-  // ORIGINAL FORM HANDLER - COMMENTED OUT FOR OTP INTEGRATION
   signupForm.addEventListener('submit', function(e) {
   e.preventDefault();
   const name = document.getElementById('name').value.trim();
@@ -1283,7 +550,6 @@ localStorage.setItem("ecoUser", JSON.stringify(ecoUser));
   document.getElementById('strength-bar').style.width = "0%";
   document.getElementById('strength-text').textContent = "";
 });
-*/
 
 
 function showPopup(message, redirect = false) {
@@ -1291,22 +557,25 @@ function showPopup(message, redirect = false) {
   const popupMessage = document.getElementById('popup-message');
   popupMessage.textContent = message;
   popup.classList.add('show');
-  
   document.getElementById('popup-ok-btn').onclick = () => {
     popup.classList.remove('show');
     if (redirect) {
       window.location.href = "dashboard.html";
     }
   };
-  
-  // Auto redirect after 2 seconds for successful signup
-  if (redirect) {
-    setTimeout(() => {
-      popup.classList.remove('show');
-      window.location.href = "dashboard.html";
-    }, 2000);
-  }
 }
+
+    
+    // Add near the end of your JavaScript
+const trailRoot = document.getElementById('cursor-trail-root');
+document.addEventListener('mousemove', function(e) {
+  const dot = document.createElement('div');
+  dot.className = 'cursor-dot';
+  dot.style.left = `${e.clientX}px`;
+  dot.style.top = `${e.clientY}px`;
+  trailRoot.appendChild(dot);
+  setTimeout(() => dot.remove(), 650);
+});
 
 
   </script>
