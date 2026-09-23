@@ -1,39 +1,100 @@
 require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const twilio = require('twilio');
+
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-const otpStore = {}; // In-memory for demo
+const client = twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
 
+const verifyService = client.verify.v2.services(
+  process.env.TWILIO_VERIFY_SERVICE_SID
+);
+
+// Send OTP
 app.post('/send-otp', async (req, res) => {
-  const { mobile } = req.body;
-  if (!mobile) return res.status(400).json({ error: 'Mobile required' });
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  otpStore[mobile] = otp;
   try {
-    await client.messages.create({
-      body: `Your OTP is: ${otp}`,
-      from: process.env.TWILIO_PHONE_NUMBER,
-      to: mobile
+    const { mobile } = req.body;
+
+    if (!mobile) {
+      return res.status(400).json({
+        success: false,
+        message: 'Mobile number is required'
+      });
+    }
+
+    const verification = await verifyService.verifications.create({
+      to: mobile,
+      channel: 'sms'
     });
-    res.json({ success: true, message: 'OTP sent' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+
+    res.json({
+      success: true,
+      message: 'OTP sent successfully',
+      status: verification.status
+    });
+
+  } catch (error) {
+    console.error('Send OTP error:', error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Failed to send OTP'
+    });
   }
 });
 
-app.post('/verify-otp', (req, res) => {
-  const { mobile, otp } = req.body;
-  if (otpStore[mobile] === otp) {
-    delete otpStore[mobile];
-    res.json({ success: true });
-  } else {
-    res.status(400).json({ success: false, message: 'Invalid OTP' });
+
+// Verify OTP
+app.post('/verify-otp', async (req, res) => {
+  try {
+    const { mobile, otp } = req.body;
+
+    if (!mobile || !otp) {
+      return res.status(400).json({
+        success: false,
+        message: 'Mobile number and OTP are required'
+      });
+    }
+
+    const verificationCheck =
+      await verifyService.verificationChecks.create({
+        to: mobile,
+        code: otp
+      });
+
+    if (verificationCheck.status === 'approved') {
+      return res.json({
+        success: true,
+        message: 'OTP verified successfully'
+      });
+    }
+
+    res.status(400).json({
+      success: false,
+      message: 'Invalid OTP'
+    });
+
+  } catch (error) {
+    console.error('Verify OTP error:', error);
+
+    res.status(400).json({
+      success: false,
+      message: 'OTP verification failed'
+    });
   }
 });
 
-app.listen(3000, () => console.log('OTP server running on port 3000'));
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log(
+    `OTP server running on port ${process.env.PORT || 3000}`
+  );
+});
