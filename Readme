@@ -1,0 +1,112 @@
+# 🌱 ECO-SAVER
+
+ECO-SAVER is a web application built to help users track and reduce their environmental impact. It combines a carbon footprint tracker, eco-habit tracking, community action tools, and an educational library on sustainability topics into a single platform.
+
+## ✨ Features
+
+- **Carbon Footprint Tracker** – log and monitor your daily/monthly carbon footprint (`carbon-footprint-tracker.html`)
+- **Eco Habit Tracking** – track sustainable habits over time (`eco-habit-tracking.html`)
+- **Dashboard** – a central overview of your eco stats (`dashboard.html`)
+- **Community Action** – discover and take part in local environmental initiatives (`community-action.html`)
+- **Local Ecological Issues** – view region-specific ecological concerns (`local-ecological-issues.html`)
+- **Educational Library & Awareness Hub** – articles and resources on biodiversity, freshwater, and renewable energy (`educational-library.html`, `ecoawarenesshub.html`, `article-*.html`)
+- **Interactive Challenges** – gamified eco-challenges to encourage sustainable behavior (`interactive-challenges.html`)
+- **Authentication** – login/signup flow with OTP-based verification (`login.html`, `signup.html`, `login.js`, `login.css`)
+- **AI Image Support** – AI-powered image features via a dedicated backend service
+
+## 📁 Project Structure
+
+```
+ECO-SAVER/
+├── ai-image-backend/              # Backend service handling AI image generation/processing
+├── otp-backend/                   # Backend service handling OTP generation & verification for auth
+├── landing.html                   # Landing page (entry point)
+├── login.html / signup.html       # Authentication pages
+├── login.js / login.css / save.js # Auth & shared client-side scripts
+├── dashboard.html                 # Main user dashboard
+├── carbon-footprint-tracker.html  # Carbon footprint tracking tool
+├── eco-habit-tracking.html        # Habit tracking tool
+├── ecotracker.html                # Eco tracking overview
+├── community-action.html          # Community initiatives
+├── local-ecological-issues.html   # Local ecological issue reports
+├── interactive-challenges.html    # Gamified challenges
+├── educational-library.html       # Learning resources
+├── ecoawarenesshub.html           # Awareness hub
+├── article-biodiversity.html      # Article: biodiversity
+├── article-freshwater.html        # Article: freshwater ecosystems
+├── article-renewable.html         # Article: renewable energy
+├── EcoSaver_SIH_Presentation.*    # Project presentation (SIH)
+└── avtar1.png ... avtar5.png      # Avatar/profile images
+```
+
+> **Note:** The root currently also contains a few files with generic names (`abc.html`, `new.html`, `card.html`) left over from development. These are being tracked separately for cleanup — see open issues.
+
+## 🚀 Getting Started
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v16 or higher recommended)
+- npm (comes with Node.js)
+- A modern web browser
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/Dipanshu8384/ECO-SAVER.git
+cd ECO-SAVER
+```
+
+### 2. Run the frontend
+The frontend is plain HTML/CSS/JS. You can open `landing.html` directly in your browser, or serve the folder with a simple static server for correct relative paths and API calls:
+```bash
+npx serve .
+# or
+python -m http.server 5500
+```
+
+### 3. Set up the OTP backend
+```bash
+cd otp-backend
+npm install
+```
+Create a `.env` file in `otp-backend/` with the required variables (e.g. email/SMS provider credentials, port). Example:
+```
+PORT=5001
+EMAIL_USER=your_email@example.com
+EMAIL_PASS=your_app_password
+```
+Then start the server:
+```bash
+npm start
+```
+
+### 4. Set up the AI image backend
+```bash
+cd ai-image-backend
+npm install
+```
+Create a `.env` file in `ai-image-backend/` with the required API keys (e.g. your image-generation provider key, port). Example:
+```
+PORT=5002
+AI_API_KEY=your_api_key_here
+```
+Then start the server:
+```bash
+npm start
+```
+
+> ⚠️ Exact environment variable names may differ — please check each backend folder's source code (`index.js`/`server.js`) for the specific variables it expects, and update this section if they differ.
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m "Add some feature"`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
+
+Please open an issue first for major changes so we can discuss what you'd like to change.
+
+## 📄 License
+
+No license has been specified for this project yet. Please check with the repository owner before reusing this code.
