@@ -3,33 +3,1047 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Sign Up - EcoSaver</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Background animation */
+        .eco-bg {
+            background:
+                radial-gradient(circle at 10% 20%, rgba(32,196,182,0.20), transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(62,195,218,0.20), transparent 30%),
+                linear-gradient(135deg, #f4fff8 0%, #e8fbf5 45%, #e8f8ff 100%);
+        }
+
+        .signup-card {
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(32, 196, 182, 0.15);
+            box-shadow:
+                0 25px 70px rgba(24, 62, 58, 0.12),
+                0 8px 30px rgba(32, 196, 182, 0.08);
+        }
+
+        .input-wrapper {
+            transition: all 0.25s ease;
+        }
+
+        .input-wrapper:focus-within {
+            transform: translateY(-1px);
+        }
+
+        .form-input {
+            transition: all 0.25s ease;
+        }
+
+        .form-input:focus {
+            border-color: #20c4b6;
+            box-shadow: 0 0 0 4px rgba(32, 196, 182, 0.12);
+            outline: none;
+        }
+
+        .signup-btn {
+            background: linear-gradient(135deg, #20c4b6, #19b6ab);
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 20px rgba(32, 196, 182, 0.25);
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(32, 196, 182, 0.35);
+        }
+
+        .signup-btn:active {
+            transform: translateY(0);
+        }
+
+        .password-bar {
+            height: 5px;
+            border-radius: 999px;
+            transition: all 0.3s ease;
+        }
+
+        .requirement {
+            transition: all 0.2s ease;
+        }
+
+        .requirement.valid {
+            color: #20a890;
+        }
+
+        .requirement.invalid {
+            color: #94a3b8;
+        }
+
+        .leaf {
+            position: absolute;
+            opacity: 0.08;
+            pointer-events: none;
+        }
+
+        .floating {
+            animation: floating 5s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .toast {
+            transform: translateY(-20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-blue-100 p-4">
-    <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
-        <h2 class="text-2xl font-bold text-center text-[#20c4b6] mb-6">Create Your Account</h2>
-        <form>
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" id="email" class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring" placeholder="Enter your email" required>
+
+<body class="min-h-screen eco-bg flex items-center justify-center p-4 relative overflow-x-hidden">
+
+    <!-- Decorative leaves -->
+    <div class="leaf text-[130px] top-5 left-5 floating">🌿</div>
+    <div class="leaf text-[120px] bottom-5 right-5 floating">🍃</div>
+    <div class="leaf text-[90px] top-1/2 right-10">🌱</div>
+
+    <!-- Toast -->
+    <div
+        id="toast"
+        class="toast fixed top-5 right-5 z-50 bg-white rounded-xl shadow-xl px-5 py-4 border border-gray-100 max-w-sm"
+    >
+        <div class="flex items-start gap-3">
+            <div id="toastIcon" class="text-xl">ℹ️</div>
+
+            <div>
+                <p id="toastTitle" class="font-semibold text-gray-800">
+                    Notice
+                </p>
+
+                <p id="toastMessage" class="text-sm text-gray-500 mt-1">
+                    Something happened.
+                </p>
             </div>
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" id="password" class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring" placeholder="Create a password" required>
-            </div>
-            <div class="mb-4">
-                <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-                <input type="password" id="confirmPassword" class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring" placeholder="Confirm your password" required>
-            </div>
-            <button type="submit" class="w-full py-2 px-4 bg-[#20c4b6] text-white rounded-lg font-semibold hover:bg-[#158a8e] transition">Sign Up</button>
-        </form>
-        <div class="mt-6 text-center text-sm text-gray-600">
-            Already have an account? <a href="login.html" class="text-[#20c4b6] hover:underline">Login</a>
-        </div>
-        <div class="mt-4 text-center">
-            <a href="login.html" class="inline-block px-4 py-2 bg-gray-200 text-[#20c4b6] rounded hover:bg-[#e1f7ef] font-semibold">&larr; Back to Dashboard</a>
         </div>
     </div>
+
+
+    <!-- Main Card -->
+    <main class="w-full max-w-md relative z-10">
+
+        <div class="signup-card rounded-3xl p-6 sm:p-8">
+
+            <!-- Logo -->
+            <div class="flex justify-center mb-5">
+
+                <div
+                    class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl"
+                    style="background: rgba(32,196,182,0.12);"
+                >
+                    🌱
+                </div>
+
+            </div>
+
+
+            <!-- Heading -->
+            <div class="text-center mb-7">
+
+                <h1
+                    class="text-3xl font-bold"
+                    style="color:#183e3a;"
+                >
+                    Create Your Account
+                </h1>
+
+                <p class="text-gray-500 mt-2 text-sm">
+                    Start your journey toward a greener lifestyle 🌍
+                </p>
+
+            </div>
+
+
+            <!-- Form -->
+            <form id="signupForm" novalidate>
+
+                <!-- Email -->
+                <div class="mb-5">
+
+                    <label
+                        for="email"
+                        class="block text-sm font-semibold text-gray-700 mb-2"
+                    >
+                        Email Address
+                    </label>
+
+                    <div class="input-wrapper relative">
+
+                        <span
+                            class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                        >
+                            ✉️
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            class="form-input w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl bg-white text-gray-800 placeholder-gray-400"
+                            required
+                        >
+
+                    </div>
+
+                    <p
+                        id="emailError"
+                        class="hidden text-red-500 text-xs mt-2"
+                    >
+                        Please enter a valid email address.
+                    </p>
+
+                </div>
+
+
+                <!-- Mobile -->
+                <div class="mb-5">
+
+                    <label
+                        for="mobile"
+                        class="block text-sm font-semibold text-gray-700 mb-2"
+                    >
+                        Mobile Number
+                    </label>
+
+                    <div class="input-wrapper relative">
+
+                        <span
+                            class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                        >
+                            📱
+                        </span>
+
+                        <input
+                            type="tel"
+                            id="mobile"
+                            placeholder="+91 9876543210"
+                            autocomplete="tel"
+                            class="form-input w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl bg-white text-gray-800 placeholder-gray-400"
+                            required
+                        >
+
+                    </div>
+
+                    <p class="text-xs text-gray-400 mt-1.5">
+                        We'll use this number for account verification.
+                    </p>
+
+                    <p
+                        id="mobileError"
+                        class="hidden text-red-500 text-xs mt-2"
+                    >
+                        Please enter a valid mobile number.
+                    </p>
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="mb-4">
+
+                    <label
+                        for="password"
+                        class="block text-sm font-semibold text-gray-700 mb-2"
+                    >
+                        Password
+                    </label>
+
+                    <div class="input-wrapper relative">
+
+                        <span
+                            class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                        >
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Create a strong password"
+                            autocomplete="new-password"
+                            class="form-input w-full pl-11 pr-12 py-3 border border-gray-200 rounded-xl bg-white text-gray-800 placeholder-gray-400"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#20c4b6]"
+                        >
+                            👁️
+                        </button>
+
+                    </div>
+
+
+                    <!-- Password strength -->
+                    <div class="mt-3">
+
+                        <div class="flex gap-1">
+
+                            <div id="bar1" class="password-bar flex-1 bg-gray-200"></div>
+                            <div id="bar2" class="password-bar flex-1 bg-gray-200"></div>
+                            <div id="bar3" class="password-bar flex-1 bg-gray-200"></div>
+                            <div id="bar4" class="password-bar flex-1 bg-gray-200"></div>
+
+                        </div>
+
+                        <p
+                            id="strengthText"
+                            class="text-xs text-gray-400 mt-1.5"
+                        >
+                            Password strength
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password Requirements -->
+                <div class="mb-5 p-4 bg-gray-50 rounded-xl">
+
+                    <p class="text-xs font-semibold text-gray-600 mb-2">
+                        Password must contain:
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+
+                        <div id="reqLength" class="requirement invalid">
+                            ○ 8+ characters
+                        </div>
+
+                        <div id="reqUpper" class="requirement invalid">
+                            ○ Uppercase letter
+                        </div>
+
+                        <div id="reqLower" class="requirement invalid">
+                            ○ Lowercase letter
+                        </div>
+
+                        <div id="reqNumber" class="requirement invalid">
+                            ○ Number
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Confirm Password -->
+                <div class="mb-5">
+
+                    <label
+                        for="confirmPassword"
+                        class="block text-sm font-semibold text-gray-700 mb-2"
+                    >
+                        Confirm Password
+                    </label>
+
+                    <div class="input-wrapper relative">
+
+                        <span
+                            class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                        >
+                            🔐
+                        </span>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirm your password"
+                            autocomplete="new-password"
+                            class="form-input w-full pl-11 pr-12 py-3 border border-gray-200 rounded-xl bg-white text-gray-800 placeholder-gray-400"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="toggleConfirmPassword"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#20c4b6]"
+                        >
+                            👁️
+                        </button>
+
+                    </div>
+
+                    <p
+                        id="passwordMatch"
+                        class="hidden text-xs mt-2"
+                    ></p>
+
+                </div>
+
+
+                <!-- Terms -->
+                <div class="flex items-start gap-3 mb-6">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        class="mt-1 w-4 h-4 accent-[#20c4b6] cursor-pointer"
+                    >
+
+                    <label
+                        for="terms"
+                        class="text-sm text-gray-500 cursor-pointer"
+                    >
+                        I agree to the
+                        <a
+                            href="#"
+                            class="text-[#20c4b6] font-semibold hover:underline"
+                        >
+                            Terms & Conditions
+                        </a>
+                        and
+                        <a
+                            href="#"
+                            class="text-[#20c4b6] font-semibold hover:underline"
+                        >
+                            Privacy Policy
+                        </a>.
+                    </label>
+
+                </div>
+
+
+                <!-- Submit -->
+                <button
+                    type="submit"
+                    id="signupBtn"
+                    class="signup-btn w-full py-3.5 rounded-xl text-white font-semibold flex items-center justify-center gap-2"
+                >
+
+                    <span id="btnText">
+                        Create Account
+                    </span>
+
+                    <span
+                        id="btnSpinner"
+                        class="spinner hidden"
+                    ></span>
+
+                </button>
+
+            </form>
+
+
+            <!-- Login -->
+            <div class="mt-7 text-center">
+
+                <p class="text-sm text-gray-500">
+
+                    Already have an account?
+
+                    <a
+                        href="login.html"
+                        class="font-semibold text-[#20c4b6] hover:underline"
+                    >
+                        Login
+                    </a>
+
+                </p>
+
+            </div>
+
+
+            <!-- Divider -->
+            <div class="flex items-center gap-3 my-6">
+
+                <div class="flex-1 h-px bg-gray-200"></div>
+
+                <span class="text-xs text-gray-400">
+                    ECO-SAVER
+                </span>
+
+                <div class="flex-1 h-px bg-gray-200"></div>
+
+            </div>
+
+
+            <!-- Back -->
+            <a
+                href="index.html"
+                class="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-gray-200 text-[#20c4b6] font-semibold hover:bg-[#e1f7ef] transition"
+            >
+                ← Back to Dashboard
+            </a>
+
+
+            <!-- Security -->
+            <div class="flex justify-center items-center gap-2 mt-5 text-xs text-gray-400">
+
+                <span>🔒</span>
+
+                <span>
+                    Your information is securely protected
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Footer -->
+        <p class="text-center text-xs text-gray-400 mt-5">
+            © 2026 EcoSaver. Building a greener future together 🌱
+        </p>
+
+    </main>
+
+
+    <script>
+
+        const form = document.getElementById("signupForm");
+
+        const email = document.getElementById("email");
+        const mobile = document.getElementById("mobile");
+
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirmPassword");
+
+        const terms = document.getElementById("terms");
+
+        const signupBtn = document.getElementById("signupBtn");
+        const btnText = document.getElementById("btnText");
+        const btnSpinner = document.getElementById("btnSpinner");
+
+
+        // ------------------------------
+        // Show / Hide Password
+        // ------------------------------
+
+        function setupPasswordToggle(input, button) {
+
+            button.addEventListener("click", () => {
+
+                if (input.type === "password") {
+
+                    input.type = "text";
+                    button.textContent = "🙈";
+
+                } else {
+
+                    input.type = "password";
+                    button.textContent = "👁️";
+
+                }
+
+            });
+
+        }
+
+
+        setupPasswordToggle(
+            password,
+            document.getElementById("togglePassword")
+        );
+
+        setupPasswordToggle(
+            confirmPassword,
+            document.getElementById("toggleConfirmPassword")
+        );
+
+
+        // ------------------------------
+        // Password Strength
+        // ------------------------------
+
+        password.addEventListener("input", () => {
+
+            const value = password.value;
+
+            const checks = {
+
+                length: value.length >= 8,
+
+                upper: /[A-Z]/.test(value),
+
+                lower: /[a-z]/.test(value),
+
+                number: /[0-9]/.test(value)
+
+            };
+
+
+            updateRequirement(
+                "reqLength",
+                checks.length,
+                "8+ characters"
+            );
+
+            updateRequirement(
+                "reqUpper",
+                checks.upper,
+                "Uppercase letter"
+            );
+
+            updateRequirement(
+                "reqLower",
+                checks.lower,
+                "Lowercase letter"
+            );
+
+            updateRequirement(
+                "reqNumber",
+                checks.number,
+                "Number"
+            );
+
+
+            const score = Object.values(checks)
+                .filter(Boolean).length;
+
+
+            const bars = [
+                document.getElementById("bar1"),
+                document.getElementById("bar2"),
+                document.getElementById("bar3"),
+                document.getElementById("bar4")
+            ];
+
+
+            bars.forEach(bar => {
+                bar.className = "password-bar flex-1 bg-gray-200";
+            });
+
+
+            const strengthText =
+                document.getElementById("strengthText");
+
+
+            if (!value) {
+
+                strengthText.textContent =
+                    "Password strength";
+
+                strengthText.className =
+                    "text-xs text-gray-400 mt-1.5";
+
+                return;
+
+            }
+
+
+            if (score <= 1) {
+
+                bars[0].classList.remove("bg-gray-200");
+                bars[0].style.background = "#ef4444";
+
+                strengthText.textContent = "Weak password";
+                strengthText.style.color = "#ef4444";
+
+            }
+
+            else if (score === 2) {
+
+                bars[0].classList.remove("bg-gray-200");
+                bars[1].classList.remove("bg-gray-200");
+
+                bars[0].style.background = "#f59e0b";
+                bars[1].style.background = "#f59e0b";
+
+                strengthText.textContent = "Fair password";
+                strengthText.style.color = "#f59e0b";
+
+            }
+
+            else if (score === 3) {
+
+                bars[0].classList.remove("bg-gray-200");
+                bars[1].classList.remove("bg-gray-200");
+                bars[2].classList.remove("bg-gray-200");
+
+                bars[0].style.background = "#20c4b6";
+                bars[1].style.background = "#20c4b6";
+                bars[2].style.background = "#20c4b6";
+
+                strengthText.textContent = "Good password";
+                strengthText.style.color = "#20c4b6";
+
+            }
+
+            else {
+
+                bars.forEach(bar => {
+                    bar.classList.remove("bg-gray-200");
+                    bar.style.background = "#20c4b6";
+                });
+
+                strengthText.textContent = "Strong password";
+                strengthText.style.color = "#20a890";
+
+            }
+
+        });
+
+
+        function updateRequirement(id, valid, text) {
+
+            const element = document.getElementById(id);
+
+            if (valid) {
+
+                element.className =
+                    "requirement valid";
+
+                element.textContent =
+                    "✓ " + text;
+
+            } else {
+
+                element.className =
+                    "requirement invalid";
+
+                element.textContent =
+                    "○ " + text;
+
+            }
+
+        }
+
+
+        // ------------------------------
+        // Password Match
+        // ------------------------------
+
+        confirmPassword.addEventListener("input", checkPasswordMatch);
+
+        password.addEventListener("input", checkPasswordMatch);
+
+
+        function checkPasswordMatch() {
+
+            const message =
+                document.getElementById("passwordMatch");
+
+
+            if (!confirmPassword.value) {
+
+                message.classList.add("hidden");
+                return;
+
+            }
+
+
+            message.classList.remove("hidden");
+
+
+            if (password.value === confirmPassword.value) {
+
+                message.textContent =
+                    "✓ Passwords match";
+
+                message.style.color = "#20a890";
+
+            } else {
+
+                message.textContent =
+                    "✕ Passwords do not match";
+
+                message.style.color = "#ef4444";
+
+            }
+
+        }
+
+
+        // ------------------------------
+        // Form Validation
+        // ------------------------------
+
+        function validateEmail(value) {
+
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+        }
+
+
+        function validateMobile(value) {
+
+            const digits =
+                value.replace(/\D/g, "");
+
+            return digits.length >= 10 &&
+                   digits.length <= 15;
+
+        }
+
+
+        function validatePassword(value) {
+
+            return value.length >= 8 &&
+                   /[A-Z]/.test(value) &&
+                   /[a-z]/.test(value) &&
+                   /[0-9]/.test(value);
+
+        }
+
+
+        // ------------------------------
+        // Toast
+        // ------------------------------
+
+        let toastTimer;
+
+
+        function showToast(
+            title,
+            message,
+            icon = "ℹ️"
+        ) {
+
+            const toast =
+                document.getElementById("toast");
+
+            document.getElementById("toastTitle")
+                .textContent = title;
+
+            document.getElementById("toastMessage")
+                .textContent = message;
+
+            document.getElementById("toastIcon")
+                .textContent = icon;
+
+
+            toast.classList.add("show");
+
+
+            clearTimeout(toastTimer);
+
+
+            toastTimer = setTimeout(() => {
+
+                toast.classList.remove("show");
+
+            }, 4000);
+
+        }
+
+
+        // ------------------------------
+        // Submit
+        // ------------------------------
+
+        form.addEventListener("submit", async (event) => {
+
+            event.preventDefault();
+
+
+            const emailValue =
+                email.value.trim();
+
+            const mobileValue =
+                mobile.value.trim();
+
+            const passwordValue =
+                password.value;
+
+            const confirmValue =
+                confirmPassword.value;
+
+
+            // Email
+            if (!validateEmail(emailValue)) {
+
+                document
+                    .getElementById("emailError")
+                    .classList.remove("hidden");
+
+                email.focus();
+
+                return;
+
+            } else {
+
+                document
+                    .getElementById("emailError")
+                    .classList.add("hidden");
+
+            }
+
+
+            // Mobile
+            if (!validateMobile(mobileValue)) {
+
+                document
+                    .getElementById("mobileError")
+                    .classList.remove("hidden");
+
+                mobile.focus();
+
+                return;
+
+            } else {
+
+                document
+                    .getElementById("mobileError")
+                    .classList.add("hidden");
+
+            }
+
+
+            // Password
+            if (!validatePassword(passwordValue)) {
+
+                showToast(
+                    "Weak Password",
+                    "Please satisfy all password requirements.",
+                    "🔐"
+                );
+
+                password.focus();
+
+                return;
+
+            }
+
+
+            // Confirm password
+            if (passwordValue !== confirmValue) {
+
+                showToast(
+                    "Passwords Don't Match",
+                    "Please enter the same password in both fields.",
+                    "⚠️"
+                );
+
+                confirmPassword.focus();
+
+                return;
+
+            }
+
+
+            // Terms
+            if (!terms.checked) {
+
+                showToast(
+                    "Terms Required",
+                    "Please accept the Terms & Conditions.",
+                    "📋"
+                );
+
+                return;
+
+            }
+
+
+            // Loading state
+            signupBtn.disabled = true;
+
+            btnText.textContent =
+                "Creating Account...";
+
+            btnSpinner.classList.remove("hidden");
+
+
+            /*
+                -----------------------------------------
+                BACKEND API GOES HERE
+                -----------------------------------------
+
+                Example:
+
+                const response = await fetch(
+                    "http://localhost:3000/send-otp",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            email: emailValue,
+                            mobile: mobileValue,
+                            password: passwordValue
+                        })
+                    }
+                );
+
+                const result = await response.json();
+
+                -----------------------------------------
+            */
+
+
+            // Demo delay
+            await new Promise(resolve =>
+                setTimeout(resolve, 1500)
+            );
+
+
+            signupBtn.disabled = false;
+
+            btnText.textContent =
+                "Create Account";
+
+            btnSpinner.classList.add("hidden");
+
+
+            showToast(
+                "Account Ready!",
+                "Your signup details have been validated successfully.",
+                "🌱"
+            );
+
+
+            /*
+                After backend integration:
+
+                window.location.href =
+                    "verify-otp.html";
+            */
+
+        });
+
+    </script>
+
 </body>
 </html>
