@@ -1,55 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>EcoSaver Solution Summary</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background: #f7fafc; color: #222; }
-    h1 { color: #20c4b6; }
-    h2 { color: #fd7e25; margin-top: 2em; }
-    ul { margin-left: 1.5em; }
-    .section { margin-bottom: 2em; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EcoSaver — Solution Summary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#1C1B18; --paper:#FAF7F0; --forest:#1B4332; --forest-2:#123526;
+    --marigold:#E8A33D; --sage:#6B8F71; --line:#E1DACB;
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior:smooth; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --ink:#EDE9DD; --paper:#15140F; --forest:#8FC9A8; --forest-2:#0E2A1F; --marigold:#F0B75C; --sage:#9BC0A2; --line:#33312A; }
+  }
+  :root[data-theme="dark"] { --ink:#EDE9DD; --paper:#15140F; --forest:#8FC9A8; --forest-2:#0E2A1F; --marigold:#F0B75C; --sage:#9BC0A2; --line:#33312A; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:'IBM Plex Sans', Arial, sans-serif; line-height:1.6; }
+  h1,h2 { font-family:'Fraunces', Georgia, serif; margin:0; }
+  .hero { background:var(--forest-2); color:var(--paper); padding:4.5rem 1.5rem 3.5rem; }
+  .hero-inner { max-width:640px; margin:0 auto; }
+  .kicker { color:var(--marigold); font-size:.95rem; letter-spacing:.02em; margin:0 0 .9rem; }
+  .hero h1 { font-size:clamp(2.2rem, 6vw, 3.2rem); font-weight:600; line-height:1.12; }
+  .hero p { font-size:1.15rem; margin:1.3rem 0 0; max-width:34ch; opacity:.92; }
+  main { max-width:640px; margin:0 auto; padding:0 1.5rem 5rem; }
+  section { padding:3.2rem 0; border-bottom:1px solid var(--line); }
+  section:last-of-type { border-bottom:none; }
+  h2 { font-size:1.7rem; font-weight:600; color:var(--forest); margin-bottom:1.1rem; }
+  p { max-width:62ch; }
+  ul.plain { list-style:none; margin:0; padding:0; display:grid; gap:.9rem; }
+  ul.plain li { padding-left:1.4rem; position:relative; }
+  ul.plain li::before { content:""; position:absolute; left:0; top:.55em; width:6px; height:6px; border-radius:50%; background:var(--marigold); }
+  ol.steps { margin:0; padding:0; list-style:none; display:grid; gap:1.2rem; }
+  ol.steps li { display:grid; grid-template-columns:2.2rem 1fr; gap:.9rem; align-items:baseline; }
+  ol.steps .num { font-family:'Fraunces', serif; font-size:1.3rem; color:var(--marigold); font-weight:600; }
+  .stack-grid { display:grid; gap:1.4rem; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); }
+  .stack-grid h3 { font-size:.95rem; text-transform:none; color:var(--sage); margin:0 0 .4rem; font-weight:600; }
+  .stack-grid ul { margin:0; padding-left:1.1rem; }
+  footer { max-width:640px; margin:0 auto; padding:2rem 1.5rem 3rem; color:var(--sage); font-size:.9rem; }
+  a { color:var(--forest); }
+</style>
 </head>
 <body>
-  <h1>EcoSaver: Smart India Hackathon Solution Summary</h1>
-  <div class="section">
+
+<div class="hero">
+  <div class="hero-inner">
+    <p class="kicker">Smart India Hackathon · Solution Summary</p>
+    <h1>Making eco-action a daily habit, one badge at a time.</h1>
+    <p>EcoSaver turns environmental awareness into a game students actually want to play — real tasks, real proof, real impact.</p>
+  </div>
+</div>
+
+<main>
+
+  <section>
     <h2>Overview</h2>
-    <p>EcoSaver is a gamified learning platform designed for Indian students to inspire eco-friendly habits and awareness through real-world challenges, quizzes, and community action. The platform uses a points and badge system, AI-powered eco-suggestions, and region-specific content to maximize local impact.</p>
-  </div>
-  <div class="section">
-    <h2>Key Features</h2>
-    <ul>
-      <li>Gamified eco-habit tracker</li>
-      <li>Real-time leaderboard</li>
-      <li>AI-powered image verification for task proof</li>
-      <li>Educational library with quizzes and resources</li>
-      <li>Community engagement and challenges</li>
-      <li>Persistent ecoPoints and badge system</li>
+    <p>EcoSaver is a gamified learning platform built for Indian students to build eco-friendly habits through real-world challenges, quizzes, and community action. Points, badges, AI-verified proof, and region-specific content work together to turn one-off good intentions into a habit that sticks.</p>
+  </section>
+
+  <section>
+    <h2>Key features</h2>
+    <ul class="plain">
+      <li>Gamified eco-habit tracker with daily and weekly tasks</li>
+      <li>Real-time leaderboard across schools and regions</li>
+      <li>AI-powered image verification so task proof can't be faked</li>
+      <li>Educational library with quizzes and reading resources</li>
+      <li>Community challenges that turn individual habits into group action</li>
+      <li>Persistent ecoPoints and badge system that carries across sessions</li>
     </ul>
-  </div>
-  <div class="section">
-    <h2>How It Works</h2>
-    <ol>
-      <li>Students log in and access daily/weekly eco-tasks.</li>
-      <li>Completing tasks earns ecoPoints and badges.</li>
-      <li>Users upload proof (images) for verification using AI.</li>
-      <li>Progress is tracked and displayed on the leaderboard.</li>
-      <li>Educational content and quizzes reinforce learning.</li>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><span class="num">1</span><span>Students log in and see their daily and weekly eco-tasks.</span></li>
+      <li><span class="num">2</span><span>Completing a task earns ecoPoints and, at milestones, a badge.</span></li>
+      <li><span class="num">3</span><span>Proof of the task is uploaded as an image and checked by AI.</span></li>
+      <li><span class="num">4</span><span>Verified progress appears on the student's profile and the leaderboard.</span></li>
+      <li><span class="num">5</span><span>Linked quizzes and articles reinforce what the task just taught.</span></li>
     </ol>
-  </div>
-  <div class="section">
-    <h2>Tech Stack</h2>
-    <ul>
-      <li>Frontend: HTML, CSS (Tailwind), JavaScript</li>
-      <li>Backend: Node.js, Express, Google Vision API</li>
-      <li>Storage: LocalStorage (frontend), Google Cloud (backend)</li>
-    </ul>
-  </div>
-  <div class="section">
+  </section>
+
+  <section>
+    <h2>Tech stack</h2>
+    <div class="stack-grid">
+      <div><h3>Frontend</h3><ul><li>HTML</li><li>Tailwind CSS</li><li>JavaScript</li></ul></div>
+      <div><h3>Backend</h3><ul><li>Node.js</li><li>Express</li><li>Google Vision API</li></ul></div>
+      <div><h3>Storage</h3><ul><li>LocalStorage (client)</li><li>Google Cloud (server)</li></ul></div>
+    </div>
+  </section>
+
+  <section>
     <h2>Impact</h2>
-    <p>EcoSaver aims to make environmental action fun, measurable, and scalable for the next generation.</p>
-    <p>For more details, see the full presentation or contact the team.</p>
-  </div>
+    <p>EcoSaver makes environmental action fun, measurable, and scalable for the next generation — turning a classroom lesson into a habit that outlasts the school term.</p>
+    <p>For more detail, see the full presentation or reach out to the team.</p>
+  </section>
+
+</main>
+
+<footer>EcoSaver — Smart India Hackathon</footer>
+
 </body>
 </html>
