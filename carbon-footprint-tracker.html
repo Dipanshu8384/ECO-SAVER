@@ -1,146 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carbon Footprint Tracker</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carbon Footprint Tracker</title>
+<style>
+:root{--bg:#eef6ee;--card:#ffffff;--ink:#1c2b21;--mute:#5b6b60;--line:#cfe2d2;--accent:#2e7d4f;--accent2:#1f5c39;--field:#f4faf5;--good:#2e7d4f;--mid:#b7791f;--bad:#c0392b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a13;--card:#17251c;--ink:#e6f2e9;--mute:#9db3a3;--line:#2a4032;--accent:#4cc37e;--accent2:#2e9f5f;--field:#122019;--good:#4cc37e;--mid:#e0a94a;--bad:#ef6b5b}}
+:root[data-theme="dark"]{--bg:#0f1a13;--card:#17251c;--ink:#e6f2e9;--mute:#9db3a3;--line:#2a4032;--accent:#4cc37e;--accent2:#2e9f5f;--field:#122019;--good:#4cc37e;--mid:#e0a94a;--bad:#ef6b5b}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;line-height:1.5}
+header{background:var(--accent2);color:#fff;padding:14px 16px}
+.bar{max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
+h1{font-size:1.4rem;margin:0}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.icon{background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:10px;padding:8px 12px}
+main{max-width:960px;margin:0 auto;padding:20px 16px;display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:820px){main{grid-template-columns:1.1fr .9fr;align-items:start}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+h2{font-size:1.15rem;margin:0 0 4px}
+.sub{color:var(--mute);margin:0 0 16px;font-size:.95rem}
+.grid{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:4px}
+label small{color:var(--mute);font-weight:400}
+input{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);font-size:1rem}
+.actions{display:flex;gap:10px;margin-top:16px}
+.primary{flex:1;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:12px;font-weight:700}
+.primary:hover{background:var(--accent2)}
+.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:12px 16px}
+.total{font-size:2.4rem;font-weight:800;margin:4px 0}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;font-weight:700;font-size:.85rem;color:#fff}
+.row{margin:12px 0}
+.row .top{display:flex;justify-content:space-between;font-size:.9rem}
+.track{height:10px;background:var(--field);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.fill{height:100%;background:var(--accent);width:0;transition:width .5s}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.stat{background:var(--field);border:1px solid var(--line);border-radius:12px;padding:10px}
+.stat b{display:block;font-size:1.1rem}
+.stat span{color:var(--mute);font-size:.82rem}
+.tip{margin-top:14px;padding:12px;border-left:4px solid var(--accent);background:var(--field);border-radius:8px;font-size:.93rem}
+.empty{color:var(--mute)}
+footer{text-align:center;color:var(--mute);padding:16px;font-size:.85rem}
+@media(prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
 </head>
-<body class="min-h-screen w-full bg-gradient-to-br from-green-200 via-green-100 to-green-400 flex flex-col">
-  <header class="bg-green-800 text-white py-4 shadow-lg">
-    <div class="container mx-auto flex justify-between items-center px-4">
-      <h1 class="text-3xl font-extrabold tracking-tight">Carbon Footprint Tracker</h1>
-      <a href="login.html" class="bg-white text-green-800 px-4 py-2 rounded-lg shadow hover:bg-green-100 font-semibold transition">Back to Dashboard</a>
-    </div>
-    <!-- Navigation Menu -->
-    <nav class="flex flex-wrap gap-2 md:gap-4 container mx-auto px-4 mt-2">
-      <a href="login.html#challenges" class="text-white hover:text-green-200 font-semibold">Challenges</a>
-      <a href="login.html#learn" class="text-white hover:text-green-200 font-semibold">Learn</a>
-      <a href="login.html#community" class="text-white hover:text-green-200 font-semibold">Community</a>
-      <a href="login.html#impact" class="text-white hover:text-green-200 font-semibold">Impact</a>
-      <a href="login.html#habits" class="text-white hover:text-green-200 font-semibold">Habits</a>
-      <a href="login.html#eco-tips" class="text-white hover:text-green-200 font-semibold">Eco Tips</a>
-      <a href="login.html#leaderboard" class="text-white hover:text-green-200 font-semibold">Leaderboard</a>
-    </nav>
-  </header>
-  <main class="flex-grow flex items-center justify-center">
-    <section class="w-full max-w-3xl bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center mt-8 mb-8">
-      <div class="flex flex-col md:flex-row items-center mb-10 w-full">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Carbon Footprint" class="w-40 h-40 object-cover rounded-full shadow-xl mb-6 md:mb-0 md:mr-10 border-4 border-green-300">
-        <div class="flex-1">
-          <h2 class="text-2xl font-bold mb-3 text-green-800">Track Your Carbon Footprint</h2>
-          <p class="text-gray-700 text-lg">Use this modern calculator to estimate your daily carbon emissions. Discover how your choices impact the planet and get instant feedback to help you live more sustainably.</p>
-        </div>
-      </div>
-      <form id="carbonForm" class="space-y-7 w-full">
-        <div>
-          <label class="block text-gray-700 font-semibold mb-2" for="electricity">Electricity Usage <span class="text-gray-500 text-sm">(kWh/day)</span>:</label>
-          <input type="number" id="electricity" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1" required>
-        </div>
-        <div>
-          <label class="block text-gray-700 font-semibold mb-2" for="car">Car Travel <span class="text-gray-500 text-sm">(km/day)</span>:</label>
-          <input type="number" id="car" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1" required>
-        </div>
-        <div>
-          <label class="block text-gray-700 font-semibold mb-2" for="publicTransport">Public Transport <span class="text-gray-500 text-sm">(km/day)</span>:</label>
-          <input type="number" id="publicTransport" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1">
-        </div>
-        <div>
-          <label class="block text-gray-700 font-semibold mb-2" for="flight">Flight Travel <span class="text-gray-500 text-sm">(hours/year)</span>:</label>
-          <input type="number" id="flight" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1">
-        </div>
-        <div>
-          <label class="block text-gray-700 font-semibold mb-2" for="heating">Home Heating (Natural Gas) <span class="text-gray-500 text-sm">(units/day)</span>:</label>
-          <input type="number" id="heating" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1">
-        </div>
-        <div>
-          <label class="block text-gray-700 font-semibold mb-2" for="meat">Meat Consumption <span class="text-gray-500 text-sm">(servings/day)</span>:</label>
-          <input type="number" id="meat" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="1" required>
-        </div>
-        <div>
-          <label class="block text-gray-700 font-semibold mb-2" for="waste">Waste Generation <span class="text-gray-500 text-sm">(kg/day)</span>:</label>
-          <input type="number" id="waste" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="0.1">
-        </div>
-        <div>
-          <label class="block text-gray-700 font-semibold mb-2" for="water">Water Usage <span class="text-gray-500 text-sm">(liters/day)</span>:</label>
-          <input type="number" id="water" class="w-full border-2 border-green-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 bg-green-50 text-lg" min="0" step="1">
-        </div>
-        <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-700 text-white font-bold py-3 rounded-xl shadow-lg hover:from-green-600 hover:to-green-800 transition text-lg">Calculate</button>
-      </form>
-      <div id="result" class="mt-10 text-center text-xl font-semibold"></div>
-    </section>
-  </main>
-  <footer class="bg-green-800 text-white text-center py-4 mt-auto shadow-inner">
-    &copy; 2025 EcoAwarenessHub. All rights reserved.
-  </footer>
-  <script>
-    document.getElementById('carbonForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const electricity = parseFloat(document.getElementById('electricity').value) || 0;
-      const car = parseFloat(document.getElementById('car').value) || 0;
-      const publicTransport = parseFloat(document.getElementById('publicTransport').value) || 0;
-      const flight = parseFloat(document.getElementById('flight').value) || 0;
-      const heating = parseFloat(document.getElementById('heating').value) || 0;
-      const meat = parseFloat(document.getElementById('meat').value) || 0;
-      const waste = parseFloat(document.getElementById('waste').value) || 0;
-      const water = parseFloat(document.getElementById('water').value) || 0;
-      // Emission factors (kg CO2e per unit)
-      const electricityFactor = 0.92; // per kWh
-      const carFactor = 0.21; // per km
-      const publicTransportFactor = 0.08; // per km (bus/train average)
-      const flightFactor = 90 / 365; // per hour (short/long haul avg, annualized)
-      const heatingFactor = 2.2; // per unit natural gas
-      const meatFactor = 2.5; // per serving
-      const wasteFactor = 1.8; // per kg
-      const waterFactor = 0.0003; // per liter
-      const total = (electricity * electricityFactor)
-        + (car * carFactor)
-        + (publicTransport * publicTransportFactor)
-        + (flight * flightFactor)
-        + (heating * heatingFactor)
-        + (meat * meatFactor)
-        + (waste * wasteFactor)
-        + (water * waterFactor);
-      let feedback = '';
-      if (total < 5) {
-        feedback = '<span class="text-green-700">Excellent!</span> Your carbon footprint is low. Keep it up! 🌱';
-      } else if (total < 15) {
-        feedback = '<span class="text-yellow-600">Average.</span> There is room for improvement. Consider greener choices! 🌍';
-      } else {
-        feedback = '<span class="text-red-700">High.</span> Try to reduce your emissions for a healthier planet. 🌎';
-      }
-      document.getElementById('result').innerHTML = `Your estimated daily carbon footprint is <span class="text-green-800 font-bold">${total.toFixed(2)} kg CO₂e</span>.<br>${feedback}`;
-    });
-  </script>
-  <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const darkModeToggle = document.getElementById('darkModeToggle');
-  const iconSun = document.getElementById('iconSun');
-  const iconMoon = document.getElementById('iconMoon');
-  // On page load, check localStorage
-  if (localStorage.getItem('darkMode') === 'enabled') {
-    document.body.classList.add('dark');
-    if (iconSun && iconMoon) {
-      iconSun.classList.add('hidden');
-      iconMoon.classList.remove('hidden');
-    }
-  }
-  if (darkModeToggle && iconSun && iconMoon) {
-    darkModeToggle.addEventListener('click', function() {
-      document.body.classList.toggle('dark');
-      const isDark = document.body.classList.contains('dark');
-      if (isDark) {
-        localStorage.setItem('darkMode', 'enabled');
-        iconSun.classList.add('hidden');
-        iconMoon.classList.remove('hidden');
-      } else {
-        localStorage.setItem('darkMode', 'disabled');
-        iconSun.classList.remove('hidden');
-        iconMoon.classList.add('hidden');
-      }
-    });
-  }
-});
+<body>
+<header><div class="bar"><h1>Carbon Footprint Tracker</h1><button class="icon" id="theme" type="button" aria-label="Toggle dark mode">Dark mode</button></div></header>
+<main>
+<section class="card">
+<h2>Your daily habits</h2>
+<p class="sub">Enter what you do in a typical day. Leave optional fields empty if they don't apply.</p>
+<div id="formWrap">
+<div class="grid">
+<div><label for="electricity">Electricity <small>(kWh/day)</small></label><input type="number" id="electricity" min="0" step="0.1" placeholder="e.g. 6"></div>
+<div><label for="car">Car travel <small>(km/day)</small></label><input type="number" id="car" min="0" step="0.1" placeholder="e.g. 15"></div>
+<div><label for="publicTransport">Public transport <small>(km/day)</small></label><input type="number" id="publicTransport" min="0" step="0.1" placeholder="e.g. 8"></div>
+<div><label for="flight">Flights <small>(hours/year)</small></label><input type="number" id="flight" min="0" step="0.1" placeholder="e.g. 10"></div>
+<div><label for="heating">Home heating, gas <small>(units/day)</small></label><input type="number" id="heating" min="0" step="0.1" placeholder="e.g. 0.5"></div>
+<div><label for="meat">Meat <small>(servings/day)</small></label><input type="number" id="meat" min="0" step="0.5" placeholder="e.g. 1"></div>
+<div><label for="waste">Waste <small>(kg/day)</small></label><input type="number" id="waste" min="0" step="0.1" placeholder="e.g. 0.8"></div>
+<div><label for="water">Water <small>(liters/day)</small></label><input type="number" id="water" min="0" step="1" placeholder="e.g. 150"></div>
+</div>
+<div class="actions"><button class="primary" id="calc" type="button">Calculate</button><button class="ghost" id="reset" type="button">Reset</button></div>
+</div>
+</section>
+<section class="card" aria-live="polite">
+<h2>Your result</h2>
+<div id="result"><p class="empty">Fill in the form and choose Calculate to see your estimate and where it comes from.</p></div>
+</section>
+</main>
+<footer>&copy; 2025 EcoAwarenessHub. Estimates use average emission factors.</footer>
+<script>
+const F={electricity:{f:0.92,n:'Electricity'},car:{f:0.21,n:'Car'},publicTransport:{f:0.08,n:'Public transport'},flight:{f:90/365,n:'Flights'},heating:{f:2.2,n:'Home heating'},meat:{f:2.5,n:'Meat'},waste:{f:1.8,n:'Waste'},water:{f:0.0003,n:'Water'}};
+const TIPS={electricity:'Switch to LED bulbs and turn off standby devices to cut electricity use.',car:'Try carpooling or swapping a few car trips for public transport or cycling.',publicTransport:'Public transport is already low impact. Walking short routes cuts it further.',flight:'Fewer flights or choosing trains for short trips makes a big difference.',heating:'Better insulation and a slightly lower thermostat reduce gas use.',meat:'Replacing a few meat servings a week with plant-based meals lowers emissions.',waste:'Composting and recycling reduce the waste you send to landfill.',water:'Shorter showers and fixing leaks save water and the energy used to heat it.'};
+const $=id=>document.getElementById(id);
+function calc(){
+  const parts={};let total=0;
+  for(const k in F){const v=parseFloat($(k).value)||0;parts[k]=v*F[k].f;total+=parts[k];}
+  const res=$('result');
+  if(total<=0){res.innerHTML='<p class="empty">Enter at least one value greater than zero.</p>';return;}
+  let label,color;
+  if(total<5){label='Low';color='var(--good)';}else if(total<15){label='Average';color='var(--mid)';}else{label='High';color='var(--bad)';}
+  const sorted=Object.entries(parts).filter(e=>e[1]>0).sort((a,b)=>b[1]-a[1]);
+  const top=sorted[0][0];
+  const rows=sorted.map(([k,v])=>{const p=v/total*100;return `<div class="row"><div class="top"><span>${F[k].n}</span><span>${v.toFixed(2)} kg (${p.toFixed(0)}%)</span></div><div class="track"><div class="fill" data-w="${p}"></div></div></div>`}).join('');
+  res.innerHTML=`<div class="total">${total.toFixed(2)} <small style="font-size:1rem;font-weight:600">kg CO₂e / day</small></div>
+  <span class="badge" style="background:${color}">${label}</span>
+  <div class="stats"><div class="stat"><b>${(total*30).toFixed(0)} kg</b><span>per month</span></div><div class="stat"><b>${(total*365/1000).toFixed(2)} t</b><span>per year</span></div></div>
+  ${rows}
+  <div class="tip"><b>Biggest source: ${F[top].n}.</b> ${TIPS[top]}</div>`;
+  requestAnimationFrame(()=>document.querySelectorAll('.fill').forEach(el=>el.style.width=el.dataset.w+'%'));
+}
+$('calc').addEventListener('click',calc);
+document.querySelectorAll('input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')calc();}));
+$('reset').addEventListener('click',()=>{document.querySelectorAll('input').forEach(i=>i.value='');$('result').innerHTML='<p class="empty">Fill in the form and choose Calculate to see your estimate and where it comes from.</p>';});
+const root=document.documentElement,btn=$('theme');
+function setTheme(t){root.setAttribute('data-theme',t);btn.textContent=t==='dark'?'Light mode':'Dark mode';try{localStorage.setItem('theme',t)}catch(e){}}
+let saved=null;try{saved=localStorage.getItem('theme')}catch(e){}
+if(saved)setTheme(saved);else if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)setTheme('dark');
+btn.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
 </script>
 </body>
 </html>
